@@ -1,35 +1,32 @@
-# L02 · PRÁCTICA: crear el espacio que ejecutará el ALM
+# L02 · PRÁCTICA: crear tu propia cuenta y proyecto GitLab y preparar Claude
 
-**Duración: 60 min.** 15 explicación, 30 preparación guiada, 10 primer metaprompt, 5 comprobación.
+**Duración: 90 minutos.** Se trabaja individualmente; no hay repositorios de equipo facilitados por el profesor.
 
-## Antes de comenzar
-El formador entrega URL de GitLab de cada equipo y plantilla del proyecto. No se crea un repositorio separado por cada alumno dentro del mismo equipo. Cada estudiante utiliza su cuenta de Claude Code; no se comparten contraseñas ni sesiones.
+## Objetivo
+Utilizar una cuenta GitLab existente o abrir una nueva, crear un **proyecto personal privado**, importar la plantilla del curso y dejar un estado inicial versionado sobre el que podrán ejecutarse dos recorridos ALM: guiado y automático.
 
-## Paso 1 — distinguir repositorios (5 min)
-Abre este GitHub del curso y el GitLab del equipo. Explica en voz alta qué cambia en cada uno. En GitHub **estudiamos materiales**; en GitLab **producimos la aplicación**. La solución del formador no se publica en el repositorio del alumno.
+La guía técnica completa está en **[GUIA_GITLAB_PASO_A_PASO.md](./GUIA_GITLAB_PASO_A_PASO.md)**, con las operaciones de GitLab.com y los comandos de PowerShell para Windows. Sigue los pasos en orden.
 
-## Paso 2 — clonar y preparar (10 min)
-Comprueba que Git, Python, VS Code y Claude Code están disponibles. En una terminal usa:
-~~~bash
-git clone URL_REAL_DE_GITLAB
-cd NOMBRE_DEL_PROYECTO
-git switch -c laboratorio/inicio-alm
-git status
-~~~
-No copies literalmente los marcadores de URL; reemplázalos por el enlace proporcionado. Si GitLab ya tiene una rama de laboratorio creada, utilízala en lugar de crear otra.
+## Reloj de la sesión
 
-## Paso 3 — reconocer el contrato (10 min)
-Abre **CLAUDE.md**, **alm/maestro.md** y **alm/contratos/01-requisitos.md**. Identifica en el contrato entradas, salidas y criterios de aceptación. Pregunta: ¿cuál es la diferencia entre el contrato y un requisito funcional? **Respuesta:** el contrato define cómo operar una fase; la especificación funcional será uno de sus resultados.
+| Tiempo | Actividad | Evidencia |
+|---|---|---|
+| 0–15 min | Conceptos cuenta, proyecto, namespace, privacidad y permisos | URL del proyecto personal |
+| 15–35 min | Login o registro, verificación y proyecto privado | Proyecto \`coworking-alm-junior\` |
+| 35–60 min | Git y Claude Code; clonar e importar la plantilla | Archivos en el directorio GitLab |
+| 60–75 min | Primer commit, tag \`base-alm\`, rama \`practica/manual\` | Historial Git visible |
+| 75–85 min | Revisar issues, MR, runners y permisos | Checklist de GitLab |
+| 85–90 min | Interpretar contrato 01 y registrar gate | Entorno aprobado o bloqueo |
 
-## Paso 4 — invocar Claude Code (10 min)
-Abre Claude Code dentro del directorio de trabajo conforme a la instalación autorizada de la empresa. Pide que lea únicamente las instrucciones y el contrato; comprueba que NO ha creado aún la aplicación. No introduzcas tokens de GitLab en el prompt.
+## Qué tiene que existir al acabar
 
-## Paso 5 — generar el primer prompt operativo (10 min)
-Ejecuta el texto de **METAPROMPT.md**. Claude debe generar un archivo **alm/prompts-generados/01-requisitos.md**. Revísalo antes de autorizar la ejecución: entradas reales, artefactos esperados, restricciones, validación y condiciones de parada.
+En GitLab debe existir un repo \`TU_USUARIO/coworking-alm-junior\`, privado, con \`CLAUDE.md\`, \`alm/\`, \`docs/\`, \`app/\`, \`tests/\` y \`scripts/\`. Esos directorios **son plantillas**: ni la especificación ni la API están resueltas.
 
-## Paso 6 — registrar evidencia (5 min)
-Guarda **alm/evidencias/L02.md** con ruta del prompt generado y un breve informe de revisión; crea commit si la configuración y el acceso están correctos. No hacer merge directo a main.
+El tag \`base-alm\` apunta a la plantilla inicial. \`practica/manual\` inicia la primera implementación; en L10 se creará \`practica/automatica\` desde el tag. Este detalle es imprescindible para comparar resultados de forma justa.
 
-**Fin de laboratorio:** el alumno demuestra la distinción entre GitHub docente, GitLab de trabajo y Claude motor; localiza contrato, metaprompt y prompt operativo; la aplicación todavía NO está generada.
+## Interpretación de la metodología
 
-**Si no hay GitLab remoto:** la práctica puede preparar un clon local, pero se etiqueta como preparación local y NO se declara la integración completada.
+Lee el contrato \`alm/contratos/01-requisitos.md\` y el metaprompt \`alm/metaprompts/01-requisitos.md\`. Todavía no los ejecutes para generar requisitos. En L03 Claude generará primero el prompt operativo y después la especificación, partiendo del mismo caso de negocio. L10 reproducirá el ciclo sin aprobaciones intermedias, usando un ejecutor automatizado.
+
+## Gate L02
+El alumno demuestra el URL de GitLab y la rama; confirma que el tag base precede a cualquier generación; el formador revisa que no se haya subido toda la documentación docente a GitLab. Si una cuenta o runner no está disponible, registrar el bloqueo: nunca declararlo configurado por suposición.
