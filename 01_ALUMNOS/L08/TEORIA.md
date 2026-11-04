@@ -1,6 +1,6 @@
 # L08 · TEORÍA: mantenimiento y propagación de un cambio por todo el ALM
 
-**Duración: 120 min.**
+**Duración: 60 min.**
 
 ## 1. Por qué mantenimiento no equivale a «cambia una línea»
 

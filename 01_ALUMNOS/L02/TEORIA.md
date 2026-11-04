@@ -1,6 +1,6 @@
 # L02 · TEORÍA: cómo se ejecuta realmente un ALM generativo
 
-**Duración total: 60 min.**
+**Duración total: 90 min.**
 
 ## 1. No confundas tres sistemas
 

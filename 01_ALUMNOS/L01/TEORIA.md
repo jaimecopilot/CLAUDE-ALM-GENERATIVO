@@ -1,6 +1,6 @@
 # L01 · TEORÍA: Vibe Coding y límites del código generado
 
-**Tiempo de lectura y explicación:** 15 minutos de la sesión de 60.
+**Tiempo de lectura y explicación:** 5 minutos de la sesión de 30.
 
 ## 1. Qué va a aprender el alumno
 

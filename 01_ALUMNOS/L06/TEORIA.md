@@ -1,6 +1,6 @@
 # L06 · TEORÍA: asegurar calidad del código generado por IA
 
-**Duración: 120 min.**
+**Duración: 75 min.**
 
 ## 1. Una prueba es una afirmación comprobable
 

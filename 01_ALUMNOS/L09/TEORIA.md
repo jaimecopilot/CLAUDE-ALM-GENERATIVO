@@ -1,6 +1,6 @@
 # L09 · TEORÍA: trazabilidad y documentación viva como salida del ALM
 
-**Duración: 60 minutos.**
+**Duración: 30 minutos.
 
 ## 1. Qué demuestra que una funcionalidad está terminada
 

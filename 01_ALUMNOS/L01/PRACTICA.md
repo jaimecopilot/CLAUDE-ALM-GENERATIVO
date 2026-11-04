@@ -1,6 +1,6 @@
 # L01 · PRÁCTICA: dos maneras de pedir lo mismo
 
-**Duración: 60 min.** 15 teoría, 10 demostración, 25 práctica guiada, 10 conclusiones.
+**Duración: 30 min.** 5 teoría, 5 demostración, 15 práctica guiada, 5 conclusiones.
 
 ## Objetivo y precondición
 Comprender mediante una experiencia pequeña por qué el ALM generativo necesita especificaciones y validaciones. Basta con Claude web o Claude Code para esta demostración; los siguientes laboratorios requieren Claude Code. No subir datos reales a ningún modelo.
