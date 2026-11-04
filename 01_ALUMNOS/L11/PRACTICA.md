@@ -1,11 +1,12 @@
 # L11 · PRÁCTICA: defensa, evaluación y retrospectiva
 
-**60 min:** preparación 10, demostraciones 35, preguntas cruzadas 10, cierre 5.
+**60 min:** preparación 10, demostraciones individuales 36, preguntas cruzadas 9, cierre 5.
 
 ## Preparación
-En equipo, prepara una demostración de máximo siete minutos con URL de GitLab y terminal del entorno. Si hay cuatro equipos, la suma de demostraciones es 28 min y quedan siete para incidencias y transición. No generes código nuevo durante la presentación.
+Cada alumno prepara una demostración de tres minutos con su GitLab personal. En un grupo de 12 personas, 12 × 3 son 36 minutos. Muestra las ramas `practica/manual` y `practica/automatica`, y no generes código nuevo durante la defensa.
 
 ## Guion obligatorio de demostración
+0. **Dos recorridos:** muestra los resultados manual y automático, o el bloqueo real del pipeline GitLab.
 1. **Negocio:** muestra RF-03 y explica qué significa solapamiento.
 2. **Metaprompt:** señala el metaprompt y el prompt operativo concreto que se generó.
 3. **Código:** abre el archivo que implementa la regla.
@@ -21,7 +22,7 @@ En equipo, prepara una demostración de máximo siete minutos con URL de GitLab 
 - ¿Qué harías si falla la CI pero las pruebas locales pasan?
 - ¿Cuándo puedes aprobar una fase y cuándo necesitas volver a requisitos?
 
-## Rúbrica común a todos los equipos
+## Rúbrica común a todos los alumnos
 | Criterio | Puntuación |
 |---|---:|
 | Requisitos y especificación trazable | 20 |
@@ -39,4 +40,4 @@ No se penaliza por fallos de infraestructura ajenos al alumno si están claramen
 3. ¿Qué elementos del flujo transferirías a tu trabajo diario y cuáles no?
 
 ## Evidencias finales
-Repositorio GitLab con documentos y código; issues/commits/MRs; pruebas; CI real o bloqueo documentado; matriz de trazabilidad; versión final y conclusiones.
+Repositorio GitLab personal con dos ramas y sus evidencias; issues/commits/MRs; pruebas; CI real o bloqueo documentado; matriz de trazabilidad; versión final y conclusiones.
