@@ -1,29 +1,36 @@
-# L10 · METAPROMPT: crear el pipeline ALM declarativo
-
-## Objetivo
-Claude debe **generar la configuración ejecutable**, no limitarse a explicar cómo sería el pipeline. El ejecutor Python ya existe y pone las restricciones de seguridad.
+# L10 · METAPROMPT: Claude diseña un pipeline ALM ejecutado por GitLab
 
 ~~~text
-Eres ingeniero de automatización de ALM generativo.
+Actúa como ingeniero especialista en GitLab CI/CD, Claude Code y Application Lifecycle Management.
 
-Tenemos seis contratos de fase en alm/contratos y sus metaprompts correspondientes en alm/metaprompts. A partir de ellos vamos a crear un SEGUNDO MODO de trabajo: pipeline automático local. No cambia el caso Coworking Norte ni sustituye los artefactos por ejemplos hipotéticos.
+Debes GENERAR un archivo .gitlab-ci.yml para que sea GITLAB quien EJECUTE automáticamente el ciclo ALM, utilizando Claude Code como motor generativo en cada job. No diseñes un script local que sustituya a GitLab.
 
-Lee primero alm/ESPECIFICACION_PIPELINE_AUTO.md y scripts/alm_auto.py, en particular la constante PHASES y la función load_pipeline. Lee CLAUDE.md, alm/maestro.md y los seis contratos y metaprompts.
+Entradas:
+- CLAUDE.md y alm/maestro.md.
+- Los seis contratos de alm/contratos/.
+- Los seis metaprompts de alm/metaprompts/.
+- docs/instrucciones/CASO_NEGOCIO.md.
 
-Crea alm/pipeline_auto.json con EXACTAMENTE el esquema previsto, sin campos adicionales, y con las seis fases en este orden:
-01 requisitos → 02 diseno → 03 desarrollo → 04 testing → 05 devops → 06 evolucion.
+Etapas obligatorias ordenadas:
+alm_requisitos → alm_diseno → alm_desarrollo → alm_testing → alm_devops → alm_evolucion.
 
-Para cada fase:
-- id y name según la constante PHASES;
-- contract = alm/contratos/NN-nombre.md;
-- metaprompt = alm/metaprompts/NN-nombre.md;
-- prompt_out = alm/prompts-generados/NN-nombre.md;
-- outputs = los archivos/globs obligatorios fijados en PHASES.
+Cada etapa tiene que:
+1. Leer su metaprompt y generar el prompt operativo correspondiente.
+2. Ejecutar el prompt operativo con Claude Code CLI en el runner GitLab.
+3. Guardar artefactos reales en rutas documentadas.
+4. Obtener mediante artifacts los resultados necesarios de todas las etapas anteriores.
+5. Ejecutar validaciones técnicas y detenerse si falta un documento o falla pytest.
+6. Conservar logs y evidencias para la revisión final.
 
-No ejecutes aún el pipeline ni generes código, requisitos, diseño o pruebas. No modifiques el ejecutor Python ni los seis contratos. No añadas claves, comandos Bash, URLs o acciones de merge/push.
+Seguridad/coste:
+- Utilizar ANTHROPIC_API_KEY únicamente desde variable CI/CD enmascarada.
+- NO introducir claves en YAML ni en logs.
+- Limitar turnos, timeout y concurrencia.
+- Lanzar el ALM solo con un trigger manual explícito en la rama practica/automatica.
+- No hacer push, merge ni despliegue sin aprobación humana.
+- La fase DevOps genera CI de la aplicación como archivo independiente del pipeline ALM actual.
 
-Después de escribir JSON, explica brevemente en lenguaje natural y con un diagrama Mermaid cómo se transmiten los artefactos entre las seis etapas. Indica cómo se bloquea el avance y qué requiere revisión final.
+Genera el YAML y los scripts auxiliares imprescindibles, explica con un esquema el paso de artefactos y proporciona una checklist de revisión. No ejecutes la API ni comprometas presupuesto sin aprobación del alumno y formador.
 ~~~
 
-## Comprobación
-El alumno ejecuta \`python scripts/alm_auto.py --plan\`. Un JSON que no supera ese control debe corregirse. La ejecución real solo comienza después de la aprobación global del alumno.
+**Criterio de aprobación:** GitLab controla el pipeline y Claude ejecuta las fases. No se considera automatización GitLab un script que únicamente corre en el ordenador del alumno.

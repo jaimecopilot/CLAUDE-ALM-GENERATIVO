@@ -1,117 +1,32 @@
-# L10 · PRÁCTICA: generar y ejecutar un pipeline ALM automático local
+# L10 · PRÁCTICA: crear un pipeline GitLab que ejecute los metaprompts
 
-**180 min:** explicación 20, rama limpia 20, generación de pipeline 35, validación del plan 20, ejecución automática 60, revisión/comparación 25.
+**180 min:** explicación 20, rama/credenciales 20, generar pipeline 45, revisión 25, ejecución y observación 50, comparación 20.
 
 ## Preparación
+Usa tu proyecto GitLab **personal y privado**, creado en L02. No mezcles la rama manual con la automática. Comprueba con el formador que existe acceso a Anthropic API con límite de gasto, o que la ejecución se realizará como demostración en un proyecto docente controlado.
 
-Necesitas tu propio GitLab con la plantilla del L02, Git configurado, Claude Code CLI autenticado y dependencias Python instaladas. Haber completado L03–L09 en \`practica/manual\` ayuda a interpretar los resultados, pero **no se deben copiar los artefactos de esa rama**.
-
-## Paso 1 — abrir una rama distinta desde la misma plantilla
-
-La etiqueta \`base-alm\` debió guardarse en L02 después de importar la plantilla, antes de generar requisitos o código. Desde la raíz del clon manual:
-
-~~~powershell
+## Paso 1 — segunda rama desde el mismo estado inicial
+~~~bash
 git fetch origin --tags
-git worktree add ../coworking-alm-auto -b practica/automatica base-alm
-cd ../coworking-alm-auto
-git status
+git switch -c practica/automatica base-alm
 ~~~
+La rama debe tener los seis contratos y metaprompts, pero no las especificaciones/código generados en L03–L09.
 
-Si la rama ya existe, no repitas el comando: abre su directorio de trabajo. Comprueba que aquí están los contratos/metaprompts iniciales pero todavía **no** existen especificaciones o código generados. Este aislamiento permite comparar dos implementaciones independientes de la misma necesidad.
+## Paso 2 — crear el pipeline con Claude
+Abre Claude Code sobre esta rama y utiliza [METAPROMPT.md](./METAPROMPT.md). Claude genera el archivo **`.gitlab-ci.yml`** y los scripts de apoyo necesarios. Incluye jobs **alm_requisitos, alm_diseno, alm_desarrollo, alm_testing, alm_devops y alm_evolucion**.
 
-## Paso 2 — generar la configuración de pipeline con Claude
+Cada job lee su contrato y metaprompt, genera un prompt operativo y lo ejecuta; los posteriores reciben los archivos reales de las fases anteriores como artefactos. **No se crea una especificación independiente para desarrollo**.
 
-Abre Claude Code en el directorio automático. Pide que lea:
-- \`alm/ESPECIFICACION_PIPELINE_AUTO.md\` (esquema y reglas).
-- \`alm/contratos/01..06\` y \`alm/metaprompts/01..06\`.
-- \`CLAUDE.md\` y \`alm/maestro.md\`.
-- el **METAPROMPT.md** de L10 (este laboratorio).
+## Paso 3 — revisar antes de publicar
+Comprueba rutas y orden, `needs`/artifacts, validaciones de salida, pruebas, uso restringido de permisos, timeout y ausencia de disparos recursivos. El job DevOps genera un YAML de **CI de producto separado**, no sobrescribe el pipeline orquestador activo. No contiene claves ni hace merge automático.
 
-Claude debe crear \`alm/pipeline_auto.json\`. Este es el **artefacto de orquestación que el alumno genera**, no un archivo entregado con la solución.
+## Paso 4 — configurar credenciales autorizadas
+La integración documentada requiere `ANTHROPIC_API_KEY` como variable CI/CD de GitLab, enmascarada y restringida. **No está incluida en Claude Pro**: necesita un presupuesto API separado. Si no hay financiación o permiso, se completa la revisión del YAML y se documenta **NO EJECUTADO**, sin fingir que GitLab ha llamado a Claude.
 
-El JSON define seis etapas en orden y sus entradas/salidas. No permite comandos arbitrarios ni claves de API. Solicita a Claude que te explique el flujo como diagrama Mermaid; el diagrama es una ayuda visual, no una sustitución del archivo ejecutable.
+## Paso 5 — lanzar desde GitLab
+Tras commit y push del YAML a la rama automática, abre **GitLab → Build → Pipelines → New pipeline**; selecciona esa rama y ejecútalo. Observa cada job y descarga los resultados. GitLab mostrará logs y fallos; si las pruebas fallan, no se aprobará la fase siguiente. Anota qué artefactos recibió cada job y qué produjo.
 
-## Paso 3 — validar sin consumir cuota
+## Paso 6 — comparar ambos recorridos
+En una tabla final contrasta la rama guiada y la automática: la necesidad de partida, los requisitos, el diseño, el código, las pruebas, las intervenciones humanas, los fallos y los costes reales registrados. No atribuyas un resultado GitLab a una simulación local.
 
-Ejecuta desde el directorio automático:
-
-~~~powershell
-python scripts/alm_auto.py --plan
-~~~
-
-El plan comprueba que son seis fases y que los contratos y rutas del JSON coinciden con los del taller. Si falla, corrige la configuración con Claude. **\`--plan\` no llama a la IA ni genera software**.
-
-Antes de ejecutar guarda el JSON en una confirmación versionada si está configurada la rama:
-
-~~~powershell
-git add alm/pipeline_auto.json
-git commit -m "alm: definir pipeline automatico de seis fases"
-~~~
-
-## Paso 4 — ejecutar el pipeline completo
-
-En la misma carpeta, desde PowerShell:
-
-~~~powershell
-claude auth status
-python -m pip install -r requirements.txt
-python scripts/alm_auto.py --run
-~~~
-
-El ejecutor pide una sola confirmación: **AUTORIZO**. A partir de ahí invoca a Claude dos veces por fase y avanza automáticamente cuando se cumplen los controles. Verás líneas \`FASE 01\`, \`FASE 02\`, etc. No intervengas modificando manualmente documentos mientras el pipeline esté trabajando.
-
-**Importante:** no definas \`ANTHROPIC_API_KEY\` y no utilices \`--bare\`. Si el CLI informa de cuota agotada, la ejecución se bloquea; no se supone que el plan Pro incluya llamadas ilimitadas.
-
-## Paso 5 — examinar el recorrido
-
-Los artefactos se generan en las mismas rutas que en el modo manual. Consulta:
-
-- \`alm/prompts-generados/\`: prompts operativos realmente generados por Claude.
-- \`docs/requisitos/\`, \`docs/arquitectura/\`, \`app/\`, \`tests/\`, \`.gitlab-ci.yml\`.
-- \`alm/evidencias/pipeline-automatico.md\`: fases cuya validación técnica mínima terminó.
-- \`.alm-run/estado.json\` y \`.alm-run/logs/\`: registro local de fases y llamadas (no subir secretos ni conversaciones enteras).
-
-Ejecuta \`python -m pytest -q\` y revisa \`git diff\`. Las comprobaciones automáticas de existencia y pytest **no demuestran por sí solas** todos los criterios funcionales: coteja al menos RF-03 y CAM-01 con el código generado.
-
-## Paso 6 — cómo recuperarse de un bloqueo
-
-Si una fase falla, el ejecutor detiene las posteriores y escribe el motivo. Conserva el log; corrige el problema en la rama automática bajo revisión humana y ejecuta:
-
-~~~powershell
-python scripts/alm_auto.py --resume --run
-~~~
-
-No declares fases incompletas como aprobadas. El curso no exige gastar créditos ilimitados para reintentar una y otra vez; el formador puede mostrar una ejecución propia como demostración, claramente diferenciada del resultado del alumno.
-
-## Paso 7 — registrar y observar GitLab
-
-Cuando el resultado sea aceptable, sube esta **rama automática** y abre una MR sin fusionarla:
-
-~~~powershell
-git status
-git add .
-git commit -m "alm: generar coworking mediante pipeline automatico"
-git push -u origin practica/automatica
-~~~
-
-Si el pipeline generó \`.gitlab-ci.yml\`, GitLab podrá disparar su **pipeline CI/CD** al recibir el push según las reglas de ese archivo. Comprueba los jobs desde GitLab; que el pipeline ALM local haya terminado no acredita una ejecución CI remota.
-
-## Paso 8 — comparar los dos modos
-
-En \`docs/entrega/comparativa-modalidades.md\` registra una tabla:
-
-| Aspecto | Manual L03–L09 | Automático L10 |
-|---|---|---|
-| Entradas iniciales | Brief de Coworking Norte | El mismo brief |
-| Generación de prompts | Fase a fase con aprobación | Orquestada por script |
-| Control de avance | Humano por fase | Gates técnicos y revisión final |
-| Requisitos, diseño y código | Vínculos reales | Vínculos reales |
-| Tests | pytest y CI de la rama manual | pytest y CI de la rama automática |
-| Intervenciones humanas | Observadas | Observadas |
-| Errores/bloqueos | Observados | Observados |
-
-**Criterio de terminación:** hay un JSON de pipeline creado con Claude, una ejecución o bloqueo **real** con logs, y comparación fundamentada. No se evalúa como éxito completo un pipeline que solo pasó \`--plan\`.
-
-## Advertencia sobre la alternativa remota
-
-Ejecutar Claude dentro de jobs de GitLab y que toda la secuencia ocurra en sus runners sería otra arquitectura: requiere API de Anthropic facturada o proveedor empresarial. Este laboratorio ejecuta el ALM automático **localmente**, pero publica sus artefactos en el GitLab personal del alumno.
+**Evidencia final:** YAML generado con Claude, revisión de arquitectura, GitLab pipeline y sus artefactos reales cuando esté financiado, y comparativa verificable de dos modos.
