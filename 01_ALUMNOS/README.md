@@ -27,6 +27,6 @@ Este directorio es el **manual técnico completo del alumno**. No hay que acudir
 
 No se entregan soluciones cerradas ni capturas fingidas de GitLab. El código, la especificación y los logs serán producidos en clase. Si no hay accesos a GitLab, el docente señalará claramente qué parte es local o simulada.
 
-## Lecturas complementarias
+## Material complementario
 
-El directorio [90_ORIGINAL_IA_ALM_2026](../90_ORIGINAL_IA_ALM_2026/README.md) conserva una biblioteca del curso original de Jaime Gallo. No significa que se deban ejecutar las decenas de prácticas originales durante estas 16 horas. El [mapa de fuentes](../04_FUENTES/TRAZABILIDAD.md) explica la selección.
+Consulta el [glosario ALM](../00_PROGRAMA/GLOSARIO_ALM.md) y el contenido completo de cada laboratorio.

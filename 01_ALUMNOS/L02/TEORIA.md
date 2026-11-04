@@ -1,6 +1,6 @@
 # L02 · TEORÍA: cómo se ejecuta realmente un ALM generativo
 
-**Duración total: 60 min.** Base del itinerario de herramientas del módulo 9 y principios de gobierno del módulo 8 .
+**Duración total: 60 min.**
 
 ## 1. No confundas tres sistemas
 
@@ -24,7 +24,7 @@ GitLab registra issues, commits, Merge Requests y ejecuta **CI/CD** mediante job
 
 ## 5. Seguridad y control de costes
 
-El agente recibe acceso únicamente al proyecto didáctico; no debe leer credenciales, borrar ramas o ejecutar comandos destructivos sin revisión. Evita enviar todo el repositorio original como contexto para cada fase. Reutiliza solo documentos aprobados y relevantes. Este principio reduce coste, ambigüedad y tiempo.
+El agente recibe acceso únicamente al proyecto didáctico; no debe leer credenciales, borrar ramas o ejecutar comandos destructivos sin revisión. Evita enviar toda la documentación docente como contexto para cada fase. Reutiliza solo documentos aprobados y relevantes. Este principio reduce coste, ambigüedad y tiempo.
 
 
 ---

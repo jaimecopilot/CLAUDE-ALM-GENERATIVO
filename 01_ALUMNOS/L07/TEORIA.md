@@ -1,6 +1,6 @@
 # L07 · TEORÍA: un pipeline CI/CD generado por IA no es todo el ALM
 
-**Duración:**
+**Duración: 120 minutos.**
 
 ## 1. Dos pipelines que deben distinguirse
 

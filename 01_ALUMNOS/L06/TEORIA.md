@@ -16,7 +16,7 @@ Debemos cubrir reserva válida, colisión, contigüidad, salas diferentes, cance
 
 Un bucle sensato es *ejecutar → registrar fallo → diagnosticar → modificar la causa → volver a ejecutar*. Una reparación peligrosa es cambiar el test para que acepte el comportamiento equivocado. Si Claude propone relajar la condición de no solapamiento, el alumno la rechaza aunque todo pase después. El agente no puede presentarse como fuente independiente de confianza sobre su propio resultado; necesitamos prueba de ejecución y, preferentemente, revisión cruzada.
 
-## 4. El protocolo de validación de siete niveles del GitHub fuente
+## 4. El protocolo de validación de siete niveles
 
 1. Visual: ¿comprendo lo que se ha modificado?
 2. Dependencias: ¿existen versiones y bibliotecas utilizadas?

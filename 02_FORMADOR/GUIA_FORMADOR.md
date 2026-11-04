@@ -1,6 +1,6 @@
 # Guía del formador — Taller de 16 horas de Vibe Coding y ALM generativo
 
-**Destinatarios:** desarrolladores junior; conocimiento básico de programación. **Motor:** Claude Code. **Gestión:** GitLab. **Fuente pedagógica:** nueve módulos del repositorio [ia-alm-2026](https://github.com/jaimecopilot/ia-alm-2026). **Caso:** Coworking Norte.
+**Destinatarios:** desarrolladores junior; conocimiento básico de programación. **Motor:** Claude Code. **Gestión:** GitLab. **Caso:** Coworking Norte.
 
 ## 1. Tesis que debe quedar clara
 
@@ -10,7 +10,7 @@ No confundas un **metaprompt** con un prompt directo: el metaprompt fabrica **al
 
 ## 2. Material que recibe cada participante
 
-El **GitHub del curso** contiene para cada laboratorio TEORIA, PRACTICA y METAPROMPT. En TEORIA hay contexto aplicado y textos originales completos. PRACTICA incluye tiempos, comandos, pasos, casos de comprobación y criterios. METAPROMPT es el texto que el alumno ejecuta para generar instrucciones operativas, no el resultado final. Todos los archivos están a la vista; los alumnos no dependen del manual abreviado de la versión anterior.
+El **GitHub del curso** contiene para cada laboratorio TEORIA, PRACTICA y METAPROMPT. En TEORIA se desarrollan los conceptos y sus aplicaciones prácticas. PRACTICA incluye tiempos, comandos, pasos, casos de comprobación y criterios. METAPROMPT es el texto que el alumno ejecuta para generar instrucciones operativas, no el resultado final. Todos los archivos están a la vista; los alumnos no dependen del manual abreviado de la versión anterior.
 
 El **GitLab del equipo** recibe exclusivamente el contenido de **03_GITLAB_PLANTILLA/**: CLAUDE.md, alm/contratos/, alm/metaprompts/, estructura vacía de docs y app, plantillas de issue/MR. El código y la especificación de negocio **no** se proporcionan como solución ya escrita.
 
@@ -64,4 +64,4 @@ La fase documental exige requisitos no ambiguos, diseño relacionado, decisiones
 
 Aplicar rúbrica: requisitos 20%, MVP 25%, tests y CI 25%, GitLab 15%, explicación crítica de IA 15%. El senior reutilizará el caso y glosario, aumentando autonomía y complejidad de controles; el junior necesita aprender a dirigir y verificar el flujo que ya existe.
 
-**Material adicional:** [soluciones conceptuales](./SOLUCIONES_CONCEPTUALES.md), [rúbrica](./EVALUACION.md), [mapa a GitHub fuente](../04_FUENTES/TRAZABILIDAD.md) y las **diez sesiones** con minutaje y preguntas técnicas.
+**Material adicional:** [soluciones conceptuales](./SOLUCIONES_CONCEPTUALES.md), [rúbrica](./EVALUACION.md), las **diez sesiones** con minutaje y preguntas técnicas.
