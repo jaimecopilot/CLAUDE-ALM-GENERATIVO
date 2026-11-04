@@ -1,22 +1,22 @@
 # L03 · TEORÍA: del cliente al backlog generativo
 
-**Duración del laboratorio:** 90 minutos. Procedencia principal: Módulo 2, prácticas originales P2.1, P2.2, P2.3 y P2.6.
+**Duración del laboratorio:** 90 minutos.
 
-## Por qué la IA no puede «inventar» al cliente
+## 1. Por qué la IA no puede «inventar» al cliente
 
 Elicitar es obtener y clarificar necesidades, no rellenar una plantilla con términos técnicos. Un LLM puede sugerir preguntas, detectar contradicciones y escribir especificaciones, pero **no es el stakeholder**. El formador asumirá el papel de responsable del coworking y resolverá un conjunto limitado de preguntas de negocio. Sin este paso todos los equipos podrían producir aplicaciones incompatibles aunque las pantallas se parezcan.
 
 Distingue un **objetivo** («evitar dobles reservas»), un **requisito funcional** («rechazar solapamientos en la misma sala») y un **criterio de aceptación** («se rechaza una solicitud que se cruza 30 minutos con una reserva existente»). El criterio tiene que poder convertirse en test, pero Gherkin no se convierte automáticamente en una prueba ejecutable: alguien deberá implementarlo o mapearlo a un test.
 
-## Modelo mínimo de trazabilidad
+## 2. Modelo mínimo de trazabilidad
 
 Utilizaremos identificadores estables: RF-01 listar salas, RF-02 reservar, RF-03 controlar solapamiento y RF-04 cancelar. Cada RF tendrá uno o más criterios CA-xx y su issue en GitLab. La cadena es:
 **necesidad → RF → criterio Gherkin → issue GitLab → archivo → test → MR y pipeline**.
 No confundas una issue con una historia de usuario: GitLab registra la unidad de trabajo; la historia explica la necesidad desde un rol.
 
-## Especificación implementable y límites
+## 3. Especificación implementable y límites
 
-En el GitHub original se usa el término *especificación ejecutable*. En este curso significa un documento detallado que un agente puede interpretar para construir y verificar, **no una garantía** de generación correcta. Debe separar las restricciones de negocio (no solapar) de decisiones técnicas (FastAPI, SQLite), salvo que sean restricciones impuestas. El formador fija el stack, para evitar perder tiempo comparando frameworks.
+En este taller se utiliza el término *especificación ejecutable*. En este curso significa un documento detallado que un agente puede interpretar para construir y verificar, **no una garantía** de generación correcta. Debe separar las restricciones de negocio (no solapar) de decisiones técnicas (FastAPI, SQLite), salvo que sean restricciones impuestas. El formador fija el stack, para evitar perder tiempo comparando frameworks.
 
 Para reservas semantiza:
 - Intervalos horarios **[inicio, fin)**: si una reserva acaba a las 11:00, otra puede empezar a las 11:00.
@@ -27,21 +27,15 @@ Para reservas semantiza:
 
 Estas reglas se validarán con el stakeholder antes de entrar en diseño; después servirán para testear las implementaciones independientes de cada equipo.
 
-## Errores típicos de Claude en requisitos
+## 4. Errores típicos de Claude en requisitos
 
 Puede convertir «gestionar reservas» en facturación, login y calendarios externos; puede definir «solapamiento» de forma inconsistente; puede mezclar una decisión técnica con una condición de negocio o generar criterios que no observan resultados. El alumno debe eliminar lo que está fuera de alcance y señalar dudas reales.
 
-**Lecturas originales completas incorporadas debajo:** elicitación, prompting para historias y ecosistema de análisis.
 
 ---
 
----
 
-## Lectura original: modulo-2-analisis-requisitos/teoria/t2.1-ia-elicitacion-requisitos.md
-
-Fuente: https://github.com/jaimecopilot/ia-alm-2026/blob/main/modulo-2-analisis-requisitos/teoria/t2.1-ia-elicitacion-requisitos.md
-
-# T2.1 – CÓMO LOS LLM ASISTEN EN LA ELICITACIÓN DE REQUISITOS
+## 5. CÓMO LOS LLM ASISTEN EN LA ELICITACIÓN DE REQUISITOS
 
 La elicitación de requisitos es la fase más temprana del desarrollo de software. Tradicionalmente consiste en reuniones con stakeholders, análisis de necesidades, tormentas de ideas y mucha documentación. Es un proceso propenso a malentendidos, omisiones y ambigüedades. Los grandes modelos de lenguaje, usados correctamente, pueden acelerar y mejorar esta fase actuando como un facilitador que ayuda a hacer las preguntas adecuadas, estructurar la información y generar borradores de documentos que luego validarás con personas reales.
 
@@ -64,11 +58,8 @@ Es importante que entiendas los límites de esta asistencia. La IA no sustituye 
 
 ---
 
-## Lectura original: modulo-2-analisis-requisitos/teoria/t2.2-prompting-historias-usuario.md
 
-Fuente: https://github.com/jaimecopilot/ia-alm-2026/blob/main/modulo-2-analisis-requisitos/teoria/t2.2-prompting-historias-usuario.md
-
-# T2.2 – TÉCNICAS DE PROMPTING PARA HISTORIAS DE USUARIO Y BACKLOG
+## 6. TÉCNICAS DE PROMPTING PARA HISTORIAS DE USUARIO Y BACKLOG
 
 Una historia de usuario tradicional describe una funcionalidad desde la perspectiva de quien la necesita. Pero cuando esa historia va a ser procesada por una IA para generar un backlog, documentación o incluso código, deja de ser solo un artefacto de comunicación entre personas: se convierte en un prompt ejecutable. La forma en que la redactes determina directamente la calidad del resultado. Si escribes "quiero un botón para guardar", la IA hará suposiciones que probablemente no coincidan con lo que necesitas. Si escribes una historia precisa, con contexto técnico, criterios Gherkin y restricciones explícitas, el resultado estará mucho más cerca de lo esperado.
 
@@ -89,11 +80,8 @@ La habilidad que estás desarrollando es nueva en la industria: la de escribir r
 
 ---
 
-## Lectura original: modulo-2-analisis-requisitos/teoria/t2.3-ecosistema-herramientas-analisis.md
 
-Fuente: https://github.com/jaimecopilot/ia-alm-2026/blob/main/modulo-2-analisis-requisitos/teoria/t2.3-ecosistema-herramientas-analisis.md
-
-# T2.3 – ECOSISTEMA DE HERRAMIENTAS PARA ANÁLISIS DE REQUISITOS
+## 7. ECOSISTEMA DE HERRAMIENTAS PARA ANÁLISIS DE REQUISITOS
 
 El mercado de herramientas de IA para análisis de requisitos es amplio y diverso. No existe una herramienta única que sea la mejor para todos los casos. La elección depende del stack tecnológico de tu organización, del nivel de integración que necesites con tus herramientas de gestión de proyectos, y de si tu objetivo es solo documentar requisitos o convertirlos directamente en código mediante agentes de IA.
 

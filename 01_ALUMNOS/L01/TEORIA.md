@@ -1,14 +1,14 @@
 # L01 · TEORÍA: Vibe Coding y límites del código generado
 
-**Tiempo de lectura y explicación:** 15 minutos de la sesión de 60. **Fuente:** módulo 1 del curso original y laboratorio P9.1a.
+**Tiempo de lectura y explicación:** 15 minutos de la sesión de 60.
 
-## Qué va a aprender el alumno
+## 1. Qué va a aprender el alumno
 
 **Vibe Coding** es una forma de construir prototipos mediante interacción en lenguaje natural con un modelo generativo, observando los resultados y refinándolos. En este taller empleamos esa interacción como una puerta de entrada, no como excusa para prescindir de requisitos, pruebas o revisión. Una petición como «crea un gestor de salas» deja sin resolver las reglas de disponibilidad, el significado de «cancelar», el formato de fechas y las respuestas de error. La IA completará esos huecos mediante supuestos, a veces de forma convincente y equivocada.
 
 **ALM** (Application Lifecycle Management) designa el conjunto de actividades, decisiones y evidencias que acompañan a una aplicación desde su concepción hasta su evolución. En este curso su secuencia visible será requisitos, diseño, construcción, verificación, integración/entrega, mantenimiento y trazabilidad. **SDLC** describe el ciclo de desarrollo; ALM incluye además organización, seguimiento y gobierno de sus artefactos.
 
-## Tres papeles que no debemos confundir
+## 2. Tres papeles que no debemos confundir
 
 1. **Chat conversacional:** propone texto o código en una conversación. Puede redactar buenas ideas sin ejecutar nada.
 2. **Asistente de IDE:** utiliza el contexto del editor para sugerir o modificar partes de un proyecto.
@@ -16,27 +16,21 @@
 
 Los **metaprompts** de este taller son instrucciones para que la IA fabrique *prompts operativos* adecuados a la fase y a sus entradas. El prompt operativo, una vez revisado, indica las acciones concretas y los archivos de salida. Esta separación será imprescindible en L02-L09.
 
-## Ejemplo que se utiliza en clase
+## 3. Ejemplo que se utiliza en clase
 
 El usuario solicita «quiero reservar una sala de reunión». A partir de eso la IA podría ofrecer un formulario con botón «Reservar» y mostrar «Reserva confirmada». ¿Qué no sabemos? Si dos reservas pueden coincidir, si el intervalo es inclusivo o exclusivo, si deben introducirse fechas en UTC, si pueden cancelarse reservas, qué sucede cuando la sala no existe y si los datos deben persistir. Un prototipo visual no demuestra ninguna de estas condiciones.
 
 **Diagnóstico inicial:** diferencia la *apariencia de funcionamiento* de un comportamiento verificable. La prueba objetiva de una reserva no solapada debe indicar entradas, estado previo y resultado esperado, por ejemplo: «si la sala 2 tiene una reserva de 10:00 a 11:00, otra reserva de 10:30 a 11:30 se rechaza»; las reservas contiguas pueden aceptarse si se define la regla de intervalo semiabierto.
 
-## Riesgos a reconocer
+## 4. Riesgos a reconocer
 
 Las alucinaciones pueden producir imports falsos, dependencias inexistentes, respuestas HTTP incoherentes o tests que no comprueban los requisitos. También existe riesgo de exponer claves, datos reales o secretos al copiar material en el chat. La medida de calidad no es cuánto código escribe Claude, sino qué evidencias conservamos: criterio de aceptación, prueba que falla o pasa, commit, revisión y pipeline.
 
-**Lecturas obligatorias del curso original, reproducidas a continuación**: fundamentos, prompt engineering y límites. Los alumnos no necesitan consultar otro repositorio para leerlas.
 
 ---
 
----
 
-## Lectura original: modulo-1-fundamentos/teoria/t1.1-conceptos-basicos-ia.md
-
-Fuente: https://github.com/jaimecopilot/ia-alm-2026/blob/main/modulo-1-fundamentos/teoria/t1.1-conceptos-basicos-ia.md
-
-# T1.1 – Conceptos básicos de inteligencia artificial
+## 5. Conceptos básicos de inteligencia artificial
 
 Imagina que estás sentado frente a tu editor de código y, antes de terminar de escribir una línea, la herramienta te sugiere exactamente lo que ibas a escribir. Esa sugerencia no viene de una bola de cristal, sino de un sistema de inteligencia artificial. La inteligencia artificial, o IA, es la capacidad de un sistema informático para realizar tareas que normalmente requieren inteligencia humana: comprender lenguaje, reconocer patrones, tomar decisiones o generar contenido nuevo. No se trata de una máquina que "piensa" como nosotros, sino de un sistema que procesa cantidades masivas de información y encuentra patrones que le permiten hacer predicciones útiles.
 
@@ -53,11 +47,8 @@ Es fundamental entender que la IA actual no razona como una persona. No comprend
 
 ---
 
-## Lectura original: modulo-1-fundamentos/teoria/t1.4-prompt-engineering.md
 
-Fuente: https://github.com/jaimecopilot/ia-alm-2026/blob/main/modulo-1-fundamentos/teoria/t1.4-prompt-engineering.md
-
-# T1.4 – Principios de prompt engineering
+## 6. Principios de prompt engineering
 
 El prompt engineering es el conjunto de técnicas para redactar instrucciones que guíen a un modelo de lenguaje hacia el resultado que necesitas. La calidad de lo que obtienes depende directamente de la calidad de lo que escribes. Un prompt ambiguo produce respuestas genéricas. Un prompt bien estructurado produce código preciso, explicaciones útiles y soluciones adaptadas a tu contexto. Estos principios son universales: funcionan en ChatGPT, Claude, Copilot, Gemini y cualquier otro LLM.
 
@@ -82,11 +73,8 @@ Un último consejo práctico: guarda tus prompts efectivos. Crea un archivo de r
 
 ---
 
-## Lectura original: modulo-1-fundamentos/teoria/t1.5-limitaciones y riesgos de la ia.md
 
-Fuente: https://github.com/jaimecopilot/ia-alm-2026/blob/main/modulo-1-fundamentos/teoria/t1.5-limitaciones%20y%20riesgos%20de%20la%20ia.md
-
-# T1.5 – LIMITACIONES Y RIESGOS DE LA IA
+## 7. LIMITACIONES Y RIESGOS DE LA IA
 
 1. Has visto lo potente que puede ser una IA generativa cuando le das un buen prompt. Pero ahora toca hablar de la otra cara: sus limitaciones y los riesgos de usarla sin supervisión. La IA no es infalible. Comete errores que a simple vista pueden parecer correctos. Conocer esos errores y saber cómo detectarlos es tan importante como saber escribir buenos prompts. Exploraremos los tres grandes riesgos: alucinaciones, sesgos y problemas de seguridad.
 

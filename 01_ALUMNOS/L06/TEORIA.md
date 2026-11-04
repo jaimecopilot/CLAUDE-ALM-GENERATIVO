@@ -1,22 +1,22 @@
 # L06 · TEORÍA: asegurar calidad del código generado por IA
 
-**Duración: 120 min.** Basado en módulo 5, P5.1–P5.6 y módulo 8, P8.4.
+**Duración: 120 min.**
 
-## Una prueba es una afirmación comprobable
+## 1. Una prueba es una afirmación comprobable
 
 Cuando Claude produce código también puede producir tests, pero ambos pueden compartir una interpretación equivocada del requisito. Por eso los tests del taller parten **primero de los criterios Gherkin aprobados**. En lugar de preguntar únicamente «¿pasan los tests?», pregunta «¿qué criterio demuestra cada test?». Una prueba que únicamente verifica HTTP 200 ante una petición de listado puede ser válida para listar, pero no demuestra que se impidan reservas dobles.
 
 **Unitario:** aísla una función o regla como el solapamiento. **Integración:** atraviesa endpoint, validación y almacenamiento. **Regresión:** comprueba que un cambio nuevo no rompe capacidades anteriores. Los tres tipos aparecen en nuestro caso, sin configurar una plataforma empresarial de pruebas.
 
-## Casos importantes y falsos positivos
+## 2. Casos importantes y falsos positivos
 
 Debemos cubrir reserva válida, colisión, contigüidad, salas diferentes, cancelación, sala desconocida, intervalos inválidos y entrada con datos incompletos. El hecho de tener veinte tests no equivale a cobertura de negocio si todos prueban el mismo caso feliz. **Cobertura de líneas** mide ejecución de líneas; **cobertura de ramas** aproxima caminos de decisión; ninguna de las dos garantiza corrección semántica. El alumno debe señalar qué criterio RF/CA verifica cada test.
 
-## Depuración y bucle de reparación supervisada
+## 3. Depuración y bucle de reparación supervisada
 
 Un bucle sensato es *ejecutar → registrar fallo → diagnosticar → modificar la causa → volver a ejecutar*. Una reparación peligrosa es cambiar el test para que acepte el comportamiento equivocado. Si Claude propone relajar la condición de no solapamiento, el alumno la rechaza aunque todo pase después. El agente no puede presentarse como fuente independiente de confianza sobre su propio resultado; necesitamos prueba de ejecución y, preferentemente, revisión cruzada.
 
-## El protocolo de validación de siete niveles del GitHub fuente
+## 4. El protocolo de validación de siete niveles del GitHub fuente
 
 1. Visual: ¿comprendo lo que se ha modificado?
 2. Dependencias: ¿existen versiones y bibliotecas utilizadas?
@@ -28,11 +28,11 @@ Un bucle sensato es *ejecutar → registrar fallo → diagnosticar → modificar
 
 No se aplica a ciegas: cada nivel produce observación, decisión y evidencia. No inventar una puntuación de cobertura ni una ausencia de vulnerabilidades sin herramientas de comprobación.
 
-## Seguridad con alcance acotado
+## 5. Seguridad con alcance acotado
 
 El MVP no usa identidades reales. Por tanto, no se afirmará «seguro en producción». Sí puede verificarse que no hay credenciales hardcodeadas, que las entradas se validan, que no se concatena SQL inseguro y que los errores no exponen trazas sensibles en respuestas públicas. Los riesgos de autorización y concurrencia se documentan como **límites del MVP**, sin implantar en 16h un sistema de seguridad empresarial.
 
-## De la validación local a CI
+## 6. De la validación local a CI
 
 L06 establece pruebas reproducibles y una lista de comandos. L07 incluirá esas comprobaciones en jobs de GitLab. Es la diferencia entre validar en mi portátil y lograr que la misma verificación se ejecute en el flujo de integración.
 
@@ -40,13 +40,8 @@ L06 establece pruebas reproducibles y una lista de comandos. L07 incluirá esas 
 
 ---
 
----
 
-## Lectura original: modulo-5-testing y calidad/teoria/t5.1-test inteligente.md
-
-Fuente: https://github.com/jaimecopilot/ia-alm-2026/blob/main/modulo-5-testing%20y%20calidad/teoria/t5.1-test%20inteligente.md
-
-# T5.1 – TESTING INTELIGENTE CON IA: DEL PROMPT AL TEST EJECUTABLE
+## 7. TESTING INTELIGENTE CON IA: DEL PROMPT AL TEST EJECUTABLE
 
 El testing de software ha sido tradicionalmente una de las tareas más infravaloradas y a la vez más críticas del desarrollo. Escribir tests unitarios, de integración y end-to-end requiere tiempo, disciplina y un conocimiento profundo del código. La IA generativa transforma este panorama permitiendo generar tests a partir de descripciones en lenguaje natural, código fuente o especificaciones ejecutables. La clave no está en delegar completamente el testing en la IA, sino en encontrar el equilibrio adecuado entre la generación automatizada y la supervisión humana.
 
@@ -65,11 +60,8 @@ Las limitaciones del testing con IA deben entenderse. Los tests generados pueden
 
 ---
 
-## Lectura original: modulo-5-testing y calidad/teoria/t5.2-estrategias cobertura.md
 
-Fuente: https://github.com/jaimecopilot/ia-alm-2026/blob/main/modulo-5-testing%20y%20calidad/teoria/t5.2-estrategias%20cobertura.md
-
-# T5.2 – ESTRATEGIAS DE COBERTURA Y VALIDACIÓN EN EL ALM GENERATIVO
+## 8. ESTRATEGIAS DE COBERTURA Y VALIDACIÓN EN EL ALM GENERATIVO
 
 La cobertura de código es una métrica que indica qué porcentaje del código fuente está siendo ejecutado por los tests. En el contexto del ALM generativo, la cobertura adquiere una nueva dimensión: no solo mide la calidad de los tests, sino también la calidad del código generado por la IA. Un código generado con baja cobertura es una señal de que la IA no generó tests adecuados o de que el código tiene ramas innecesarias.
 
@@ -86,11 +78,8 @@ La personalización de la estrategia de testing es posible mediante instruccione
 
 ---
 
-## Lectura original: modulo-5-testing y calidad/teoria/t5.3-seguridad testing.md
 
-Fuente: https://github.com/jaimecopilot/ia-alm-2026/blob/main/modulo-5-testing%20y%20calidad/teoria/t5.3-seguridad%20testing.md
-
-# T5.3 – SEGURIDAD EN TESTING: DETECCIÓN DE VULNERABILIDADES EN CÓDIGO GENERADO POR IA
+## 9. SEGURIDAD EN TESTING: DETECCIÓN DE VULNERABILIDADES EN CÓDIGO GENERADO POR IA
 
 El código generado por IA no es inherentemente seguro. Al entrenarse con repositorios públicos que contienen abundantes malas prácticas de seguridad, las IAs pueden sugerir código con vulnerabilidades. La seguridad en el testing no consiste solo en probar la funcionalidad, sino en verificar activamente que el código generado no introduce nuevos vectores de ataque. Esta verificación debe ser parte del ciclo de testing en el ALM generativo.
 
@@ -107,11 +96,8 @@ La automatización de la seguridad en el ALM generativo es la capa final. En un 
 
 ---
 
-## Lectura original: modulo-8-riesgos y buenas practicas/teoria/t8.3-validacion output.md
 
-Fuente: https://github.com/jaimecopilot/ia-alm-2026/blob/main/modulo-8-riesgos%20y%20buenas%20practicas/teoria/t8.3-validacion%20output.md
-
-# T8.3 – CÓMO VALIDAR Y SUPERVISAR EL OUTPUT GENERADO POR LA IA
+## 10. CÓMO VALIDAR Y SUPERVISAR EL OUTPUT GENERADO POR LA IA
 
 La pregunta fundamental que todo desarrollador debe hacerse ante cada output de IA es: ¿cómo sé que esto es correcto? La validación del código generado por IA no es opcional ni secundaria: es la responsabilidad principal del desarrollador que usa herramientas de IA generativa. La IA es un copiloto, no un piloto automático.
 

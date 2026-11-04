@@ -1,42 +1,36 @@
 # L04 · TEORÍA: diseñar con IA sin perder el control arquitectónico
 
-**Duración:** 60 min. Procedencia: módulo 3 del GitHub fuente, con especial atención a las prácticas P3.2, P3.4 y P3.5.
+**Duración:** 60 min.
 
-## Diseño como transformación de requisitos aprobados
+## 1. Diseño como transformación de requisitos aprobados
 
 La fase no comienza diciendo «proponme una gran arquitectura». Comienza leyendo **docs/requisitos/especificacion.md** y preguntando qué componentes mínimos cumplen esos criterios. Un diseño que ignore RF-03 (solapamiento) es incorrecto aunque tenga un diagrama elegante.
 
 El curso fija el stack **FastAPI + SQLite + pytest** para que equipos junior no gasten tiempo eligiendo tecnologías. La IA sí puede proponer cómo dividir responsabilidades entre módulos: endpoints, servicio de reservas, persistencia, validaciones y tests. La arquitectura se evalúa por adecuación y legibilidad, no por número de capas o patrones.
 
-## Arquitectura, diagrama y decisión son cosas distintas
+## 2. Arquitectura, diagrama y decisión son cosas distintas
 
 **Arquitectura:** componentes y responsabilidades que limitan la implementación. **Diagrama C4:** vista de actores, sistemas y contenedores; no representa necesariamente cada clase del código. **UML de clases:** entidades, asociaciones y atributos. **ADR:** registro corto de una decisión, alternativas descartadas y consecuencias. El *sparring arquitectónico* consiste en pedir a Claude que critique una decisión bajo restricciones concretas y luego decidir con criterio humano.
 
 Para Coworking Manager un diseño razonable contempla los conceptos Sala y Reserva y una función de disponibilidad. No necesitamos Kubernetes ni mensajería. Un ADR útil puede justificar SQLite para un taller local y describir cuándo habría que reconsiderarlo; no deben inventarse beneficios que no existen.
 
-## Dónde debe vivir la regla de solapamiento
+## 3. Dónde debe vivir la regla de solapamiento
 
 Un endpoint que guarda solicitudes sin comprobar el intervalo viola el requisito. La regla debe estar en una función o servicio verificable, no escondida en la interfaz. La condición de intersección entre intervalos activos permite diseñar tests independientes. La implementación concreta puede variar, pero el comportamiento de negocio es fijo.
 
-## La paradoja de los diagramas generados
+## 4. La paradoja de los diagramas generados
 
 Claude puede producir diagramas que parecen correctos, pero no corresponden al código finalmente generado. En L04 el diagrama es **diseño propuesto**; en L09 se comparará contra la implementación real. Si hay cambios, se documentan: no se «arregla» el diagrama borrando decisiones incómodas.
 
-## Criterio de paso
+## 5. Criterio de paso
 
 Solo avanza la fase cuando hay: modelo de entidades coherente, diagrama legible versionable, al menos un ADR y correspondencia explícita con RF-01..RF-04. No hay que desarrollar la aplicación aquí; el output de diseño alimentará L05.
 
-**Lecturas del curso original incorporadas a continuación:** IA como sparring, diagramas como código y evaluación de decisiones.
 
 ---
 
----
 
-## Lectura original: modulo-3-diseno-software/teoria/t3.1-ia-como-sparring-arquitectonico.md
-
-Fuente: https://github.com/jaimecopilot/ia-alm-2026/blob/main/modulo-3-diseno-software/teoria/t3.1-ia-como-sparring-arquitectonico.md
-
-# T3.1 – LA IA COMO SPARRING ARQUITECTÓNICO
+## 6. LA IA COMO SPARRING ARQUITECTÓNICO
 
 Diseñar la arquitectura de un sistema es una de las tareas más desafiantes en el desarrollo de software. Implica tomar decisiones que afectarán a todo el proyecto: ¿monolito o microservicios? ¿SQL o NoSQL? ¿Arquitectura hexagonal o en capas? La IA generativa, usada correctamente, puede actuar como un sparring arquitectónico: un compañero de diseño que te ayuda a explorar alternativas, evaluar trade-offs, identificar riesgos y documentar decisiones. No sustituye tu criterio, pero lo amplifica.
 
@@ -59,11 +53,8 @@ El resultado del sparring arquitectónico no debería quedarse solo en una conve
 
 ---
 
-## Lectura original: modulo-3-diseno-software/teoria/t3.2-diagramas-uml-c4-con-ia.md
 
-Fuente: https://github.com/jaimecopilot/ia-alm-2026/blob/main/modulo-3-diseno-software/teoria/t3.2-diagramas-uml-c4-con-ia.md
-
-# T3.2 – GENERACIÓN DE DIAGRAMAS UML Y C4 CON IA
+## 7. GENERACIÓN DE DIAGRAMAS UML Y C4 CON IA
 
 Los diagramas de arquitectura y UML han sido tradicionalmente un punto de fricción en el desarrollo de software. Se dibujan al inicio del proyecto, se desactualizan rápidamente y rara vez reflejan lo que realmente hay en producción. La IA generativa, combinada con lenguajes de diagramación como código —Mermaid y PlantUML—, cambia esta realidad: ahora puedes generar diagramas directamente desde descripciones en lenguaje natural, mantenerlos versionados junto al código y regenerarlos automáticamente cuando la arquitectura evoluciona.
 
@@ -84,11 +75,8 @@ La comparación entre diseño e implementación es una práctica recomendada. Ge
 
 ---
 
-## Lectura original: modulo-3-diseno-software/teoria/t3.3-evaluacion-decisiones-arquitectura.md
 
-Fuente: https://github.com/jaimecopilot/ia-alm-2026/blob/main/modulo-3-diseno-software/teoria/t3.3-evaluacion-decisiones-arquitectura.md
-
-# T3.3 – EVALUACIÓN DE DECISIONES TÉCNICAS CON IA
+## 8. EVALUACIÓN DE DECISIONES TÉCNICAS CON IA
 
 Tomar decisiones técnicas es una de las responsabilidades más delicadas del desarrollo de software. Una mala decisión temprana —elegir la base de datos equivocada, una arquitectura que no escala, un framework que limita— puede lastrar el proyecto durante años. La IA generativa puede actuar como un comité de evaluación que te ayuda a analizar opciones, identificar trade-offs ocultos y documentar el razonamiento detrás de cada decisión.
 

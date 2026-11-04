@@ -1,26 +1,26 @@
 # L05 · TEORÍA: código multiarchivo generado desde una especificación
 
-**Duración: 210 minutos (3 h 30 min).** El bloque más largo del curso. Procedencia: módulo 4, ejercicios P4.2 «CRUD API REST» y P4.8 «ciclo completo», junto a P9.4b «agentes de codificación».
+**Duración: 210 minutos (3 h 30 min).** El bloque más largo del curso.
 
-## El código es un producto derivado, no el punto de partida
+## 1. El código es un producto derivado, no el punto de partida
 
 Hasta ahora hemos descrito necesidades, generado una especificación revisada, creado un backlog y aprobado un diseño. Esos documentos son **entradas** de la generación de código. Si Claude se desvía de la especificación, no «arreglamos» el requisito para que el código parezca correcto. Marcamos la discrepancia y corregimos el código o elevamos una decisión de cambio formal.
 
 Un agente trabaja sobre archivos, no solo sobre un mensaje. La diferencia importante con un chat es que debe inspeccionar la estructura real del repositorio, proponer un plan multiarchivo, editar módulos, invocar pruebas y mostrar el diff. El alumno debe aprender los conceptos de **working tree**, **rama**, **commit**, **diff** y **Merge Request**, aunque Claude escriba la mayor parte de las líneas de Python.
 
-## Arquitectura objetivo y mínima de las capas
+## 2. Arquitectura objetivo y mínima de las capas
 
 FastAPI expone endpoints HTTP. El servicio aplica las reglas de negocio; la persistencia guarda salas y reservas; los esquemas validan entradas y salidas; las pruebas verifican comportamientos. **No imponemos clases por cada sustantivo** ni un patrón Repository excesivo, a menos que mejore la separación y permita probar la lógica. Una solución en una decena de archivos razonables es preferible a un mini ecosistema de microservicios.
 
 La especificación del curso define de forma deliberada un perímetro pequeño: consulta de salas, creación de reservas, detección de colisión y cancelación. Se admite almacenamiento SQLite local para el MVP. La pantalla puede ser una página HTML sencilla; no se requiere frontend con build complejo.
 
-## API, validación y semántica de errores
+## 3. API, validación y semántica de errores
 
 El equipo acordará rutas concretas a partir del contrato: por ejemplo **GET /salas**, **POST /reservas** y **DELETE /reservas/{id}**. Una solicitud válida se representa con inicio y fin inequívocos, ambos con zona horaria. La operación de alta puede devolver 201; la solicitud que solapa otra reserva, 409; sala desconocida, 404; datos inválidos, 422. Estos códigos describen comportamientos que los tests comprobarán, no adornos en una tabla.
 
 La comprobación de solapamiento debe realizarse para reservas activas de la **misma** sala. Una reserva cancelada libera el intervalo; los extremos contiguos no se solapan cuando el contrato usa [inicio,fin). Para bases con acceso concurrente real hay riesgos de carrera: en el nivel junior se estudian conceptualmente y no se promete resistencia a cargas de producción.
 
-## Desarrollo asistido: plan → cambio → inspección → prueba
+## 4. Desarrollo asistido: plan → cambio → inspección → prueba
 
 1. **Plan:** Claude expone qué archivos creará y qué RF cubrirá.
 2. **Generación:** solo implementa el alcance autorizado.
@@ -30,29 +30,23 @@ La comprobación de solapamiento debe realizarse para reservas activas de la **m
 
 La iteración es intencionada: no esperamos el código perfecto a la primera. Tampoco damos a Claude permiso para «resolver» un fallo eliminando tests o relajando criterios. La reparación se registra y vuelve a verificarse.
 
-## Dónde entra GitLab
+## 5. Dónde entra GitLab
 
 El trabajo debe aparecer asociado a issues concretas. La rama de implementación deja un historial; una MR expone cambios, motivación y evidencias. El pipeline CI de L07 aún no existe, por lo que L05 registra pruebas locales y evita afirmar que la integración continua ha pasado.
 
-## Consejos para gestionar la cuota de Claude
+## 6. Consejos para gestionar la cuota de Claude
 
 Delimita contexto: incluye solo contrato, diseño y requisito específico; ejecuta por incremento (salas, reservas, conflictos, cancelación). Conserva resultados y no pidas regeneraciones cosméticas. Reutiliza pruebas y logs de la ejecución que ya ha realizado el agente. Pide una corrección concreta ante un error en lugar de «reescribe toda la aplicación».
 
-## Criterio de aprobación
+## 7. Criterio de aprobación
 
 Funciona la API local con las cuatro operaciones exigidas; hay demostración y pruebas básicas, sin funcionalidades añadidas, y una rama versionada con diff revisado. No es requisito que todas las pruebas de seguridad o CI estén completas: L06 y L07 profundizarán en esos aspectos.
 
-**Lecturas originales completas:** generación de código, técnicas de prompting, refactorización y buenas prácticas.
 
 ---
 
----
 
-## Lectura original: modulo-4-desarrollo-codificacion/teoria/t4.1- generacion codigo.md
-
-Fuente: https://github.com/jaimecopilot/ia-alm-2026/blob/main/modulo-4-desarrollo-codificacion/teoria/t4.1-%20generacion%20codigo.md
-
-# T4.1 – IA EN GENERACIÓN DE CÓDIGO: DEL PROMPT AL CÓDIGO FUNCIONAL
+## 8. IA EN GENERACIÓN DE CÓDIGO: DEL PROMPT AL CÓDIGO FUNCIONAL
 
 La generación de código es la aplicación más visible y transformadora de la IA en el desarrollo de software. Lo que antes requería horas de escritura manual —implementar una función, crear una clase, montar un endpoint— ahora puede obtenerse en segundos mediante un prompt bien redactado. Pero la diferencia entre un código mediocre y uno profesional no está en la IA, sino en la calidad del prompt que le proporcionas y en tu capacidad para validar y refinar el resultado.
 
@@ -71,11 +65,8 @@ Es importante entender las limitaciones. El código generado por IA puede conten
 
 ---
 
-## Lectura original: modulo-4-desarrollo-codificacion/teoria/t4.2-tecnicas promting.md
 
-Fuente: https://github.com/jaimecopilot/ia-alm-2026/blob/main/modulo-4-desarrollo-codificacion/teoria/t4.2-tecnicas%20promting.md
-
-# T4.2 – TÉCNICAS DE PROMPTING PARA FUNCIONES, CLASES Y ALGORITMOS
+## 9. TÉCNICAS DE PROMPTING PARA FUNCIONES, CLASES Y ALGORITMOS
 
 Generar una función o una clase con IA es mucho más que pedir "escribe una función que haga X". La diferencia entre un código mediocre y uno profesional está en la cantidad de contexto y especificidad que proporcionas en tu prompt. Una función no vive aislada: pertenece a un módulo, usa ciertas dependencias, sigue convenciones de nomenclatura y debe manejar errores. Cuando incluyes estos elementos en tu prompt, la IA genera código que se integra limpiamente en tu proyecto.
 
@@ -92,11 +83,8 @@ La generación de tests junto con el código es una práctica recomendada. Puede
 
 ---
 
-## Lectura original: modulo-4-desarrollo-codificacion/teoria/t4.3-refactorizacion asistida.md
 
-Fuente: https://github.com/jaimecopilot/ia-alm-2026/blob/main/modulo-4-desarrollo-codificacion/teoria/t4.3-refactorizacion%20asistida.md
-
-# T4.3 – REFACTORIZACIÓN ASISTIDA Y TRADUCCIÓN ENTRE LENGUAJES
+## 10. REFACTORIZACIÓN ASISTIDA Y TRADUCCIÓN ENTRE LENGUAJES
 
 La refactorización es el arte de mejorar la estructura interna del código sin cambiar su comportamiento externo. Tradicionalmente, es una tarea costosa y arriesgada: mover código, extraer métodos, renombrar variables o aplicar patrones de diseño puede introducir bugs sutiles. La IA transforma esta realidad. Con un prompt adecuado, puedes pedirle que analice un bloque de código y lo mejore en segundos, manteniendo la semántica original. La refactorización asistida no elimina la necesidad de revisar, pero reduce drásticamente el tiempo mecánico de reescritura.
 
@@ -115,11 +103,8 @@ La regla de oro para refactorización y traducción es: nunca sin tests. Antes d
 
 ---
 
-## Lectura original: modulo-4-desarrollo-codificacion/teoria/t4.4-buenas practicas.md
 
-Fuente: https://github.com/jaimecopilot/ia-alm-2026/blob/main/modulo-4-desarrollo-codificacion/teoria/t4.4-buenas%20practicas.md
-
-# T4.4 – BUENAS PRÁCTICAS Y VALIDACIÓN EN EL DESARROLLO CON IA
+## 11. BUENAS PRÁCTICAS Y VALIDACIÓN EN EL DESARROLLO CON IA
 
 La IA generativa puede producir código asombrosamente bueno en segundos. Pero la regla de oro del desarrollo con IA es: nunca aceptes código que no entiendas. La IA no es un oráculo infalible. Es un modelo estadístico que predice tokens. A veces acierta con precisión milimétrica. Otras veces genera código incorrecto, inseguro o simplemente absurdo que parece correcto a simple vista. La diferencia entre un desarrollador que usa IA de forma profesional y uno que la usa de forma peligrosa está en el hábito de revisar y comprender cada línea antes de aceptarla.
 
