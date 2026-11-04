@@ -17,7 +17,6 @@ La IA del curso será Claude Code; los contratos y metaprompts se redactan para 
 - **[Guía de alta individual en GitLab](./01_ALUMNOS/L02/GUIA_GITLAB_PASO_A_PASO.md)**: cuenta personal, proyecto privado y permisos.
 - **[Nuevo laboratorio de ALM automático](./01_ALUMNOS/L10/PRACTICA.md)**: segunda ejecución del mismo caso.
 - **[Material del alumno](./01_ALUMNOS/README.md)**: índice de los once laboratorios; **cada laboratorio tiene TEORIA, PRACTICA y METAPROMPT**.
-- **[Guía del formador](./02_FORMADOR/GUIA_FORMADOR.md)**: explicaciones, demostraciones, intervenciones y evaluación.
 - **[Plantilla para GitLab](./03_GITLAB_PLANTILLA/README.md)**: archivos iniciales que se copiarán al proyecto GitLab cuando esté disponible.
 
 ## Qué debe hacer el alumno
