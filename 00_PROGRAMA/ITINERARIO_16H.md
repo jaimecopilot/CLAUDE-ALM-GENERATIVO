@@ -1,54 +1,39 @@
-# Programa oficial — taller junior de ALM generativo (16 horas)
+# Programa oficial — Taller junior de ALM generativo (16 horas)
 
-## Resultado exigible
-Cada equipo utiliza Claude Code y un proyecto GitLab para producir y explicar la cadena **idea → requisitos → diseño → implementación → pruebas → CI/CD → evolución → trazabilidad**. Cada fase posee metaprompt de creación de instrucciones, prompt operativo específico, contrato de salida y evidencia comprobable.
+## Dos modalidades de ejecución sobre el mismo caso
+**Modo A (L01-L09):** los alumnos recorren el ALM fase a fase con Claude Code, revisan cada prompt y validan salidas. **Modo B (L10):** crean la configuración de un **pipeline ALM automático local**; el ejecutor realiza la secuencia con los mismos metaprompts y contratos, guardando estado, logs y bloqueos. **L11:** evalúa resultados de ambas modalidades.
 
-**MVP obligatorio:** listar salas, realizar reserva, impedir solapamientos, cancelar reserva. **Cambio de mantenimiento:** impedir intervalos de más de 4 h. No añadir usuarios, facturación, membresías ni despliegue cloud.
+El caso no cambia: Coworking Norte, con listado de salas, creación y cancelación de reservas y prevención de solapamientos. En evolución se incorpora el máximo de cuatro horas.
 
-## Cronograma de dos jornadas (horas lectivas; pausas fuera)
+## Dos jornadas de ocho horas lectivas
 
-| Día | Laboratorio | Tiempo | Producto verificable |
+| Día | Laboratorio | Min | Entrega |
 |---|---|---:|---|
-| 1 | L01 Vibe Coding y límites | 1 h | Prototipo inicial y errores detectados |
-| 1 | L02 Metaprompts, Claude Code y GitLab | 1 h | Proyecto, rama y primer prompt operativo |
-| 1 | L03 Requisitos generativos | 1,5 h | Especificación, Gherkin, backlog e issues |
-| 1 | L04 Diseño generativo | 1 h | Modelo, diagrama, ADR |
-| 1 | L05 Desarrollo generativo | 3,5 h | API de reservas ejecutable |
-| 2 | L06 Testing y revisión de seguridad | 2 h | Tests, cobertura y correcciones |
-| 2 | L07 GitLab CI/CD | 2 h | Pipeline remoto y artefactos |
-| 2 | L08 Mantenimiento y cambio | 2 h | Nuevo requisito, código y tests |
-| 2 | L09 Trazabilidad y documentación | 1 h | Matriz requisitos–código–tests–MR |
-| 2 | L10 Evaluación final | 1 h | Demostración funcional y explicación |
-| | **TOTAL** | **16 h** | |
+| 1 | L01 Vibe Coding y sus límites | 30 | Identificar supuestos |
+| 1 | L02 Cuenta GitLab personal y entorno Claude | 90 | Proyecto privado y plantilla importada |
+| 1 | L03 Requisitos generativos | 90 | RF/CA, Gherkin, backlog, issues |
+| 1 | L04 Diseño generativo | 60 | Modelo, Mermaid, ADR |
+| 1 | L05 Desarrollo guiado | 210 | API de reservas ejecutable |
+| 2 | L06 Testing y calidad | 75 | pytest y matriz de pruebas |
+| 2 | L07 GitLab CI/CD | 75 | Pipeline y logs |
+| 2 | L08 Cambio de requisito | 60 | Regresión y MR |
+| 2 | L09 Trazabilidad | 30 | Documentación y matriz |
+| 2 | L10 **ALM automático** | 180 | Pipeline ALM ejecutado en otra rama |
+| 2 | L11 Defensa comparada y evaluación | 60 | Comparación manual/automático |
+| | **Total** | **960** | **16 h** |
 
-## Qué enseñamos y qué no
+Las pausas no forman parte de las horas lectivas.
 
-**Enseñamos:** terminología ALM, calidad de un metaprompt, generación de prompts operativos con entradas y salidas formales, aprobación humana, relación con GitLab Issues y Merge Requests, pruebas y cierre de ciclo.
+## Repositorios de cada alumno
+1. **GitHub del curso:** teoría, prácticas y metaprompts, solo lectura.
+2. **GitLab personal:** cada alumno utiliza su cuenta existente o crea una nueva. Genera proyecto privado `coworking-alm-junior`, importa la plantilla y mantiene dos ramas de trabajo con el mismo punto de partida: `practica/manual` y `practica/automatica`.
+3. **Claude Code local:** cada alumno inicia sesión en su propia cuenta con plan compatible. No se copian tokens a prompts ni repositorios.
 
-**No enseñamos:** IA teórica avanzada, administración de GitLab, Kubernetes, servicios en nube, desarrollo de un motor propio de orquestación, sistemas multiagente complejos.
+## Continuidad de artefactos (regla obligatoria)
+Las fases NO usan nuevas especificaciones inconexas. Cada contrato declara entradas generadas y aprobadas en las anteriores. Desarrollo utiliza requisitos **y** diseño; testing utiliza requisitos **y** código; CI utiliza código **y** tests; evolución reutiliza todo lo anterior. El pipeline automático parte del mismo brief y aplica exactamente esos contratos en una rama separada.
 
-## Método pedagógico de cada laboratorio
+## Límite de coste
+Modo A y B se plantean con Claude Code en el ordenador del alumno, utilizando su propia autenticación. La modalidad B realiza más invocaciones y consume cuota; Pro tiene límites. La integración remota `Claude Code dentro de GitLab CI` utiliza API facturada y no está incluida. No se configura `ANTHROPIC_API_KEY` en las prácticas locales.
 
-1. **Teoría (contexto):** concepto y significado dentro del ALM; lectura antes de practicar.
-2. **Demostración:** el formador muestra una ejecución y un problema típico.
-3. **Metaprompt:** Claude propone el prompt operativo; los alumnos revisan objetivo, entradas, restricciones, salidas y validaciones.
-4. **Práctica:** Claude ejecuta el prompt sobre el clon GitLab; se comprueba el resultado real.
-5. **Gate humano:** no se avanza si faltan evidencias, y se registra la razón de fallos.
-
-## Preparación y coste asumidos
-
-Cada alumno tiene acceso personal autorizado a Claude Code (plan compatible), VS Code, Python, Git y GitLab. El uso de Claude Free web no reemplaza a Claude Code. No habrá llamadas API desde jobs GitLab. Las cuotas de Pro no son ilimitadas: los checkpoints son planes de continuidad, no una garantía de ejecución por alumno.
-
-## Evaluación
-
-- Requisitos y especificaciones: 20%.
-- Aplicación funcional: 25%.
-- Pruebas y CI/CD: 25%.
-- GitLab e historial de revisión: 15%.
-- Argumentación y uso crítico de IA: 15%.
-
-**Criterio irrenunciable:** ninguna prueba se declara «pasada» sin una evidencia de ejecución. Ninguna fase se «aprueba» solo por haber generado un documento.
-
-## Aplicación al taller senior
-
-El caso, el vocabulario y la base de requisitos son iguales; el senior modifica contratos, arquitectura, controles, límites de agentes y política de aprobación, pero no hay que rehacer los materiales junior.
+## Criterios de evaluación
+Requisitos 20%, MVP 25%, pruebas y CI 25%, GitLab 15%, explicación crítica 15%. El L11 exige contrastar resultados y evidencias de ambos modos, sin afirmar que el automático pasó si sus gates fallaron.

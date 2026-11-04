@@ -6,19 +6,19 @@ En [CLAUDE.md](./CLAUDE.md) están los límites operativos del agente y en [alm/
 
 ## Preparación por parte del formador
 
-1. Crear un proyecto GitLab por equipo, con usuarios y permisos autorizados.
+1. Cada alumno crea un proyecto GitLab **personal y privado**, con su propio usuario (ver L02).
 2. Importar esta plantilla y comprobar que el repositorio es clonable.
 3. Confirmar Python, Git, Claude Code y runner de GitLab para el L07.
 4. Crear proyecto de prueba pequeño; no se usan credenciales reales del negocio.
-5. Comunicar URL exacta a los alumnos y registrar cualquier limitación de CI.
+5. El alumno comunica al formador la URL de su proyecto y registra cualquier limitación de CI.
 
 ## Pasos del alumno
 
 - Leer el material L01–L10 en [GitHub del curso](https://github.com/jaimecopilot/CLAUDE-ALM-GENERATIVO/tree/main/01_ALUMNOS).
-- Clonar su proyecto GitLab y abrirlo en VS Code.
+- Clonar su proyecto GitLab personal y abrirlo en VS Code.
 - Ejecutar por orden las seis fases. Cada fase produce primero **alm/prompts-generados/NN-fase.md**, luego sus artefactos.
 - Confirmar gates humanos; no fingir resultados ni cerrar una fase solo porque Claude generó texto.
-- L09/L10 completan documentación y evaluación del ciclo.
+- L09 termina la documentación manual; L10 ejecuta un pipeline ALM automático local desde la misma plantilla; L11 evalúa las dos modalidades.
 
 **Nota:** no hay .gitlab-ci.yml inicial. Lo generará Claude en L07 a partir de la implementación y las pruebas reales. Hasta ese momento la ausencia de CI es intencionada.
 

@@ -17,3 +17,7 @@
 **Gestión de cuota:** una arquitectura, una ejecución por fase y correcciones concretas. Guardar prompts y resultados; no enviar toda la biblioteca GitHub a Claude en cada paso.
 
 **GitLab CI/CD** será un artefacto generado en la fase 05, no el motor que ejecuta este protocolo. No hay llamadas API pagadas a Claude desde jobs GitLab.
+
+## Perfil de automatización L10 (separado del procedimiento manual)
+
+En modo automático local, el alumno **aprueba una sola vez el plan global y el alcance**, en una rama aislada que parte de la plantilla inicial. Un ejecutor realiza secuencialmente los dos pasos de cada contrato (metaprompt → prompt operativo → ejecución), inspecciona salidas y ejecuta pruebas determinadas. Si falla una verificación, la ejecución se detiene; nunca se autoriza automáticamente un merge. Esta regla solo se aplica a L10; en L03–L09 permanecen las dos aprobaciones por fase.

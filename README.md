@@ -1,6 +1,6 @@
 # Taller de 16 horas · Vibe Coding y ALM generativo con Claude y GitLab
 
-> **Curso de 16 horas.** La ejecución con GitLab requiere configurar el proyecto y sus runners.
+> **Curso de 16 horas.** Cada alumno crea su proyecto GitLab. El uso de runners y la automatización local se documentan en L02, L07 y L10.
 
 ## Qué es este repositorio
 
@@ -19,11 +19,12 @@ La IA del curso será Claude Code; los contratos y metaprompts se redactan para 
 
 ## Qué debe hacer el alumno
 
-1. Leer **TEORIA.md** del laboratorio en curso.
-2. Ejecutar **PRACTICA.md** con Claude y GitLab.
-3. Usar **METAPROMPT.md** para producir un prompt específico, que Claude después ejecuta.
-4. Verificar resultados y evidencias antes de avanzar.
-5. Registrar las salidas verificadas en su proyecto GitLab.
+1. Crear o utilizar una cuenta GitLab personal y un proyecto privado propio, siguiendo L02.
+2. Leer **TEORIA.md** del laboratorio en curso.
+3. Ejecutar **PRACTICA.md** con Claude y GitLab.
+4. Usar **METAPROMPT.md** para producir un prompt específico, que Claude después ejecuta.
+5. Verificar resultados y evidencias antes de avanzar.
+6. Registrar las salidas verificadas en su proyecto GitLab.
 
 Los **metaprompts** están versionados y son reutilizables. Los **prompts operativos** y **artefactos de fase** se crean durante el taller; no se entregan resueltos al alumno.
 
@@ -37,12 +38,13 @@ Los **metaprompts** están versionados y son reutilizables. Los **prompts operat
 
 Stack de referencia: Python, FastAPI, SQLite, pytest, GitLab CI/CD. Evitamos autenticación compleja, membresías, facturación, Kubernetes y despliegue productivo. La entrega se verifica mediante ejecución local y pipeline GitLab.
 
-## Alcance de automatización: dos pipelines distintos
+## Dos formas de ejecutar el ALM y un pipeline de CI/CD
 
-- **Pipeline del ALM generativo:** metaprompts → prompts de fase → artefactos → validaciones → siguiente fase. Lo orquesta Claude Code bajo control humano.
-- **Pipeline de CI/CD:** tareas automatizadas del proyecto en GitLab, representadas por `.gitlab-ci.yml`.
+- **Modo guiado (L01–L09):** el alumno solicita a Claude cada fase, revisa el prompt operativo y valida la salida.
+- **Modo automático (L10):** un pipeline ALM local encadena los mismos seis contratos y metaprompts, genera prompts operativos y artefactos, ejecuta validaciones y se detiene si falla un gate. Se prepara en una rama limpia del mismo proyecto.
+- **GitLab CI/CD (L07):** pipeline diferente definido por `.gitlab-ci.yml`, que valida tests y artefactos tras los pushes. No debe confundirse con el pipeline ALM.
 
-El pipeline ALM no debe confundirse con CI/CD. Sin integración adicional o credenciales no habrá ejecución desatendida desde GitLab hacia Claude; el agente se ejecuta sobre el clon del repositorio.
+En L10 se verá el pipeline ALM **en ejecución local automatizada** usando Claude Code CLI. Para ejecutar IA directamente en runners remotos de GitLab se requeriría una modalidad adicional con API facturada; está fuera del presupuesto de este taller.
 
 ## Recursos y costes
 
@@ -50,6 +52,6 @@ Claude Code requiere un plan compatible; Claude Free web no equivale a Claude Co
 
 ## Fase 2
 
-Quedará pendiente la **integración remota real con GitLab**: crear o vincular el proyecto, configurar acceso, runners, permisos y ejecutar las Merge Requests y pipelines. Hasta entonces la plantilla es material preparado, no infraestructura desplegada.
+Quedará pendiente la **ejecución real en las cuentas GitLab de los alumnos**: ellos crearán sus proyectos y comprobarán sus runners, permisos, Merge Requests y pipelines. Hasta entonces la plantilla es material preparado, no infraestructura desplegada.
 
 **No subir las soluciones del formador al repositorio del alumno.**

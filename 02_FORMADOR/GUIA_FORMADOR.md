@@ -16,8 +16,8 @@ El **GitLab del equipo** recibe exclusivamente el contenido de **03_GITLAB_PLANT
 
 ## 3. Preparación obligatoria antes de la primera clase
 
-- Confirmar que todos pueden abrir los recursos de teoría y prácticas de GitHub.
-- Crear proyecto GitLab por equipo, importar 03_GITLAB_PLANTILLA como raíz, y comprobar que cada usuario puede clonar, subir una rama y crear MR según permisos.
+- Confirmar que todos pueden abrir los recursos de teoría y prácticas de GitHub. No se facilitan cuentas GitLab compartidas: cada alumno inicia sesión en la suya.
+- Cada alumno crea su proyecto GitLab personal privado y copia 03_GITLAB_PLANTILLA a la raíz, con acompañamiento del formador; debe poder clonar, subir ramas y abrir MR.
 - Comprobar que Claude Code se abre en el directorio y reconoce CLAUDE.md; se utiliza cuenta personal con acceso autorizado, no credenciales compartidas.
 - Reservar un GitLab Runner accesible para la fase CI/CD y verificar que la instancia admite jobs según sus límites. No prometer CI remoto sin runner.
 - Preparar una solución exclusiva del formador fuera del repositorio que ven los alumnos y una serie de checkpoints marcados como **ayuda docente**.
@@ -25,6 +25,8 @@ El **GitLab del equipo** recibe exclusivamente el contenido de **03_GITLAB_PLANT
 - No usar API de Claude desde un job GitLab: no se ha presupuestado ese consumo.
 
 ## 4. Agenda docente y ejecución de los laboratorios
+
+**La jornada tiene dos experiencias deliberadamente distintas:** ejecución manual supervisada de L01–L09 y pipeline automático local en L10, con la misma especificación inicial. La automatización no se hace en un runner remoto de GitLab con una suscripción Pro; esa variante exigiría API y otro presupuesto.
 
 | Día | Bloque | Duración | Objetivo | Archivo de sesión |
 |---|---|---:|---|---|
@@ -64,4 +66,4 @@ La fase documental exige requisitos no ambiguos, diseño relacionado, decisiones
 
 Aplicar rúbrica: requisitos 20%, MVP 25%, tests y CI 25%, GitLab 15%, explicación crítica de IA 15%. El senior reutilizará el caso y glosario, aumentando autonomía y complejidad de controles; el junior necesita aprender a dirigir y verificar el flujo que ya existe.
 
-**Material adicional:** [soluciones conceptuales](./SOLUCIONES_CONCEPTUALES.md), [rúbrica](./EVALUACION.md), las **diez sesiones** con minutaje y preguntas técnicas.
+**Material adicional:** [soluciones conceptuales](./SOLUCIONES_CONCEPTUALES.md), [rúbrica](./EVALUACION.md), las **once sesiones** con minutaje y preguntas técnicas.
