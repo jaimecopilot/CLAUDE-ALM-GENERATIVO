@@ -44,6 +44,3 @@ Comprueba y registra:
 
 ## Si no llega la cuota de Claude
 No se generan más variantes. Se utiliza la especificación de referencia entregada por el docente como **checkpoint externo**, marcado como tal y sin fingir autoría del equipo.
-
-## Enlace directo con el GitHub fuente
-P2.1 idea→especificación, P2.2 especificación→backlog, P2.6 requisito→issue. Adaptamos esos tres ejercicios a un solo flujo con artefactos reales y GitLab.

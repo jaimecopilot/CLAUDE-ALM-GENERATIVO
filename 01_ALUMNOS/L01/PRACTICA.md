@@ -31,5 +31,3 @@ Crea el archivo **evidencias/L01.md** (en el cuaderno del equipo o repositorio l
 **Criterio de terminación:** el alumno puede explicar Vibe Coding, ALM, metaprompt, prompt operativo, artefacto y evidencia usando ejemplos distintos, e identifica al menos un supuesto que haría fallar una aplicación real.
 
 **Problemas habituales:** Claude presenta un «proyecto completo» sin ejecutarlo; el alumno confunde la respuesta con un archivo; un test pasa porque no valida ninguna condición. **Solución didáctica:** preguntar «¿dónde está la evidencia?», no aceptar afirmaciones verbales.
-
-**Enlace al curso original:** P1.2 «comparación de estilos de prompt» y P9.1a «fundamentos del ALM generativo». En este taller se aplica la comparación al caso único y no se abren seis conversaciones para ahorrar cuota.

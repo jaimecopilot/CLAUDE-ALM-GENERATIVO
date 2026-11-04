@@ -40,5 +40,3 @@ Documenta cada nivel (observación, resultado, evidencia). No basta poner siete 
 
 ## Gate de calidad
 Hay pruebas ejecutadas, resultados comprobados, correspondencia con criterios CA y hallazgos anotados. Si falla un test exigido, la fase queda BLOQUEADA; el alumno realiza corrección controlada. Registra el commit de pruebas y prepara la MR para L07.
-
-**Procedencia:** P5.6 integra requisitos, tests, correcciones, cobertura y seguridad; P8.4 define los siete niveles. Ambos se convierten aquí en una práctica única verificable.

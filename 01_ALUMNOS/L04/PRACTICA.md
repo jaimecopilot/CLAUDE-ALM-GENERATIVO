@@ -35,6 +35,3 @@ Si no puede ubicar la responsabilidad, el diseño necesita revisión. El ADR deb
 Guarda el prompt, el diseño, el diagrama y el ADR en una rama; registra revisión y gate en **alm/evidencias/registro.md**. No marques el diseño «aprobado» si la especificación aún tiene dudas bloqueantes.
 
 **Resultado esperado:** la implementación del L05 puede partir del diseño sin redefinir reglas de negocio. **Errores típicos:** patrones innecesarios, módulos inventados, base de datos remota para un taller local, Mermaid que no renderiza, diagrama sin relación con RF-03. Corrige el diseño, no el requisito para justificar el dibujo.
-
-## Relación con el curso original
-En P3.5 se aprende a documentar ADR; en P3.2 a generar diagramas; en P3.4 a conectar especificación y diseño. Aquí los tres resultados forman una sola fase encadenada.

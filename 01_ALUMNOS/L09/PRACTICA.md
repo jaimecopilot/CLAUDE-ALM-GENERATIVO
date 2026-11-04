@@ -27,5 +27,3 @@ Pide a Claude comparar el diagrama original con los módulos actuales. Identific
 Guarda matriz, README y diferencias de diseño. Si falta prueba remota, deja esa celda marcada. Presenta al compañero una fila completa de trazabilidad y pídele que llegue desde el requisito hasta el test concreto.
 
 **Criterio de fin:** el alumno sabe reconstruir el ciclo de una funcionalidad sin consultar el historial del chat. La documentación se basa en el código real.
-
-**Origen:** P2.6 especifica trazabilidad de requisitos; P8.8 exige documentación y diagramas reales; T8.4 añade la responsabilidad de auditar las decisiones.

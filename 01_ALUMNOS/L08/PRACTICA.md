@@ -46,6 +46,3 @@ Comprueba desde el endpoint real el límite de cuatro horas. Si la base contiene
 Sube cambios, observa pipeline remoto GitLab y registra: issue CAM-01, commits, MR, tests nuevos, pruebas antiguas y estado CI. Si no hay runner, anota bloqueo; no anuncies «CI verde».
 
 **Resultado esperado:** el equipo puede explicar por qué un cambio de negocio vuelve a abrir requisitos, implementación, testing y documentación. Una MR es evidencia del proceso, no solo un mecanismo de subir archivos.
-
-## Enlace con la fuente
-P7.4 «planificar y ejecutar refactorizaciones» aporta disciplina de cambio y pruebas; P8.5-P8.10 aportan visión integrada del proyecto. La práctica aquí se limita a un único cambio de requisitos para ajustarse a 16h.

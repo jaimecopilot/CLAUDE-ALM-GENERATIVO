@@ -40,5 +40,3 @@ No se penaliza por fallos de infraestructura ajenos al alumno si están claramen
 
 ## Evidencias finales
 Repositorio GitLab con documentos y código; issues/commits/MRs; pruebas; CI real o bloqueo documentado; matriz de trazabilidad; versión final y conclusiones.
-
-**Vínculo al curso original:** P8.10 define retrospectiva, dashboard y cierre; se mantiene la reflexión, pero se sustituyen métricas hipotéticas por hechos observados.

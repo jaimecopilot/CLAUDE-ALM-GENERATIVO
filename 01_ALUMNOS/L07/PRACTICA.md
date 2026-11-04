@@ -38,6 +38,3 @@ Registrar:
 - Registro del fallo/reparación si ocurrió.
 - Artefacto generado y guía breve de uso.
 - Aprobación humana; no merge automático.
-
-## Relación con el curso fuente
-P6.1 enseñaba a traducir descripciones naturales a YAML y comparar plataformas; aquí priorizamos **GitLab real**, no GitHub Actions. P6.3 enseñaba diagnosis de fallos; aquí se utiliza el log real del job, y no una simulación desconectada.
