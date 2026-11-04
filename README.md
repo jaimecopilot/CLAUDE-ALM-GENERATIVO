@@ -1,6 +1,6 @@
 # Taller de 16 horas · Vibe Coding y ALM generativo con Claude y GitLab
 
-> **Estado:** contenidos docentes en publicación. El repositorio de referencia [ia-alm-2026](https://github.com/jaimecopilot/ia-alm-2026) permanece intacto. La ejecución en un GitLab real queda pendiente de disponer de su proyecto y runners.
+> **Curso de 16 horas.** La ejecución con GitLab requiere configurar el proyecto y sus runners.
 
 ## Qué es este repositorio
 
@@ -16,8 +16,6 @@ La IA del curso será Claude Code; los contratos y metaprompts se redactan para 
 - **[Material del alumno](./01_ALUMNOS/README.md)**: índice de los diez laboratorios; **cada laboratorio tiene TEORIA, PRACTICA y METAPROMPT**.
 - **[Guía del formador](./02_FORMADOR/GUIA_FORMADOR.md)**: explicaciones, demostraciones, intervenciones y evaluación.
 - **[Plantilla para GitLab](./03_GITLAB_PLANTILLA/README.md)**: archivos iniciales que se copiarán al proyecto GitLab cuando esté disponible.
-- **[Trazabilidad al curso original](./04_FUENTES/TRAZABILIDAD.md)**: qué archivo de ia-alm-2026 fundamenta cada laboratorio y cómo se ha adaptado.
-- **[Biblioteca original del curso](./90_ORIGINAL_IA_ALM_2026/README.md)**: copia contextual de materiales de teoría y metaprompts originales, separada del itinerario obligatorio.
 
 ## Qué debe hacer el alumno
 
