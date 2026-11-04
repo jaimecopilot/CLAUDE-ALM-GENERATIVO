@@ -1,203 +1,56 @@
-# L10 · TEORÍA: evaluar un ALM completo, no una demostración llamativa
+# L10 · TEORÍA: automatizar el ALM generativo sin perder trazabilidad
 
-**Duración: 60 minutos.**
+**Duración total:** 180 minutos. Este laboratorio es una segunda forma de ejecutar **el mismo caso práctico**, no un proyecto nuevo.
 
-## 1. Qué se evalúa
+## 1. Qué cambia respecto al modo guiado
 
-El examen final no consiste en que Claude programe delante del docente. Se valora que el estudiante pueda explicar por qué existe cada artefacto, cómo se generó, qué problemas detectó, qué verificaciones se ejecutaron y qué aprobó una persona. Un equipo que ha obtenido un MVP vistoso pero no sabe mostrar su requisito y test correspondiente no ha demostrado ALM.
+En L03–L09 el alumno dirige cada fase: lanza el metaprompt, revisa el prompt operativo generado, aprueba su ejecución y comprueba sus artefactos. En L10 un **ejecutor local** lee una configuración de pipeline y encadena esas operaciones, haciendo avanzar el proyecto cuando los controles automáticos mínimos se cumplen. El alumno aprueba globalmente el recorrido y revisa el resultado final.
 
-## 2. Demostración guiada por evidencia
+La automatización no sustituye el requisito ni el diseño: utiliza los mismos contratos y la misma descripción de Coworking Norte. Lo único que cambia es quién dispara la siguiente fase. El objetivo didáctico es comparar **control humano fase a fase** frente a **orquestación con gates técnicos automáticos**.
 
-El equipo parte de una necesidad de negocio y muestra RF, criterio de aceptación, prompt operativo, código de la función, ejecución de prueba, MR e informe CI. Debe poder reproducir una reserva válida y una colisión, y explicar cómo la petición de máximo cuatro horas modificó las fases afectadas. No se exige introducir nuevas funcionalidades durante el cierre.
+## 2. Tres pipelines, dos propósitos
 
-## 3. Métricas con honestidad
+- **ALM manual:** ejecución guiada de contratos de ingeniería generativa. Existe en la rama `practica/manual`.
+- **ALM automático:** ejecutor `scripts/alm_auto.py` y configuración `alm/pipeline_auto.json` creada con Claude. Existe en la rama `practica/automatica`. Se ejecuta en el ordenador del alumno.
+- **GitLab CI/CD:** archivo `.gitlab-ci.yml` generado en la fase DevOps; GitLab Runner realiza pruebas y empaquetado cuando recibe el push. No genera los requisitos ni sustituye al pipeline ALM.
 
-Se puede medir número de RF, CA, pruebas ejecutadas, MRs revisadas, pipelines verificados y defectos encontrados. **No** se debe inferir «porcentaje de código escrito por Claude» sin un procedimiento de medición explícito, ni afirmar ahorros económicos o de tiempo sin línea base comparable. Una demostración en clase es un ejercicio de aprendizaje, no un estudio de productividad empresarial.
+Un job remoto de GitLab que invocase Claude necesitaría una integración con API facturada; el taller no la necesita y no presupone ese gasto.
 
-## 4. Responsabilidades profesionales
+## 3. Diseño del pipeline automático
 
-La IA prepara propuestas, genera código y explica errores. El desarrollador conserva responsabilidad sobre requisitos, seguridad, calidad y aprobación. GitLab permite registrar decisiones y ejecuciones, pero no certifica automáticamente que la solución de negocio sea buena. La defensa final debe presentar también limitaciones: autenticación deliberadamente ausente, escala/concurrencia no probada y ausencia de despliegue productivo.
+En lugar de pedir «genera todo el software» mediante una única frase, crearemos un **pipeline declarativo**. Cada una de sus seis etapas identifica el contrato, el metaprompt, la ruta del prompt operativo generado y las salidas exigidas. El ejecutor reconoce exclusivamente esas rutas, para evitar que una configuración invente comandos arbitrarios o añada funciones fuera de alcance.
 
-## 5. Continuidad con el taller senior
+El ciclo interno de cada etapa es:
 
-El mismo Coworking Manager puede reutilizarse para debatir arquitectura, transacciones y concurrencia, despliegue, secretos, gobernanza de agentes y revisión cruzada. El junior debe salir dominando terminología y capacidad de inspección, no con expectativas de autonomía ilimitada del agente.
+1. Comprobar que existe el contrato y su metaprompt.
+2. Invocar `claude -p` para generar un prompt operativo específico de la fase.
+3. Comprobar que dicho archivo se escribió.
+4. Invocar de nuevo `claude -p` para ejecutar ese prompt.
+5. Validar los archivos resultantes; en testing y evolución ejecutar `pytest`.
+6. Guardar el estado y, si no hay bloqueo, continuar con la siguiente fase.
 
+Es la misma arquitectura de dos generaciones del modo manual, pero el alumno no debe introducir una instrucción en cada etapa. **No equivale a garantizar corrección de negocio**: una verificación automática de rutas y tests no sustituye la revisión final.
 
----
+## 4. Continuidad de los artefactos
 
+El pipeline jamás empieza de otra especificación entre fases. La fase de diseño consume la especificación generada en requisitos. El desarrollo consume esa especificación, el backlog, el diseño y el ADR. Testing consume los requisitos y el código real. DevOps consume código y tests. Evolución incorpora CAM-01 a los documentos y pruebas existentes.
 
-## 6. LABORATORIO GUIADO: FUNDAMENTOS DEL ALM GENERATIVO
+El ejecutor no contiene una solución de coworking: solamente sabe el orden y los contratos de salida. **Claude debe generar** la especificación, diagramas, implementación, pruebas y CI durante la ejecución.
 
-### 6.1 Visión en el ALM generativo
+## 5. Seguridad, cuotas y límites
 
-El ALM (Application Lifecycle Management) generativo redefine el ciclo de desarrollo tradicional. En lugar de depender exclusivamente de escritura manual de código, introduce sistemas de IA que acompañan y automatizan partes del flujo: diseño, implementación, testing, DevOps y mantenimiento.
+La ejecución se hace con la CLI Claude Code oficial y la cuenta autenticada del alumno. El script no almacena credenciales ni hace push/merge/despliegue. Permite exclusivamente lectura y edición de archivos, no concede Bash al agente; las pruebas las ejecuta Python desde el propio orquestador.
 
-En esta fase inicial, el objetivo es entender cómo la IA se integra en el ciclo de vida del software como un acelerador de productividad y calidad.
+El modo automático requiere más invocaciones que una demo abreviada, y Claude Pro puede alcanzar sus límites. Si ocurre, el sistema se detiene con estado de fases completadas y permite `--resume` después de revisar el bloqueo; el alumno no debe fingir que completó todas las fases.
 
----
+El script bloquea `ANTHROPIC_API_KEY`, porque esa variable podría facturar consumo API en lugar de utilizar la suscripción. No uses `--bare`: la documentación oficial indica que ese modo no usa la autenticación por suscripción.
 
-### 6.2 Objetivo del laboratorio
+## 6. Gates automáticos y humanos
 
-En este laboratorio aprenderás a:
+En el recorrido manual hay dos aprobaciones por fase. En el automático se solicita una aprobación inicial del plan global y del alcance. Los gates automáticos comprueban presencia de archivos, identificadores RF, configuración CI básica y resultados de pytest. Si Claude detecta una pregunta de negocio no resuelta, debe generar un bloqueo y detenerse. Al final debe existir una revisión humana de la rama antes de subirla y abrir una MR.
 
-- Identificar las fases del ALM generativo
-- Comprender cómo la IA impacta en cada fase
-- Diferenciar asistentes, agentes y plataformas
-- Construir un flujo conceptual completo de desarrollo con IA
+## 7. Qué se comparará
 
----
+Calidad de la especificación, coherencia entre diseño y código, pruebas y su cobertura de criterios, número de intervenciones humanas, causas de bloqueo, tiempo observado y cantidad de invocaciones. No se comparará «cuántas líneas escribió Claude» ni se atribuirá fiabilidad a un pipeline solo porque terminó.
 
-### 6.3 Identificar el ciclo ALM tradicional
-
-Antes de introducir IA, define el ciclo clásico:
-
-- Planificación
-- Análisis
-- Diseño
-- Desarrollo
-- Testing
-- Despliegue
-- Mantenimiento
-
-**Ejercicio:**
-Escribe una breve descripción de cada fase aplicada a una aplicación simple (por ejemplo: gestor de tareas).
-
----
-
-### 6.4 Introducción del ALM generativo
-
-Ahora reescribe el mismo ciclo, pero incorporando IA.
-
-**Prompt sugerido:**
-
-> “Reescribe el ciclo ALM tradicional incorporando herramientas de IA en cada fase y explica su impacto”
-
-Observa cómo cambian los roles:
-
-- El desarrollador deja de ser ejecutor puro
-- La IA actúa como copiloto o agente
-- El flujo se vuelve continuo y automatizado
-
----
-
-### 6.5 Diferencia entre asistentes y agentes
-
-Define claramente:
-
-- Asistentes: herramientas que sugieren código (Copilot, Codeium)
-- Agentes: sistemas que ejecutan tareas completas (Cursor Agent, Copilot Workspace)
-
-**Ejercicio:**
-Clasifica estos ejemplos:
-
-- Autocompletado de función
-- Generación de PR automática
-- Explicación de código
-- Implementación multiarchivo
-
----
-
-### 6.6 Flujo completo de ALM generativo
-
-Construye un flujo conceptual:
-
-1. Idea o requerimiento
-2. Especificación generada con IA
-3. Implementación asistida o autónoma
-4. Testing automático
-5. Revisión con IA
-6. Despliegue automatizado
-7. Mantenimiento continuo
-
-**Prompt sugerido:**
-
-> “Diseña un flujo completo de desarrollo de software usando IA en todas las fases del ALM”
-
----
-
-### 6.7 Reflexión técnica
-
-Responde:
-
-- ¿Qué fases se automatizan completamente?
-- ¿Cuáles requieren supervisión humana?
-- ¿Qué riesgos introduce la automatización?
-
----
-
-### 6.8 Conexión con el ALM generativo
-
-Este laboratorio introduce la base conceptual sobre la que se construyen:
-
-- Asistentes de IDE
-- Agentes autónomos
-- Testing automatizado
-- DevOps generativo
-- Gobernanza de IA
-
----
-
-### 6.9 Tabla conceptual
-
-| Elemento | ALM tradicional | ALM generativo |
-|----------|----------------|----------------|
-| Desarrollo | Manual | Asistido por IA |
-| Testing | Manual | Automatizado + IA |
-| DevOps | Scripts | Generación IA |
-| Mantenimiento | Reactivo | Continuo |
-| Rol dev | Programador | Supervisor de IA |
-
----
-
-### 6.10 Reflexión final
-
-El ALM generativo no elimina al desarrollador, pero transforma su rol: de escribir cada línea de código a diseñar sistemas que generan, validan y mantienen software.
-
-El valor se desplaza desde la implementación hacia la supervisión, la arquitectura y la definición de intención.
-
-
----
-
-
-## 7. PROYECTO INTEGRADOR: CIERRE, RETROSPECTIVA Y REFLEXIÓN FINAL
-
-### 7.1 Herramientas cubiertas
-Genérico (cualquier IA)
-
-### 7.2 Laboratorio generado por IA
-Instrucción: El formador debe copiar este meta-prompt y pegarlo en ChatGPT, Claude o Gemini. La IA generará un laboratorio guiado completo listo para entregar al alumno.
-
-### 7.3 Actúa como un arquitecto de ALM Generativo
-Estás diseñando el ejercicio de cierre del curso, donde los alumnos reflexionan sobre todo el ciclo de vida que han ejecutado, consolidan sus aprendizajes y generan un dashboard de calidad del proyecto.
-
-### 7.4 Objetivo del ejercicio
-Que los alumnos realicen una retrospectiva completa del proyecto integrador y del curso, generen un dashboard de calidad con métricas, documenten sus aprendizajes y establezcan un plan de acción para aplicar el ALM generativo en su trabajo diario.
-
-### 7.5 Escenario
-Los alumnos han completado todas las fases del proyecto integrador: análisis, diseño, implementación, testing, documentación y DevOps. Es el momento de cerrar y reflexionar.
-
-### 7.6 Estructura que debes generar
-
-#### 7.6.1 Introducción
-Explica que la reflexión es parte del aprendizaje. El ALM generativo no es solo un conjunto de herramientas, sino un cambio de mentalidad sobre cómo se desarrolla software.
-
-#### 7.6.2 Generar retrospectiva del proyecto
-Proporciona un prompt para que el alumno pida a la IA que le ayude a estructurar una retrospectiva con secciones: qué funcionó bien, qué fue difícil, qué aprendió, qué haría diferente.
-
-#### 7.6.3 Generar dashboard de calidad
-Proporciona un prompt para generar un dashboard con métricas del proyecto: cobertura de tests, número de tests, endpoints implementados, ADRs documentados, diagramas generados, porcentaje de código generado por IA vs manual.
-
-#### 7.6.4 Generar plan de acción post-curso
-Proporciona un prompt para que el alumno pida a la IA que le ayude a crear un plan para aplicar lo aprendido en su trabajo diario: qué prácticas incorporará, qué herramientas configurará, qué compartirá con su equipo.
-
-#### 7.6.5 Generar resumen ejecutivo para stakeholders
-Proporciona un prompt para generar un resumen de una página sobre el valor del ALM generativo, con métricas cuantitativas y recomendaciones para adoptarlo en la organización.
-
-#### 7.6.6 Reflexión personal guiada
-Incluye preguntas de reflexión para el alumno: ¿cómo ha cambiado tu percepción del desarrollo con IA? ¿Qué fase del ALM generativo te resultó más valiosa? ¿Qué reservas tienes? ¿Cómo crees que evolucionará tu rol como desarrollador?
-
-#### 7.6.7 Producto final
-Indica al alumno que debe entregar: retrospectiva, dashboard de calidad, plan de acción y resumen ejecutivo.
-
-#### 7.6.8 Cierre
-Incluye un mensaje de cierre que felicite al alumno por completar el curso y le anime a seguir explorando el ALM generativo en su carrera profesional.
+**Conclusión:** la automatización convierte una secuencia dirigida manualmente en un sistema reproducible de instrucciones y gates. El desarrollador pasa de conducir cada paso a diseñar y auditar el proceso, sin delegar la responsabilidad del software.
