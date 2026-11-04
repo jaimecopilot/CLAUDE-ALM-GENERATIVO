@@ -100,13 +100,34 @@ Verifica que \`git status\` está limpio antes de comenzar L03. No realices todo
 
 ## 6. Configuración GitLab recomendada
 
-26. Abre el proyecto en GitLab y confirma **Project information → Members** (la ruta puede variar). El alumno es propietario de su proyecto personal; podrá invitar al formador con permiso mínimo de revisión si la actividad lo exige. No conceder permisos de administración ni compartir credenciales personales.
+26. Comprueba que el proyecto sigue siendo **Private**. En el apartado 7 aprenderás a invitar al formador como miembro **Developer**, sin hacerlo público.
 27. Comprueba que **Issues** y **Merge Requests** están habilitados. Se utilizarán en L03 y L05.
 28. Comprueba la protección de la rama \`main\` en **Settings → Repository / Branch rules** según la versión. No se hará merge sin revisión humana.
 29. En **Settings → CI/CD → Runners** verifica que hay runners disponibles. GitLab.com suele ofrecer runners alojados; si tu cuenta no puede utilizarlos, documenta el bloqueo y avisa al formador.
-30. No es necesario añadir variables de Anthropic para el CI de pruebas del L07. En L10, si existe un presupuesto API aprobado, se configurará ANTHROPIC_API_KEY como variable enmascarada para ejecutar Claude desde GitLab; no la incluyas en archivos ni prompts.
+30. No añadas claves API de Anthropic a tu GitLab para este taller. En L10 se estudiará dónde configurar `ANTHROPIC_API_KEY`, pero la ejecución automática la realizará **únicamente el formador** en su GitLab. Recibirás los resultados mediante Git, sin consumir API.
 
-## 7. Verificación de finalización
+## 7. Invitar al formador como Developer (obligatorio)
+
+Durante el taller, el formador hará una única ejecución del pipeline ALM generativo en su propio GitLab. Después distribuirá una copia de los artefactos a tu repositorio privado. **Para ello no necesitas hacerlo público, ni compartir contraseñas o claves API**: debes concederle acceso **Developer**.
+
+**Dato previo:** el formador facilitará en clase su **nombre de usuario exacto de GitLab**. En este manual aparece el marcador \`USUARIO_GITLAB_FORMADOR\`; no lo utilices literalmente.
+
+31. Inicia sesión en GitLab y abre **tu proyecto** \`https://gitlab.com/TU_USUARIO/coworking-alm-junior\`.
+32. En el menú lateral izquierdo entra en **Manage → Members** (Gestionar → Miembros).
+33. Haz clic en **Invite members** (Invitar miembros).
+34. En el campo de búsqueda introduce el nombre de usuario de GitLab del formador y selecciona su cuenta. Si tiene una cuenta GitLab existente, es preferible invitarlo por usuario y no por correo.
+35. En **Select a role**, selecciona exactamente **Developer**. Este rol puede escribir en ramas no protegidas y abrir Merge Requests, pero no administra el proyecto. No selecciones Guest, Reporter, Maintainer ni Owner.
+36. Si se ofrece **Access expiration date**, puedes establecer una fecha posterior a la revisión y distribución de resultados. No pongas una fecha que venza durante el taller.
+37. Pulsa **Invite**. Vuelve a **Manage → Members** y comprueba que aparece el usuario correcto con el rol **Developer**. Una invitación enviada por correo puede quedar pendiente de aceptación.
+38. Copia la URL HTTPS de la página principal de **tu proyecto** (por ejemplo, \`https://gitlab.com/TU_USUARIO/coworking-alm-junior\`). Envía al formador mediante el canal del curso **esa URL y tu usuario de GitLab**. No envíes contraseñas, claves API, tokens de acceso ni códigos de seguridad.
+39. Cuando el formador distribuya la salida de su pipeline, verifica en **Code → Branches** que existe \`referencia/alm-automatico\`. Esa rama contendrá el resultado de **la ejecución del formador**, y no debe sobrescribir \`practica/manual\` ni \`main\`.
+40. Después de que el formador confirme que la entrega está finalizada, puedes retirar su acceso en **Manage → Members → Remove member**. Los archivos ya recibidos permanecerán en tu repositorio.
+
+**Si el formador no puede escribir:** comprueba el usuario, el rol y que intenta subir una **rama no protegida**. No cambies la visibilidad a Public, no le concedas Maintainer y no desprotejas \`main\` para solucionar un problema de permisos.
+
+Documentación oficial: https://docs.gitlab.com/user/project/members/ y https://docs.gitlab.com/user/permissions/
+
+## 8. Verificación de finalización
 
 - [ ] Puedo entrar a mi cuenta GitLab.
 - [ ] Mi proyecto personal existe y está configurado como **Private**.
@@ -115,5 +136,9 @@ Verifica que \`git status\` está limpio antes de comenzar L03. No realices todo
 - [ ] Existe la rama \`practica/manual\`.
 - [ ] Puedo ejecutar \`claude auth status\` y veo una sesión autorizada.
 - [ ] He comprobado los runners o documentado la limitación.
+- [ ] He invitado al formador con el rol **Developer**.
+- [ ] He confirmado que mi proyecto continúa siendo **Private**.
+- [ ] He enviado al formador únicamente mi usuario GitLab y la URL del proyecto.
+- [ ] Sé que recibiré los resultados automáticos en `referencia/alm-automatico`.
 
 **Resultado L02:** una plataforma de trabajo personal preparada para crear artefactos ALM con Claude. Ninguna especificación de requisitos se considera todavía generada.

@@ -15,7 +15,7 @@ La guía técnica completa está en **[GUIA_GITLAB_PASO_A_PASO.md](./GUIA_GITLAB
 | 15–35 min | Login o registro, verificación y proyecto privado | Proyecto \`coworking-alm-junior\` |
 | 35–60 min | Git y Claude Code; clonar e importar la plantilla | Archivos en el directorio GitLab |
 | 60–75 min | Primer commit, tag \`base-alm\`, rama \`practica/manual\` | Historial Git visible |
-| 75–85 min | Revisar issues, MR, runners y permisos | Checklist de GitLab |
+| 75–85 min | Revisar issues, MR y runners e invitar al formador con rol **Developer** | Acceso confirmado |
 | 85–90 min | Interpretar contrato 01 y registrar gate | Entorno aprobado o bloqueo |
 
 ## Qué tiene que existir al acabar
@@ -26,7 +26,7 @@ El tag \`base-alm\` apunta a la plantilla inicial. \`practica/manual\` inicia la
 
 ## Interpretación de la metodología
 
-Lee el contrato \`alm/contratos/01-requisitos.md\` y el metaprompt \`alm/metaprompts/01-requisitos.md\`. Todavía no los ejecutes para generar requisitos. En L03 Claude generará primero el prompt operativo y después la especificación, partiendo del mismo caso de negocio. L10 reproducirá el ciclo sin aprobaciones intermedias, usando un ejecutor automatizado.
+Lee el contrato \`alm/contratos/01-requisitos.md\` y el metaprompt \`alm/metaprompts/01-requisitos.md\`. Todavía no los ejecutes para generar requisitos. En L03 Claude generará primero el prompt operativo y después la especificación, partiendo del mismo caso de negocio. En L10 estudiarás el pipeline automático de GitLab, que **solo ejecutará el formador**. Recibirás su resultado como referencia en otra rama de tu propio proyecto.
 
 ## Gate L02
-El alumno demuestra el URL de GitLab y la rama; confirma que el tag base precede a cualquier generación; el formador revisa que no se haya subido toda la documentación docente a GitLab. Si una cuenta o runner no está disponible, registrar el bloqueo: nunca declararlo configurado por suposición.
+El alumno demuestra el URL de GitLab y la rama; confirma que el tag base precede a cualquier generación; el formador revisa que no se haya subido toda la documentación docente a GitLab. El alumno debe **invitarlo con rol Developer** y enviarle la URL de su proyecto, siguiendo el [apartado 7 de la guía](./GUIA_GITLAB_PASO_A_PASO.md#7-invitar-al-formador-como-developer-obligatorio). Si una cuenta o runner no está disponible, registrar el bloqueo: nunca declararlo configurado por suposición.
