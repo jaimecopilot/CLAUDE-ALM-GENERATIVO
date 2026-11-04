@@ -14,9 +14,9 @@ Esta guía se realiza **individualmente**. No hay un GitLab facilitado por el pr
 ## 2. Crear el proyecto
 
 7. Selecciona **Create new → New project/repository → Create blank project** (los textos exactos pueden variar según idioma/versión).
-8. Introduce el nombre \`coworking-alm-junior\`.
-9. Comprueba el **namespace / Project URL**: debe ser **tu propio usuario**, no un grupo compartido del formador. El resultado previsto es \`https://gitlab.com/TU_USUARIO/coworking-alm-junior\`.
-10. Utiliza el slug \`coworking-alm-junior\`, si está disponible. Si ya tienes un proyecto con ese nombre, añade un sufijo corto, pero conserva el mismo caso didáctico.
+8. Introduce el nombre `coworking-alm-junior`.
+9. Comprueba el **namespace / Project URL**: debe ser **tu propio usuario**, no un grupo compartido del formador. El resultado previsto es `https://gitlab.com/TU_USUARIO/coworking-alm-junior`.
+10. Utiliza el slug `coworking-alm-junior`, si está disponible. Si ya tienes un proyecto con ese nombre, añade un sufijo corto, pero conserva el mismo caso didáctico.
 11. **Visibility: Private.** El alumno puede conceder acceso de revisión al formador más adelante, sin publicar el proyecto.
 12. **Initialize repository with a README: desmarcado**, porque importaremos una plantilla de archivos ya preparada como primer commit.
 13. No actives un despliegue cloud, Auto DevOps ni un proyecto de demostración diferente. Selecciona **Create project**.
@@ -43,7 +43,7 @@ Sustituye esos ejemplos por tu identidad real. No copies claves de acceso ni con
 claude auth login
 claude auth status
 ~~~
-Utiliza un plan compatible con Claude Code. Si la empresa gestiona la autenticación, sigue sus instrucciones. Una variable \`ANTHROPIC_API_KEY\` activada podría cambiar la facturación a API: para los laboratorios guiados no se necesita. L10 utiliza una API autorizada dentro de GitLab CI/CD, facturada por separado.
+Utiliza un plan compatible con Claude Code. Si la empresa gestiona la autenticación, sigue sus instrucciones. Una variable `ANTHROPIC_API_KEY` activada podría cambiar la facturación a API: para los laboratorios guiados no se necesita. L10 utiliza una API autorizada dentro de GitLab CI/CD, facturada por separado.
 
 ## 4. Importar la plantilla GitLab
 
@@ -57,9 +57,9 @@ Si ya lo tienes, utiliza su carpeta local y omite esta operación.
 ~~~powershell
 git clone https://gitlab.com/TU_USUARIO/coworking-alm-junior.git
 ~~~
-Sustituye \`TU_USUARIO\` por el tuyo. Es normal que Git avise que el repositorio está vacío. Si la autenticación Git solicita credenciales, utiliza el procedimiento autorizado por GitLab, Git Credential Manager o SSH; no pegues tokens en Claude.
+Sustituye `TU_USUARIO` por el tuyo. Es normal que Git avise que el repositorio está vacío. Si la autenticación Git solicita credenciales, utiliza el procedimiento autorizado por GitLab, Git Credential Manager o SSH; no pegues tokens en Claude.
 
-21. Desde la carpeta **padre de ambos clones** en PowerShell, copia exclusivamente los archivos de \`03_GITLAB_PLANTILLA\` al repositorio GitLab. Esto incluye archivos ocultos como \`.gitignore\` y \`.gitlab/\`:
+21. Desde la carpeta **padre de ambos clones** en PowerShell, copia exclusivamente los archivos de `03_GITLAB_PLANTILLA` al repositorio GitLab. Esto incluye archivos ocultos como `.gitignore` y `.gitlab/`:
 ~~~powershell
 Get-ChildItem -LiteralPath ".\CLAUDE-ALM-GENERATIVO\03_GITLAB_PLANTILLA" -Force |
   Copy-Item -Destination ".\coworking-alm-junior" -Recurse -Force
@@ -72,7 +72,7 @@ cd .\coworking-alm-junior
 Get-ChildItem -Force
 git status
 ~~~
-Deben existir \`CLAUDE.md\`, \`alm/maestro.md\`, \`alm/contratos/\`, \`alm/metaprompts/\`, \`scripts/alm_auto.py\` y la plantilla de casos de negocio.
+Deben existir `CLAUDE.md`, `alm/maestro.md`, `alm/contratos/`, `alm/metaprompts/`, `scripts/alm_auto.py` y la plantilla de casos de negocio.
 
 ## 5. Primer commit, rama y versión base
 
@@ -96,13 +96,13 @@ Este tag permitirá que L10 cree una segunda rama desde exactamente el mismo pun
 git switch -c practica/manual
 git push -u origin practica/manual
 ~~~
-Verifica que \`git status\` está limpio antes de comenzar L03. No realices todo el curso directamente sobre main.
+Verifica que `git status` está limpio antes de comenzar L03. No realices todo el curso directamente sobre main.
 
 ## 6. Configuración GitLab recomendada
 
 26. Comprueba que el proyecto sigue siendo **Private**. En el apartado 7 aprenderás a invitar al formador como miembro **Developer**, sin hacerlo público.
 27. Comprueba que **Issues** y **Merge Requests** están habilitados. Se utilizarán en L03 y L05.
-28. Comprueba la protección de la rama \`main\` en **Settings → Repository / Branch rules** según la versión. No se hará merge sin revisión humana.
+28. Comprueba la protección de la rama `main` en **Settings → Repository / Branch rules** según la versión. No se hará merge sin revisión humana.
 29. En **Settings → CI/CD → Runners** verifica que hay runners disponibles. GitLab.com suele ofrecer runners alojados; si tu cuenta no puede utilizarlos, documenta el bloqueo y avisa al formador.
 30. No añadas claves API de Anthropic a tu GitLab para este taller. En L10 se estudiará dónde configurar `ANTHROPIC_API_KEY`, pero la ejecución automática la realizará **únicamente el formador** en su GitLab. Recibirás los resultados mediante Git, sin consumir API.
 
@@ -110,20 +110,20 @@ Verifica que \`git status\` está limpio antes de comenzar L03. No realices todo
 
 Durante el taller, el formador hará una única ejecución del pipeline ALM generativo en su propio GitLab. Después distribuirá una copia de los artefactos a tu repositorio privado. **Para ello no necesitas hacerlo público, ni compartir contraseñas o claves API**: debes concederle acceso **Developer**.
 
-**Dato previo:** el formador facilitará en clase su **nombre de usuario exacto de GitLab**. En este manual aparece el marcador \`USUARIO_GITLAB_FORMADOR\`; no lo utilices literalmente.
+**Dato previo:** el formador facilitará en clase su **nombre de usuario exacto de GitLab**. En este manual aparece el marcador `USUARIO_GITLAB_FORMADOR`; no lo utilices literalmente.
 
-31. Inicia sesión en GitLab y abre **tu proyecto** \`https://gitlab.com/TU_USUARIO/coworking-alm-junior\`.
+31. Inicia sesión en GitLab y abre **tu proyecto** `https://gitlab.com/TU_USUARIO/coworking-alm-junior`.
 32. En el menú lateral izquierdo entra en **Manage → Members** (Gestionar → Miembros).
 33. Haz clic en **Invite members** (Invitar miembros).
 34. En el campo de búsqueda introduce el nombre de usuario de GitLab del formador y selecciona su cuenta. Si tiene una cuenta GitLab existente, es preferible invitarlo por usuario y no por correo.
 35. En **Select a role**, selecciona exactamente **Developer**. Este rol puede escribir en ramas no protegidas y abrir Merge Requests, pero no administra el proyecto. No selecciones Guest, Reporter, Maintainer ni Owner.
 36. Si se ofrece **Access expiration date**, puedes establecer una fecha posterior a la revisión y distribución de resultados. No pongas una fecha que venza durante el taller.
 37. Pulsa **Invite**. Vuelve a **Manage → Members** y comprueba que aparece el usuario correcto con el rol **Developer**. Una invitación enviada por correo puede quedar pendiente de aceptación.
-38. Copia la URL HTTPS de la página principal de **tu proyecto** (por ejemplo, \`https://gitlab.com/TU_USUARIO/coworking-alm-junior\`). Envía al formador mediante el canal del curso **esa URL y tu usuario de GitLab**. No envíes contraseñas, claves API, tokens de acceso ni códigos de seguridad.
-39. Cuando el formador distribuya la salida de su pipeline, verifica en **Code → Branches** que existe \`referencia/alm-automatico\`. Esa rama contendrá el resultado de **la ejecución del formador**, y no debe sobrescribir \`practica/manual\` ni \`main\`.
+38. Copia la URL HTTPS de la página principal de **tu proyecto** (por ejemplo, `https://gitlab.com/TU_USUARIO/coworking-alm-junior`). Envía al formador mediante el canal del curso **esa URL y tu usuario de GitLab**. No envíes contraseñas, claves API, tokens de acceso ni códigos de seguridad.
+39. Cuando el formador distribuya la salida de su pipeline, verifica en **Code → Branches** que existe `referencia/alm-automatico`. Esa rama contendrá el resultado de **la ejecución del formador**, y no debe sobrescribir `practica/manual` ni `main`.
 40. Después de que el formador confirme que la entrega está finalizada, puedes retirar su acceso en **Manage → Members → Remove member**. Los archivos ya recibidos permanecerán en tu repositorio.
 
-**Si el formador no puede escribir:** comprueba el usuario, el rol y que intenta subir una **rama no protegida**. No cambies la visibilidad a Public, no le concedas Maintainer y no desprotejas \`main\` para solucionar un problema de permisos.
+**Si el formador no puede escribir:** comprueba el usuario, el rol y que intenta subir una **rama no protegida**. No cambies la visibilidad a Public, no le concedas Maintainer y no desprotejas `main` para solucionar un problema de permisos.
 
 Documentación oficial: https://docs.gitlab.com/user/project/members/ y https://docs.gitlab.com/user/permissions/
 
@@ -132,9 +132,9 @@ Documentación oficial: https://docs.gitlab.com/user/project/members/ y https://
 - [ ] Puedo entrar a mi cuenta GitLab.
 - [ ] Mi proyecto personal existe y está configurado como **Private**.
 - [ ] Tiene la plantilla, no la solución preimplementada.
-- [ ] Tengo un commit inicial y el tag \`base-alm\`.
-- [ ] Existe la rama \`practica/manual\`.
-- [ ] Puedo ejecutar \`claude auth status\` y veo una sesión autorizada.
+- [ ] Tengo un commit inicial y el tag `base-alm`.
+- [ ] Existe la rama `practica/manual`.
+- [ ] Puedo ejecutar `claude auth status` y veo una sesión autorizada.
 - [ ] He comprobado los runners o documentado la limitación.
 - [ ] He invitado al formador con el rol **Developer**.
 - [ ] He confirmado que mi proyecto continúa siendo **Private**.
