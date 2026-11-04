@@ -13,12 +13,12 @@ Este directorio es el **manual técnico completo del alumno**. No hay que acudir
 | [L07](./L07/TEORIA.md) | GitLab CI/CD, runners, pipelines, MRs, release | Tests locales |
 | [L08](./L08/TEORIA.md) | Mantenimiento, regresión y propagación de cambios | Requisito de máximo 4 h |
 | [L09](./L09/TEORIA.md) | Trazabilidad y documentación viva | Repositorio completo |
-| [L10](./L10/TEORIA.md) | **Pipeline ALM automático local**, gates, logs, recuperación y comparación | Los seis contratos, metaprompts y brief |
+| [L10](./L10/TEORIA.md) | **Pipeline ALM automático en GitLab**, jobs, artifacts, logs, presupuestos y comparación | Los seis contratos, metaprompts y brief |
 | [L11](./L11/TEORIA.md) | Cierre, evidencia, retrospectiva y responsabilidad | Resultado guiado y automático |
 
 ## Dos ejecuciones complementarias
 
-**L01–L09 (guiada):** Claude trabaja fase por fase con dos aprobaciones por contrato. **L10 (automática):** cada alumno genera una configuración de pipeline para ejecutar los mismos contratos en una rama limpia, a partir de la misma necesidad. **L11:** compara ambas ejecuciones y defiende lo aprendido. No mezclar artefactos de dos ramas para simular continuidad.
+**L01–L09 (guiada):** Claude trabaja fase por fase con dos aprobaciones por contrato. **L10 (automática):** Claude genera el archivo GitLab CI que ejecutará los mismos contratos en una rama limpia mediante una API autorizada, a partir de la misma necesidad. **L11:** compara ambas ejecuciones y defiende lo aprendido. No mezclar artefactos de dos ramas para simular continuidad.
 
 ## Orden de trabajo por laboratorio
 

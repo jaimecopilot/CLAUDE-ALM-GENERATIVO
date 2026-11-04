@@ -16,8 +16,8 @@
 
 **Gestión de cuota:** una arquitectura, una ejecución por fase y correcciones concretas. Guardar prompts y resultados; no enviar toda la biblioteca GitHub a Claude en cada paso.
 
-**GitLab CI/CD** será un artefacto generado en la fase 05, no el motor que ejecuta este protocolo. No hay llamadas API pagadas a Claude desde jobs GitLab.
+**GitLab CI/CD** será un artefacto generado en la fase 05, no el motor que ejecuta este protocolo. En L10 sí hay llamadas API de Claude desde jobs GitLab, facturadas separadamente y sujetas a autorización de presupuesto.
 
 ## Perfil de automatización L10 (separado del procedimiento manual)
 
-En modo automático local, el alumno **aprueba una sola vez el plan global y el alcance**, en una rama aislada que parte de la plantilla inicial. Un ejecutor realiza secuencialmente los dos pasos de cada contrato (metaprompt → prompt operativo → ejecución), inspecciona salidas y ejecuta pruebas determinadas. Si falla una verificación, la ejecución se detiene; nunca se autoriza automáticamente un merge. Esta regla solo se aplica a L10; en L03–L09 permanecen las dos aprobaciones por fase.
+En modo automático **GitLab CI**, el alumno **aprueba una sola vez el YAML y el presupuesto**, en una rama aislada que parte de la plantilla inicial. Los jobs GitLab ejecutan secuencialmente los dos pasos de cada contrato (metaprompt → prompt operativo → ejecución), inspecciona salidas y ejecuta pruebas determinadas. Si falla una verificación, la ejecución se detiene; nunca se autoriza automáticamente un merge. Esta regla solo se aplica a L10: GitLab Runner invoca Claude mediante API autorizada, no mediante sesión Pro. En L03–L09 permanecen las dos aprobaciones por fase.

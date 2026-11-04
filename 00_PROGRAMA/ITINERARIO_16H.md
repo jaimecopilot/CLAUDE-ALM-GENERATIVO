@@ -1,7 +1,7 @@
 # Programa oficial — Taller junior de ALM generativo (16 horas)
 
 ## Dos modalidades de ejecución sobre el mismo caso
-**Modo A (L01-L09):** los alumnos recorren el ALM fase a fase con Claude Code, revisan cada prompt y validan salidas. **Modo B (L10):** crean la configuración de un **pipeline ALM automático local**; el ejecutor realiza la secuencia con los mismos metaprompts y contratos, guardando estado, logs y bloqueos. **L11:** evalúa resultados de ambas modalidades.
+**Modo A (L01-L09):** los alumnos recorren el ALM fase a fase con Claude Code, revisan cada prompt y validan salidas. **Modo B (L10):** crean la configuración de un **pipeline ALM automático **ejecutado por GitLab****; el ejecutor realiza la secuencia con los mismos metaprompts y contratos, guardando estado, logs y bloqueos. **L11:** evalúa resultados de ambas modalidades.
 
 El caso no cambia: Coworking Norte, con listado de salas, creación y cancelación de reservas y prevención de solapamientos. En evolución se incorpora el máximo de cuatro horas.
 
@@ -33,7 +33,7 @@ Las pausas no forman parte de las horas lectivas.
 Las fases NO usan nuevas especificaciones inconexas. Cada contrato declara entradas generadas y aprobadas en las anteriores. Desarrollo utiliza requisitos **y** diseño; testing utiliza requisitos **y** código; CI utiliza código **y** tests; evolución reutiliza todo lo anterior. El pipeline automático parte del mismo brief y aplica exactamente esos contratos en una rama separada.
 
 ## Límite de coste
-Modo A y B se plantean con Claude Code en el ordenador del alumno, utilizando su propia autenticación. La modalidad B realiza más invocaciones y consume cuota; Pro tiene límites. La integración remota `Claude Code dentro de GitLab CI` utiliza API facturada y no está incluida. No se configura `ANTHROPIC_API_KEY` en las prácticas locales.
+El modo A utiliza Claude Code con la cuenta del alumno. El modo B requiere, además, acceso a la API de Anthropic facturada por tokens y los minutos de runner que correspondan. La modalidad B realiza más invocaciones y consume cuota; Pro tiene límites. El presupuesto de API para L10 debe fijarse por separado; no está incluido en el coste de Claude Pro. No se configura `ANTHROPIC_API_KEY` en las prácticas locales.
 
 ## Criterios de evaluación
 Requisitos 20%, MVP 25%, pruebas y CI 25%, GitLab 15%, explicación crítica 15%. El L11 exige contrastar resultados y evidencias de ambos modos, sin afirmar que el automático pasó si sus gates fallaron.

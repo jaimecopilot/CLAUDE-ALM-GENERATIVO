@@ -43,14 +43,14 @@ Stack de referencia: Python, FastAPI, SQLite, pytest, GitLab CI/CD. Evitamos aut
 ## Dos formas de ejecutar el ALM y un pipeline de CI/CD
 
 - **Modo guiado (L01–L09):** el alumno solicita a Claude cada fase, revisa el prompt operativo y valida la salida.
-- **Modo automático (L10):** un pipeline ALM local encadena los mismos seis contratos y metaprompts, genera prompts operativos y artefactos, ejecuta validaciones y se detiene si falla un gate. Se prepara en una rama limpia del mismo proyecto.
+- **Modo automático (L10):** un pipeline de **GitLab CI/CD** encadena los mismos seis contratos y metaprompts, genera prompts operativos y artefactos, ejecuta validaciones y se detiene si falla un gate. Se prepara en una rama limpia del mismo proyecto y GitLab lo ejecuta en runners.
 - **GitLab CI/CD (L07):** pipeline diferente definido por `.gitlab-ci.yml`, que valida tests y artefactos tras los pushes. No debe confundirse con el pipeline ALM.
 
-En L10 se verá el pipeline ALM **en ejecución local automatizada** usando Claude Code CLI. Para ejecutar IA directamente en runners remotos de GitLab se requeriría una modalidad adicional con API facturada; está fuera del presupuesto de este taller.
+En L10 el alumno genera el YAML con Claude Code y **GitLab ejecuta los metaprompts en sus runners**. La ejecución remota consume API de Anthropic (se factura aparte de Pro) y minutos del runner: debe habilitarse con presupuesto y permisos explícitos. Sin ellos se enseña el diseño pero no se afirma una ejecución completa.
 
 ## Recursos y costes
 
-Claude Code requiere un plan compatible; Claude Free web no equivale a Claude Code. El curso está dimensionado para una cuenta Pro por alumno, con límites de uso. No se prevén llamadas de API pagadas desde CI. Se prevén puntos de recuperación si un alumno alcanza los límites.
+Claude Code requiere un plan compatible; Claude Free web no equivale a Claude Code. El curso está dimensionado para una cuenta Pro por alumno, con límites de uso. Las llamadas de API del L10 son un coste separado que debe autorizarse antes de ejecutar. Se prevén puntos de recuperación si un alumno alcanza los límites.
 
 ## Fase 2
 

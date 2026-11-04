@@ -22,11 +22,11 @@ El **GitLab personal de cada alumno** recibe exclusivamente el contenido de **03
 - Reservar un GitLab Runner accesible para la fase CI/CD y verificar que la instancia admite jobs según sus límites. No prometer CI remoto sin runner.
 - Preparar una solución exclusiva del formador fuera del repositorio que ven los alumnos y una serie de checkpoints marcados como **ayuda docente**.
 - Acordar previamente la convención de datos temporales, no esperar a que la IA improvise una diferente en cada equipo.
-- No usar API de Claude desde un job GitLab: no se ha presupuestado ese consumo.
+- No lanzar los jobs de Claude dentro de GitLab hasta tener presupuestos API delimitados; Pro no cubre ese consumo.
 
 ## 4. Agenda docente y ejecución de los laboratorios
 
-**La jornada tiene dos experiencias deliberadamente distintas:** ejecución manual supervisada de L01–L09 y pipeline automático local en L10, con la misma especificación inicial. La automatización no se hace en un runner remoto de GitLab con una suscripción Pro; esa variante exigiría API y otro presupuesto.
+**La jornada tiene dos experiencias deliberadamente distintas:** ejecución manual supervisada de L01–L09 y pipeline ALM automatizado en GitLab en L10, con la misma especificación inicial. La ejecución en runner GitLab requiere API de Anthropic o un proveedor compatible, facturada separadamente de Claude Pro; debe aprobarse un presupuesto antes de ejecutarla.
 
 | Día | Bloque | Duración | Objetivo | Archivo de sesión |
 |---|---|---:|---|---|
