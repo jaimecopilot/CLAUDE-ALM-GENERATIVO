@@ -12,7 +12,7 @@ No confundas un **metaprompt** con un prompt directo: el metaprompt fabrica **al
 
 El **GitHub del curso** contiene para cada laboratorio TEORIA, PRACTICA y METAPROMPT. En TEORIA se desarrollan los conceptos y sus aplicaciones prácticas. PRACTICA incluye tiempos, comandos, pasos, casos de comprobación y criterios. METAPROMPT es el texto que el alumno ejecuta para generar instrucciones operativas, no el resultado final. Todos los archivos están a la vista; los alumnos no dependen del manual abreviado de la versión anterior.
 
-El **GitLab del equipo** recibe exclusivamente el contenido de **03_GITLAB_PLANTILLA/**: CLAUDE.md, alm/contratos/, alm/metaprompts/, estructura vacía de docs y app, plantillas de issue/MR. El código y la especificación de negocio **no** se proporcionan como solución ya escrita.
+El **GitLab personal de cada alumno** recibe exclusivamente el contenido de **03_GITLAB_PLANTILLA/**: CLAUDE.md, alm/contratos/, alm/metaprompts/, estructura vacía de docs y app, plantillas de issue/MR. El código y la especificación de negocio **no** se proporcionan como solución ya escrita.
 
 ## 3. Preparación obligatoria antes de la primera clase
 
@@ -30,16 +30,17 @@ El **GitLab del equipo** recibe exclusivamente el contenido de **03_GITLAB_PLANT
 
 | Día | Bloque | Duración | Objetivo | Archivo de sesión |
 |---|---|---:|---|---|
-| 1 | L01 Vibe Coding | 60 min | Ver supuestos y diferenciar resultado aparente de prueba | [L01](./SESIONES/L01.md) |
-| 1 | L02 Orquestación y entorno | 60 min | Distinguir GitHub, GitLab, Claude y dos generaciones | [L02](./SESIONES/L02.md) |
-| 1 | L03 Requisitos | 90 min | Obtener RF/CA, backlog, issues | [L03](./SESIONES/L03.md) |
-| 1 | L04 Diseño | 60 min | Documento, diagramas, ADR | [L04](./SESIONES/L04.md) |
-| 1 | L05 Desarrollo | 210 min | MVP con revisión de diff y ejecución | [L05](./SESIONES/L05.md) |
-| 2 | L06 Testing | 120 min | CA → tests, reparación y riesgos | [L06](./SESIONES/L06.md) |
-| 2 | L07 CI/CD | 120 min | Pipeline GitLab real y logs | [L07](./SESIONES/L07.md) |
-| 2 | L08 Evolución | 120 min | CAM-01 propaga cambio al ALM | [L08](./SESIONES/L08.md) |
-| 2 | L09 Trazabilidad | 60 min | Matriz y documentación as-built | [L09](./SESIONES/L09.md) |
-| 2 | L10 Cierre | 60 min | Defensa y rúbrica | [L10](./SESIONES/L10.md) |
+| 1 | L01 Vibe Coding | 30 min | Supuestos y validación | [L01](./SESIONES/L01.md) |
+| 1 | L02 GitLab personal y Claude | 90 min | Cuenta, proyecto privado y etiqueta inicial | [L02](./SESIONES/L02.md) |
+| 1 | L03 Requisitos | 90 min | RF, Gherkin, backlog e issues | [L03](./SESIONES/L03.md) |
+| 1 | L04 Diseño | 60 min | Arquitectura, Mermaid, ADR | [L04](./SESIONES/L04.md) |
+| 1 | L05 Desarrollo | 210 min | API, pruebas y revisión | [L05](./SESIONES/L05.md) |
+| 2 | L06 Testing | 75 min | Tests y corrección | [L06](./SESIONES/L06.md) |
+| 2 | L07 GitLab CI/CD | 75 min | Pipeline de pruebas remoto | [L07](./SESIONES/L07.md) |
+| 2 | L08 Evolución | 60 min | Cambio de cuatro horas | [L08](./SESIONES/L08.md) |
+| 2 | L09 Trazabilidad | 30 min | Matriz y documentación | [L09](./SESIONES/L09.md) |
+| 2 | L10 ALM automático | 180 min | Segunda ejecución orquestada | [L10](./SESIONES/L10.md) |
+| 2 | L11 Evaluación | 60 min | Comparación y defensa individual | [L11](./SESIONES/L11.md) |
 
 **Total: 960 minutos lectivos.** Pausas no incluidas.
 

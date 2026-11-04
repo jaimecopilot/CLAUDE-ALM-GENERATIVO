@@ -29,7 +29,7 @@ Se valora la capacidad de explicar, producir, verificar y conectar artefactos de
 | Lab | Qué debe inspeccionar el docente | Cómo comprobarlo |
 |---|---|---|
 | L01 | Supuestos de una petición vaga | Al menos cinco supuestos clasificados y una condición verificable |
-| L02 | Metaprompt y prompt operativo diferenciados | Archivo generado sin ejecutar todavía la fase |
+| L02 | Proyecto GitLab personal | Cuenta, proyecto privado, tag base-alm y rama de trabajo |
 | L03 | RF, CA, backlog e issues | Inspección de Gherkin y enlaces reales de GitLab |
 | L04 | Modelo, diagramas y ADR | Rastrear RF-03 en diagrama; ADR con alternativas y consecuencias |
 | L05 | API y revisiones de código | Ejecutar caso válido, rechazo 409 y cancelación |
@@ -37,7 +37,8 @@ Se valora la capacidad de explicar, producir, verificar y conectar artefactos de
 | L07 | CI/CD | Ver estado y logs del pipeline asociado a MR/commit |
 | L08 | Cambio CAM-01 | 3h59 y 4h permitidas; 4h01 rechazada; regresión |
 | L09 | Trazabilidad | Seguir una fila RF → CA → issue → archivo → test → MR |
-| L10 | Defensa final | Demostración de siete minutos y preguntas sobre responsabilidades |
+| L10 | Pipeline ALM automático | JSON, ejecución completa o bloqueo real y comparación de ramas |
+| L11 | Defensa final | Demostración individual y explicación de los dos modos |
 
 ## Tres tipos de estado que jamás deben confundirse
 
@@ -59,11 +60,11 @@ Cuando un bloqueo sea externo al alumno, separar la evaluación de competencia (
 
 **¿Qué cambia con CAM-01?** Se actualizan criterios de aceptación, validación de duración, tests y documentación afectada. Solo se cambia arquitectura si existe motivo real.
 
-## Acta breve de evaluación (duplicar por equipo)
+## Acta breve de evaluación (duplicar por alumno)
 
 | Campo | Resultado |
 |---|---|
-| Equipo / asistentes | |
+| Alumno / usuario GitLab | |
 | Proyecto GitLab y rama | |
 | Versión o commit de demostración | |
 | RF/CA | /20 |
