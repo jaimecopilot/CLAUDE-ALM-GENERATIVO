@@ -1,0 +1,7 @@
+# Dependencias mínimas de partida. Claude debe revisar y fijar versiones compatibles
+# al preparar una ejecución reproducible del proyecto.
+fastapi
+uvicorn
+pytest
+httpx
+ruff
