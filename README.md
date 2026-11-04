@@ -12,6 +12,7 @@ La IA del curso será Claude Code; los contratos y metaprompts se redactan para 
 
 ## Cómo encontrar los contenidos
 
+- **[Ciclo continuo ALM + CI/CD](./00_PROGRAMA/DIAGRAMAS/CICLO_CONTINUO_ALM_CICD.md)**: diagrama de necesidades, requisitos, diseño, código, revisión, entrega y mantenimiento.
 - **[Itinerario de 16 horas](./00_PROGRAMA/ITINERARIO_16H.md)**: tiempos, nivel junior, objetivos y entregables.
 - **[Guía de alta individual en GitLab](./01_ALUMNOS/L02/GUIA_GITLAB_PASO_A_PASO.md)**: cuenta personal, proyecto privado y permisos.
 - **[Nuevo laboratorio de ALM automático](./01_ALUMNOS/L10/PRACTICA.md)**: segunda ejecución del mismo caso.

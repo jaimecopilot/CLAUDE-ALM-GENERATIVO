@@ -8,6 +8,29 @@ El **pipeline ALM generativo** es el flujo lógico que produce especificaciones,
 
 En L07 queremos que el alumno use un metaprompt para que Claude redacte un prompt operativo y, una vez aprobado, genere un **pipeline real de GitLab** capaz de verificar su proyecto: instalar dependencias, lint con ruff si está disponible, ejecutar pytest y empaquetar un artefacto utilizable. No añadimos producción cloud ni Kubernetes en el nivel junior.
 
+
+### Diagrama: flujo continuo de desarrollo y mantenimiento
+
+Este diagrama sintetiza **el ciclo del proyecto y el circuito de revisión/CI**, no el pipeline automático que invoca los metaprompts en L10. El retorno por fallo CI y la nueva issue tras una incidencia representan dos bucles distintos.
+
+```mermaid
+flowchart TD
+    A["Necesidad de negocio"] --> B["Requisitos y criterios de aceptación"]
+    B --> C["Issue en GitLab"]
+    C --> D["Diseño asistido por Claude"]
+    D --> E["Generación y revisión de código"]
+    E --> F["Tests y validación"]
+    F --> G["Merge Request"]
+    G --> H{"Pipeline CI correcto"}
+    H -->|No| E
+    H -->|Sí| I["Revisión y merge"]
+    I --> J["Entrega / staging"]
+    J --> K["Incidencia o mejora"]
+    K --> C
+```
+
+Si CI falla, el alumno analiza el fallo y prepara una corrección antes de una nueva revisión. Si aparece una nueva necesidad después de la entrega, se reevalúan los requisitos antes de retomar el diseño y el código. Consulta la [versión comentada del diagrama](../../00_PROGRAMA/DIAGRAMAS/CICLO_CONTINUO_ALM_CICD.md).
+
 ## 2. Qué ejecuta GitLab y qué ejecuta Claude
 
 **Claude Code:** puede escribir y modificar YAML, explicar un fallo y proponer una reparación. **GitLab Runner:** ejecuta los jobs en un entorno de CI. Claude no puede declarar «pipeline verde» si nadie ha comprobado el resultado remoto. La evidencia correcta es el enlace de pipeline, su estado, los logs y, cuando se genera, el artefacto.
