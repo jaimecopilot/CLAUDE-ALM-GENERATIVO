@@ -1,6 +1,6 @@
 # L09 · PRÁCTICA: unir todas las piezas del ALM
 
-**60 min:** teoría 15, generar documentación 20, trazar 15, revisión y gate 10.
+**30 min:** teoría 5, generar documentación 10, trazar 10, revisión/gate 5.
 
 ## Paso 1 — recuperar evidencias verdaderas
 Recupera RF/CA de L03, diagrama/ADR de L04, archivos y commit de L05, tests y resultados de L06, CI de L07 y cambio CAM-01 de L08. No uses pantallazos fabricados.

@@ -1,6 +1,6 @@
 # L08 · PRÁCTICA: una petición de negocio reabre el ALM
 
-**120 min:** cambio y análisis 25, prompt operativo 20, modificación 35, pruebas/CI 25, revisión 15.
+**60 min:** cambio/análisis 10, prompt operativo 10, modificación 15, pruebas/CI 15, revisión 10.
 
 ## Petición del cliente
 «A partir de ahora una reserva de sala no puede durar más de cuatro horas consecutivas. Las reservas de exactamente cuatro horas sí están permitidas. El resto de reglas se mantiene».

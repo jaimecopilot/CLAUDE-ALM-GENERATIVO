@@ -1,6 +1,6 @@
 # L06 · PRÁCTICA: tests desde Gherkin y revisión de seguridad
 
-**120 min:** teoría 20, metaprompt y diseño de pruebas 20, tests y ejecución 45, fallos y seguridad 25, gate 10.
+**75 min:** teoría 10, metaprompt y matriz 10, tests/ejecución 30, fallos/seguridad 15, gate 10.
 
 ## Entrada
 Recupera **docs/requisitos/especificacion.md** (criterios CA), el código real de L05 y **alm/contratos/04-testing.md**. Identifica los tests que ya existen y comprueba su resultado antes de modificarlos.

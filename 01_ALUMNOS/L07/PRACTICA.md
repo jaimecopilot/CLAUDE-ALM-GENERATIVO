@@ -1,6 +1,6 @@
 # L07 · PRÁCTICA: generar y ejecutar CI/CD en GitLab
 
-**120 min:** teoría 20, diseño del pipeline 20, generación/revisión 25, ejecución remota 30, reparación y cierre 25.
+**75 min:** teoría 10, diseño 10, generación/revisión 15, ejecución remota 25, reparación/cierre 15.
 
 ## Entradas
 Aplicación de L05, pruebas de L06, **alm/contratos/05-devops.md**, requirements y comandos locales reales. El proyecto ya debe tener una rama y MR abierta o lista para crearse.
