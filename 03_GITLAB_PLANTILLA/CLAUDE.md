@@ -6,6 +6,10 @@ Trabajas sobre un repositorio didáctico de GitLab de Coworking Manager. El obje
 ## Alcance
 Listar salas, reservar por intervalos, rechazar solapamientos y cancelar; una evolución posterior limitará a cuatro horas. Tecnologías: Python, FastAPI, SQLite, pytest. No integrar pagos, usuarios reales, notificaciones, cloud, Kubernetes o microservicios.
 
+## Modo de ejecución
+
+Estas aprobaciones fase a fase corresponden al recorrido guiado L03–L09. En L10 el alumno aprueba el pipeline global antes de lanzarlo; GitLab controla los jobs y la revisión humana final permanece obligatoria. Claude Code en GitLab CI requiere una API autorizada, que **no** se factura dentro de Pro.
+
 ## Metodología obligatoria
 1. Lee el contrato de fase y el contexto mínimo.
 2. Primero genera **alm/prompts-generados/NN-fase.md** según el metaprompt de fase. Detente.

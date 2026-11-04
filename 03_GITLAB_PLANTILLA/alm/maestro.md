@@ -18,6 +18,6 @@
 
 **GitLab CI/CD** será un artefacto generado en la fase 05, no el motor que ejecuta este protocolo. En L10 sí hay llamadas API de Claude desde jobs GitLab, facturadas separadamente y sujetas a autorización de presupuesto.
 
-## Perfil de automatización L10 (separado del procedimiento manual)
+## Modo automático L10 (independiente del modo guiado)
 
-En modo automático **GitLab CI**, el alumno **aprueba una sola vez el YAML y el presupuesto**, en una rama aislada que parte de la plantilla inicial. Los jobs GitLab ejecutan secuencialmente los dos pasos de cada contrato (metaprompt → prompt operativo → ejecución), inspecciona salidas y ejecuta pruebas determinadas. Si falla una verificación, la ejecución se detiene; nunca se autoriza automáticamente un merge. Esta regla solo se aplica a L10: GitLab Runner invoca Claude mediante API autorizada, no mediante sesión Pro. En L03–L09 permanecen las dos aprobaciones por fase.
+En modo automático **GitLab CI**, el alumno **aprueba una sola vez el YAML y el presupuesto**, en una rama aislada que parte de la plantilla inicial. Los jobs GitLab ejecutan secuencialmente los pasos de cada contrato (metaprompt → prompt operativo → ejecución), comprueban las salidas y ejecutan las pruebas definidas. Si falla una verificación, la ejecución se detiene; nunca se autoriza automáticamente un merge. Esta regla solo se aplica a L10: GitLab Runner invoca Claude mediante API autorizada, no mediante sesión Pro. En L03–L09 permanecen las dos aprobaciones por fase.

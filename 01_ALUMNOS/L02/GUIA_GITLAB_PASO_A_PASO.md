@@ -43,7 +43,7 @@ Sustituye esos ejemplos por tu identidad real. No copies claves de acceso ni con
 claude auth login
 claude auth status
 ~~~
-Utiliza un plan compatible con Claude Code. Si la empresa gestiona la autenticación, sigue sus instrucciones. Una variable \`ANTHROPIC_API_KEY\` activada podría cambiar la facturación a API: para este taller no se necesita.
+Utiliza un plan compatible con Claude Code. Si la empresa gestiona la autenticación, sigue sus instrucciones. Una variable \`ANTHROPIC_API_KEY\` activada podría cambiar la facturación a API: para los laboratorios guiados no se necesita. L10 utiliza una API autorizada dentro de GitLab CI/CD, facturada por separado.
 
 ## 4. Importar la plantilla GitLab
 
@@ -104,7 +104,7 @@ Verifica que \`git status\` está limpio antes de comenzar L03. No realices todo
 27. Comprueba que **Issues** y **Merge Requests** están habilitados. Se utilizarán en L03 y L05.
 28. Comprueba la protección de la rama \`main\` en **Settings → Repository / Branch rules** según la versión. No se hará merge sin revisión humana.
 29. En **Settings → CI/CD → Runners** verifica que hay runners disponibles. GitLab.com suele ofrecer runners alojados; si tu cuenta no puede utilizarlos, documenta el bloqueo y avisa al formador.
-30. No es necesario añadir variables de CI con claves de Claude o tokens de Anthropic. El pipeline GitLab del L07 ejecutará pruebas Python, no invocaciones de IA.
+30. No es necesario añadir variables de Anthropic para el CI de pruebas del L07. En L10, si existe un presupuesto API aprobado, se configurará ANTHROPIC_API_KEY como variable enmascarada para ejecutar Claude desde GitLab; no la incluyas en archivos ni prompts.
 
 ## 7. Verificación de finalización
 
