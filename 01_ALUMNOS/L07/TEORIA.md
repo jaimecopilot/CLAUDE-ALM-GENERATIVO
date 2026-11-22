@@ -225,3 +225,7 @@ Esta capacidad de discernimiento reduce el ruido y evita correcciones innecesari
 ### 8.6 Supervisión humana
 
 La supervisión humana sigue siendo necesaria. La IA puede diagnosticar y corregir muchos fallos, pero no todos. Fallos que requieren conocimiento del dominio de negocio, cambios arquitectónicos o decisiones de diseño deben ser revisados por un humano. El **Self-Healing CI es una red de seguridad, no un piloto automático completo.**
+
+## Cómo observar un pipeline desde Claude Code
+
+En L07 el código y `.gitlab-ci.yml` se publican normalmente mediante **Git**; GitLab Runner ejecuta los jobs. El alumno puede consultar la ejecución desde GitLab web, por GitLab MCP autorizado o por la herramienta opcional `glab` (`glab ci status`, `glab ci view`, `glab ci trace`). Estos mecanismos no instalan una terminal dentro de Claude web ni convierten CI normal en ALM automático: el job de pruebas no necesita `ANTHROPIC_API_KEY`. Para configurar MCP, tratar errores y conservar evidencias, consulta la [guía transversal](../GUIA_INTEGRACION_CLAUDE_CODE_GITLAB.md).
