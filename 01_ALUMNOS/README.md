@@ -1,5 +1,7 @@
 # Material del alumno: teoría + prácticas + metaprompts
 
+**Primera lectura obligatoria antes de L02:** [**Guía Claude + GitLab + VS Code, edición 2026 (PDF)**](./GUIA_ALUMNADO_CLAUDE_GITLAB_VSCODE_ALM_2026.pdf). Incluye instalación de Git y herramientas, conexión mediante Git y MCP, alternativas de trabajo y funcionamiento de Claude Code. La práctica L02 verifica las instalaciones y prepara el GitLab personal.
+
 Este directorio es el **manual técnico completo del alumno**. No hay que acudir a una guía corta para conocer el contenido: cada uno de los once laboratorios tiene sus archivos `TEORIA.md`, `PRACTICA.md` y `METAPROMPT.md`.
 
 | Laboratorio | Conceptos que se estudian | Entrada a la práctica |

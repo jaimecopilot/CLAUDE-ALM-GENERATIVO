@@ -1,0 +1,44 @@
+name: Verificar guía PDF de alumnado
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "01_ALUMNOS/GUIA_ALUMNADO_CLAUDE_GITLAB_VSCODE_ALM_2026.pdf"
+      - "README.md"
+      - "01_ALUMNOS/README.md"
+      - "01_ALUMNOS/L02/PRACTICA.md"
+      - ".github/workflows/verificar-guia-alm.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  comprobar-guia:
+    name: PDF, portada y enlaces
+    runs-on: ubuntu-latest
+    steps:
+      - name: Obtener repositorio
+        uses: actions/checkout@v4
+      - name: Verificar PDF y referencias de los manuales
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          import re
+          from pathlib import Path
+          pdf_path = Path("01_ALUMNOS/GUIA_ALUMNADO_CLAUDE_GITLAB_VSCODE_ALM_2026.pdf")
+          content = pdf_path.read_bytes()
+          assert content.startswith(b"%PDF-"), "El archivo no tiene cabecera PDF"
+          assert len(content) > 50_000, "El PDF parece incompleto"
+          page_count = len(re.findall(rb"/Type\s*/Page\b", content))
+          assert page_count == 23, f"Se esperaban 23 páginas, encontradas {page_count}"
+          expected = {
+              "README.md": "./01_ALUMNOS/GUIA_ALUMNADO_CLAUDE_GITLAB_VSCODE_ALM_2026.pdf",
+              "01_ALUMNOS/README.md": "./GUIA_ALUMNADO_CLAUDE_GITLAB_VSCODE_ALM_2026.pdf",
+              "01_ALUMNOS/L02/PRACTICA.md": "../GUIA_ALUMNADO_CLAUDE_GITLAB_VSCODE_ALM_2026.pdf",
+          }
+          for file, link in expected.items():
+              assert link in Path(file).read_text(encoding="utf-8"), f"Falta enlace en {file}"
+          print(f"OK: PDF válido ({len(content)} bytes), {page_count} páginas y 3 enlaces.")
+          PY

@@ -12,6 +12,9 @@ La IA del curso será Claude Code; los contratos y metaprompts se redactan para 
 
 ## Cómo encontrar los contenidos
 
+**Empieza por la guía PDF antes de realizar los laboratorios.** Es el documento de instalación y conexión; L02 aplica sus instrucciones al repositorio personal.
+
+- **[Guía inicial Claude + GitLab + VS Code (PDF)](./01_ALUMNOS/GUIA_ALUMNADO_CLAUDE_GITLAB_VSCODE_ALM_2026.pdf)**: lectura inicial para instalar Git, VS Code, Python, Claude Code y entender las conexiones con GitLab antes de L02.
 - **[Ciclo continuo ALM + CI/CD](./00_PROGRAMA/DIAGRAMAS/CICLO_CONTINUO_ALM_CICD.md)**: diagrama de necesidades, requisitos, diseño, código, revisión, entrega y mantenimiento.
 - **[Itinerario de 16 horas](./00_PROGRAMA/ITINERARIO_16H.md)**: tiempos, nivel junior, objetivos y entregables.
 - **[Cómo se conectan Claude Code, Git, GitLab MCP y glab](./01_ALUMNOS/GUIA_INTEGRACION_CLAUDE_CODE_GITLAB.md)**: mecanismos, permisos, sincronización, tests, MRs y CI.
