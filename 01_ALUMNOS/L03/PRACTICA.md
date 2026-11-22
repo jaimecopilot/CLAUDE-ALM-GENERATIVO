@@ -1,5 +1,7 @@
 # L03 · PRÁCTICA: generar requisitos, Gherkin e issues en GitLab
 
+**Herramienta de trabajo:** requisitos y Gherkin pueden generarse con Claude Code o con Claude web + MCP. Ambas vías deben leer los mismos contratos y dejar el prompt operativo guardado antes de producir documentos. Si alternas herramientas, sincroniza la rama; ver [guía transversal](../GUIA_INTEGRACION_CLAUDE_CODE_GITLAB.md).
+
 **90 min:** teoría 20, preguntas y contrato 15, generación 25, revisión/GitLab 20, gate 10.
 
 ## Entrada de negocio común (no es la especificación final)

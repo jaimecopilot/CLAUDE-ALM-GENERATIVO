@@ -1,5 +1,7 @@
 # L06 · PRÁCTICA: tests desde Gherkin y revisión de seguridad
 
+**Herramienta principal:** Claude Code ejecuta las pruebas reales en el clon (o workspace con terminal); GitLab CI aportará la verificación remota. Claude web + MCP no ejecuta tests por sí solo. Ver [guía transversal](../GUIA_INTEGRACION_CLAUDE_CODE_GITLAB.md).
+
 **75 min:** teoría 10, metaprompt y matriz 10, tests/ejecución 30, fallos/seguridad 15, gate 10.
 
 ## Entrada

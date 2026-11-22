@@ -1,5 +1,7 @@
 # L04 · PRÁCTICA: generar y aprobar la arquitectura del coworking
 
+**Herramienta de trabajo:** diseño y ADR pueden crearse con Claude Code o Claude web + MCP a partir de requisitos aprobados. Al alternar herramientas, sincroniza los commits y evita ediciones simultáneas. Ver [guía transversal](../GUIA_INTEGRACION_CLAUDE_CODE_GITLAB.md).
+
 **60 min:** teoría 15, prompt de diseño 10, generación 20, revisión/ADR 10, gate 5.
 
 ## Entradas

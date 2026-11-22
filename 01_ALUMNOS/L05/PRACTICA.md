@@ -1,5 +1,7 @@
 # L05 · PRÁCTICA: generar Coworking Manager con Claude Code
 
+**Herramienta principal:** Claude Code en VS Code sobre el clon GitLab. **Git** sincroniza el código; MCP o `glab` (opcionales) sirven para issues, MR y pipelines. No hace falta VM. Ver [guía y flujo completo issue → pruebas → MR → CI](../GUIA_INTEGRACION_CLAUDE_CODE_GITLAB.md).
+
 **Tiempo: 210 min.** Preparación y explicación 25; prompt/plan 25; incremento de salas 35; reservas y conflictos 65; cancelación 25; validación, registro y revisión 35.
 
 ## Entradas aprobadas y alcance
@@ -72,3 +74,14 @@ Las rutas y nombres pueden variar según el proyecto real. Abre una **Merge Requ
 
 ## Fin del L05
 La aplicación debe ejecutar las operaciones del MVP. En L06 se convertirán los criterios en pruebas más completas y se introducirán revisiones de seguridad. En L07 se integrarán dichas comprobaciones en GitLab CI/CD.
+
+
+## Cómo publica Claude Code los resultados de L05
+
+1. Consulta la **issue real** en GitLab web, con MCP o con `glab issue view N` (opcional).
+2. Confirma `git status` y sincroniza con `git fetch origin` y `git pull --ff-only` en la rama correcta. Si hay cambios locales, revísalos antes de hacer pull.
+3. Claude genera primero `alm/prompts-generados/03-desarrollo.md`. **Gate A:** revisa y autoriza ese archivo; el modo Plan no sustituye su aprobación.
+4. Tras la ejecución, comprueba salida real de tests y `git diff`. **Gate B:** no autorices commit/push sin revisar.
+5. Autoriza commit y `git push`; abre una MR desde GitLab web, MCP o `glab mr create`. No hagas merge automático; examina la CI y sus logs.
+
+**Git no equivale a MCP:** en el clon se publica normalmente mediante Git; en Claude web + MCP los cambios pueden escribirse directamente en GitLab, pero requieren los mismos gates.

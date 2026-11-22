@@ -1,5 +1,7 @@
 # L02 · PRÁCTICA: crear tu propia cuenta y proyecto GitLab y preparar Claude
 
+**Cómo se conectan las herramientas:** GitLab almacena el proyecto; Claude Code trabaja sobre su clon en VS Code y **Git** sincroniza los cambios. Claude web + MCP y GitLab Web IDE son alternativas. Consulta la [guía transversal](../GUIA_INTEGRACION_CLAUDE_CODE_GITLAB.md) antes de comenzar.
+
 **Duración: 90 minutos.** Se trabaja individualmente; no hay repositorios de equipo facilitados por el profesor.
 
 ## Objetivo
