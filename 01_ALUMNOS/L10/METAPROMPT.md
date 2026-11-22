@@ -30,7 +30,7 @@ Seguridad/coste:
 - No hacer push, merge ni despliegue sin aprobación humana.
 - La fase DevOps genera CI de la aplicación como archivo independiente del pipeline ALM actual.
 
-Genera el YAML y los scripts auxiliares imprescindibles, explica con un esquema el paso de artefactos y proporciona una checklist de revisión. No ejecutes la API ni comprometas presupuesto sin aprobación del alumno y formador.
+Genera el YAML y los scripts auxiliares imprescindibles, explica con un esquema el paso de artefactos y proporciona una checklist de revisión. No ejecutes la API ni comprometas presupuesto sin aprobación expresa del formador. En esta edición solo él ejecuta el pipeline en su proyecto GitLab.
 ~~~
 
 **Criterio de aprobación:** GitLab controla el pipeline y Claude ejecuta las fases. No se considera automatización GitLab un script que únicamente corre en el ordenador del alumno.

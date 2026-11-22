@@ -8,7 +8,7 @@ Listar salas, reservar por intervalos, rechazar solapamientos y cancelar; una ev
 
 ## Modo de ejecución
 
-Estas aprobaciones fase a fase corresponden al recorrido guiado L03–L09. En L10 el alumno aprueba el pipeline global antes de lanzarlo; GitLab controla los jobs y la revisión humana final permanece obligatoria. Claude Code en GitLab CI requiere una API autorizada, que **no** se factura dentro de Pro.
+Estas aprobaciones fase a fase corresponden al recorrido guiado L03–L09. En L10 los alumnos aprenden a revisar el pipeline global, pero **solo el formador lo lanza en su GitLab** y reparte una copia del resultado. GitLab controla los jobs y la revisión humana final permanece obligatoria. Claude Code en GitLab CI requiere una API autorizada, que **no** se factura dentro de Pro.
 
 ## Metodología obligatoria
 1. Lee el contrato de fase y el contexto mínimo.

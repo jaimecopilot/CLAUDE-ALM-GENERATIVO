@@ -18,7 +18,7 @@ En [CLAUDE.md](./CLAUDE.md) están los límites operativos del agente y en [alm/
 - Clonar su proyecto GitLab personal y abrirlo en VS Code.
 - Ejecutar por orden las seis fases. Cada fase produce primero **alm/prompts-generados/NN-fase.md**, luego sus artefactos.
 - Confirmar gates humanos; no fingir resultados ni cerrar una fase solo porque Claude generó texto.
-- L09 termina la documentación manual; L10 diseña y ejecuta el pipeline ALM automatizado por GitLab, si hay credenciales API autorizadas; L11 evalúa las dos modalidades.
+- L09 termina la documentación manual; L10 estudia el pipeline ALM automatizado y sus evidencias, pero **solo el formador lo ejecuta una vez** en su propio GitLab. Después distribuye la referencia en `referencia/alm-automatico`; L11 evalúa ambas modalidades.
 
 **Nota:** no hay .gitlab-ci.yml inicial. En L07 Claude lo genera para CI de la aplicación en la rama guiada; en L10 lo genera para **orquestación ALM** en una rama limpia desde base-alm. Son configuraciones distintas. Hasta ese momento la ausencia de CI es intencionada.
 

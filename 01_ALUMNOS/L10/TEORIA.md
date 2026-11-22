@@ -4,7 +4,7 @@
 
 ## 1. ¿Quién hace qué?
 
-**Claude Code**, utilizado por el alumno, diseña el archivo `.gitlab-ci.yml` a partir de los seis contratos y metaprompts. **GitLab** ejecuta ese archivo en sus runners: controla el orden, las dependencias, los logs y el paso de artefactos. **Claude Code en cada job** genera primero el prompt operativo y después el artefacto de esa fase. **El alumno** revisa y aprueba antes de lanzar y antes de integrar el resultado.
+**Claude Code**, utilizado por el alumno, puede proponer y revisar el archivo `.gitlab-ci.yml` a partir de los seis contratos y metaprompts. **La única ejecución real con Claude API la lanza el formador en su proyecto GitLab**, tras validar el YAML y el presupuesto. **GitLab** ejecuta ese archivo en sus runners: controla el orden, las dependencias, los logs y el paso de artefactos. **Claude Code en cada job** genera primero el prompt operativo y después el artefacto de esa fase. **El formador** revisa y autoriza antes de lanzar la ejecución central, y aprueba cualquier publicación de resultados. Cada alumno analiza el YAML, los logs y los artefactos recibidos en su repositorio.
 
 La primera generación del YAML es guiada porque GitLab no puede lanzar un pipeline que todavía no existe. Una vez versionado y aprobado, se ejecuta desde **GitLab → Build → Pipelines**. No consiste en arrancar un script Python local.
 
@@ -27,7 +27,7 @@ El pipeline **ALM** utiliza Claude para generar y transformar especificaciones y
 
 La integración oficial Claude Code + GitLab CI/CD requiere una clave **Anthropic API** guardada en GitLab como variable `ANTHROPIC_API_KEY` enmascarada (o un proveedor cloud compatible). **Claude Pro de 20 USD no cubre estos consumos remotos**. También se utilizan minutos de GitLab Runner. Nunca se añade una clave a la documentación, al YAML o a un prompt.
 
-Cada alumno con su propio GitLab solo puede ejecutar remotamente con credenciales autorizadas y presupuesto delimitado. Una clave central del formador **no** debe copiarse a doce repositorios controlados por estudiantes. La alternativa de una demostración del formador se diferencia claramente de doce ejecuciones individuales.
+**En esta edición los alumnos no ejecutan su propia API en GitLab.** Solo el formador configura Anthropic API en su GitLab y muestra la ejecución. Distribuye resultados versionados a los doce repositorios privados en `referencia/alm-automatico`, sin añadir claves a esos proyectos ni atribuirles doce ejecuciones.
 
 Usar límites de gasto por workspace, máximo de turnos, tiempos de job y una regla que ejecute el pipeline únicamente al lanzarlo manualmente, para evitar bucles que consuman crédito. No declarar «completado» un job que falló por presupuesto, autorización o un criterio funcional.
 
