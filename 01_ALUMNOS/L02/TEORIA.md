@@ -69,3 +69,7 @@ La prevención de shadow AI —el uso de herramientas de IA no autorizadas por l
 
 ### 7.6 La medición del impacto de la IA
 La medición del impacto de la IA en el ciclo de desarrollo es una capacidad emergente. Métricas como el tiempo de ciclo, la frecuencia de despliegue, la tasa de fallos en CI y la cobertura de tests permiten evaluar el retorno de inversión de la IA y ajustar las políticas de uso. El gobierno de la IA no es un obstáculo a la productividad, sino un habilitador que permite usar la IA de forma segura, auditable y alineada con los requisitos normativos.
+
+## Integración técnica del entorno
+
+Claude Code puede ejecutar las prácticas sobre el clon del proyecto GitLab abierto en VS Code. **Git realiza la sincronización de código**, mientras que GitLab web, MCP o `glab` (opcionales) proporcionan acceso a issues, Merge Requests y pipelines. Claude web + MCP permite editar directamente archivos remotos, pero no ofrece terminal para ejecutar el código. Consulta la [guía transversal](../GUIA_INTEGRACION_CLAUDE_CODE_GITLAB.md) para alternar las herramientas sin pisar cambios.

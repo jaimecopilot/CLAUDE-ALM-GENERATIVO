@@ -14,6 +14,7 @@ La IA del curso será Claude Code; los contratos y metaprompts se redactan para 
 
 - **[Ciclo continuo ALM + CI/CD](./00_PROGRAMA/DIAGRAMAS/CICLO_CONTINUO_ALM_CICD.md)**: diagrama de necesidades, requisitos, diseño, código, revisión, entrega y mantenimiento.
 - **[Itinerario de 16 horas](./00_PROGRAMA/ITINERARIO_16H.md)**: tiempos, nivel junior, objetivos y entregables.
+- **[Cómo se conectan Claude Code, Git, GitLab MCP y glab](./01_ALUMNOS/GUIA_INTEGRACION_CLAUDE_CODE_GITLAB.md)**: mecanismos, permisos, sincronización, tests, MRs y CI.
 - **[Guía de alta individual en GitLab](./01_ALUMNOS/L02/GUIA_GITLAB_PASO_A_PASO.md)**: cuenta personal, proyecto privado y permisos.
 - **[Nuevo laboratorio de ALM automático](./01_ALUMNOS/L10/PRACTICA.md)**: segunda ejecución del mismo caso.
 - **[Material del alumno](./01_ALUMNOS/README.md)**: índice de los once laboratorios; **cada laboratorio tiene TEORIA, PRACTICA y METAPROMPT**.
@@ -42,7 +43,7 @@ Stack de referencia: Python, FastAPI, SQLite, pytest, GitLab CI/CD. Evitamos aut
 
 ## Dos formas de ejecutar el ALM y un pipeline de CI/CD
 
-- **Modo guiado (L01–L09):** el alumno solicita a Claude cada fase, revisa el prompt operativo y valida la salida.
+- **Modo guiado (L01–L09):** Claude Code en VS Code/terminal con Git para sincronizar el proyecto es el recorrido principal de desarrollo y pruebas. Claude web + MCP es una alternativa remota para documentación, requisitos y diseño; ambos respetan contratos y gates.
 - **Modo automático (L10):** GitLab encadena seis contratos y metaprompts mediante Claude API. El alumno estudia su diseño, pero **solo el formador ejecuta una vez** el pipeline en su GitLab y distribuye los resultados versionados mediante la rama `referencia/alm-automatico`.
 - **GitLab CI/CD (L07):** pipeline diferente definido por `.gitlab-ci.yml`, que valida tests y artefactos tras los pushes. No debe confundirse con el pipeline ALM.
 

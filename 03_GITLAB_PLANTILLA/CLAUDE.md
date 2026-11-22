@@ -18,6 +18,10 @@ Estas aprobaciones fase a fase corresponden al recorrido guiado L03–L09. En L1
 5. Ejecuta comandos de validación autorizados y muestra salida real. «Parece correcto» no es evidencia.
 6. Documenta resultados en alm/evidencias/registro.md; solicita segundo gate para terminar la fase.
 
+## Conexión al proyecto y sincronización
+
+En L03–L09, el agente trabaja sobre el clon Git del alumno: **Git gestiona los commits y ramas**; GitLab web, GitLab MCP o `glab` pueden consultar issues, Merge Requests y pipelines. Estos mecanismos no reemplazan los gates. Si otra herramienta ha generado cambios directamente en GitLab, revisa `git status` y sincroniza con `git fetch` y `git pull --ff-only` antes de continuar. No uses `push --force` ni sobrescribas trabajo ajeno.
+
 ## Reglas de seguridad y control
 - No accedas a secretos, contraseñas ni datos personales.
 - No borres historial, repositorio, ramas ni carpetas ajenas al alcance.

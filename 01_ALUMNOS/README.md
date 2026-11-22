@@ -16,9 +16,13 @@ Este directorio es el **manual técnico completo del alumno**. No hay que acudir
 | [L10](./L10/TEORIA.md) | **Pipeline ALM automático en GitLab**, jobs, artifacts, logs, presupuestos y comparación | Los seis contratos, metaprompts y brief |
 | [L11](./L11/TEORIA.md) | Cierre, evidencia, retrospectiva y responsabilidad | Resultado guiado y automático |
 
+## Cómo se conectan las herramientas
+
+Lee la [**guía transversal Claude Code + Git + GitLab MCP + glab**](./GUIA_INTEGRACION_CLAUDE_CODE_GITLAB.md). Aclara qué hace Git frente a MCP, dónde ejecuta pruebas Claude Code y cómo se pasa de una issue a una MR y al pipeline. MCP y `glab` son opciones, no requisitos simultáneos.
+
 ## Dos ejecuciones complementarias
 
-**L01–L09 (guiada):** Claude trabaja fase por fase con dos aprobaciones por contrato. **L10 (automática):** los alumnos revisan el pipeline GitLab que encadena los contratos y metaprompts. El formador realiza **una única ejecución central con Claude API** y distribuye una copia en `referencia/alm-automatico` a cada proyecto privado. **L11:** compara ambas ejecuciones y defiende lo aprendido. No mezclar artefactos de dos ramas para simular continuidad.
+**L01–L09 (guiada):** Claude Code con VS Code y Git es el flujo principal para implementar y probar. Claude web + GitLab MCP puede apoyar requisitos, diseño o trabajo remoto. En todos los casos se mantienen dos aprobaciones por contrato. **L10 (automática):** los alumnos revisan el pipeline GitLab que encadena los contratos y metaprompts. El formador realiza **una única ejecución central con Claude API** y distribuye una copia en `referencia/alm-automatico` a cada proyecto privado. **L11:** compara ambas ejecuciones y defiende lo aprendido. No mezclar artefactos de dos ramas para simular continuidad.
 
 ## Orden de trabajo por laboratorio
 

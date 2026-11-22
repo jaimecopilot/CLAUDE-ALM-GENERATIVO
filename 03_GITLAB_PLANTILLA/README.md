@@ -12,6 +12,12 @@ En [CLAUDE.md](./CLAUDE.md) están los límites operativos del agente y en [alm/
 4. Crear proyecto de prueba pequeño; no se usan credenciales reales del negocio.
 5. El alumno comunica al formador la URL de su proyecto y registra cualquier limitación de CI.
 
+## Comunicación con GitLab
+
+Claude Code opera sobre el **clon de este proyecto** y usa Git (`clone`, `pull`, `push`) para sincronizar código y ramas. GitLab MCP o la herramienta `glab` (opcionales) sirven para issues, MR y CI; no son necesarios para ejecutar pruebas en la terminal. La [guía transversal](https://github.com/jaimecopilot/CLAUDE-ALM-GENERATIVO/blob/main/01_ALUMNOS/GUIA_INTEGRACION_CLAUDE_CODE_GITLAB.md) detalla cada paso.
+
+**Esta plantilla no distribuye un `.mcp.json` activo.** Si se decide añadirlo, debe revisarse y autorizarse, especialmente en el pipeline no interactivo del formador. Nunca se comparten tokens dentro del proyecto.
+
 ## Pasos del alumno
 
 - Leer el material L01–L11 en [GitHub del curso](https://github.com/jaimecopilot/CLAUDE-ALM-GENERATIVO/tree/main/01_ALUMNOS).
