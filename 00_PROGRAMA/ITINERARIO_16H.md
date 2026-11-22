@@ -1,39 +1,34 @@
-# Programa oficial — Taller junior de ALM generativo (16 horas)
+# Itinerario — Taller ALM generativo con Claude y GitLab (16 horas)
 
-## Dos modalidades de ejecución sobre el mismo caso
-**Modo A (L01-L09):** los alumnos recorren el ALM fase a fase con Claude Code, revisan cada prompt y validan salidas. **Modo B (L10):** crean la configuración de un **pipeline ALM automático ejecutado por GitLab**; GitLab ejecuta la secuencia con los mismos metaprompts y contratos, guardando estado, logs y bloqueos. **L11:** evalúa resultados de ambas modalidades.
+**Cuatro jornadas de cuatro horas.** Un mismo programa para grupos junior y senior, ajustando profundidad, complejidad y autonomía.
 
-El caso no cambia: Coworking Norte, con listado de salas, creación y cancelación de reservas y prevención de solapamientos. En evolución se incorpora el máximo de cuatro horas.
+## Estrategia
 
-## Dos jornadas de ocho horas lectivas
+El caso práctico único es Coworking Norte: salas, reservas, prevención de solapamientos y cancelación. En la evolución CAM-01 se limita la duración máxima a cuatro horas.
 
-| Día | Laboratorio | Min | Entrega |
-|---|---|---:|---|
-| 1 | L01 Vibe Coding y sus límites | 30 | Identificar supuestos |
-| 1 | L02 Cuenta GitLab personal y entorno Claude | 90 | Proyecto privado y plantilla importada |
-| 1 | L03 Requisitos generativos | 90 | RF/CA, Gherkin, backlog, issues |
-| 1 | L04 Diseño generativo | 60 | Modelo, Mermaid, ADR |
-| 1 | L05 Desarrollo guiado | 210 | API de reservas ejecutable |
-| 2 | L06 Testing y calidad | 75 | pytest y matriz de pruebas |
-| 2 | L07 GitLab CI/CD | 75 | Pipeline y logs |
-| 2 | L08 Cambio de requisito | 60 | Regresión y MR |
-| 2 | L09 Trazabilidad | 30 | Documentación y matriz |
-| 2 | L10 **ALM automático** | 180 | Pipeline ALM ejecutado en otra rama |
-| 2 | L11 Defensa comparada y evaluación | 60 | Comparación manual/automático |
-| | **Total** | **960** | **16 h** |
+**Modo guiado (L01–L09).** Cada alumno utiliza Claude Code en su ordenador y su GitLab personal privado. Genera un prompt operativo a partir del metaprompt y del contrato de fase, revisa el resultado y lo valida con evidencias. Todas las fases consumen los artefactos aprobados de las anteriores.
 
-Las pausas no forman parte de las horas lectivas.
+**Modo automático (L10).** Los alumnos estudian y revisan la definición GitLab CI/CD que ejecuta seis jobs generativos. **Solo el profesor realiza una ejecución central en su propio proyecto GitLab con su Anthropic API key**, previa validación técnica y autorización del presupuesto. Distribuye después el resultado versionado a los proyectos privados de los alumnos mediante la rama `referencia/alm-automatico`. Esta copia no consume API y no representa doce ejecuciones independientes.
 
-## Repositorios de cada alumno
-1. **GitHub del curso:** teoría, prácticas y metaprompts, solo lectura.
-2. **GitLab personal:** cada alumno utiliza su cuenta existente o crea una nueva. Genera proyecto privado `coworking-alm-junior`, importa la plantilla y mantiene dos ramas de trabajo con el mismo punto de partida: `practica/manual` y `practica/automatica`.
-3. **Claude Code local:** cada alumno inicia sesión en su propia cuenta con plan compatible. No se copian tokens a prompts ni repositorios.
+**Cierre (L11).** Comparación de resultados propios con la referencia central, trazabilidad y defensa.
 
-## Continuidad de artefactos (regla obligatoria)
-Las fases NO usan nuevas especificaciones inconexas. Cada contrato declara entradas generadas y aprobadas en las anteriores. Desarrollo utiliza requisitos **y** diseño; testing utiliza requisitos **y** código; CI utiliza código **y** tests; evolución reutiliza todo lo anterior. El pipeline automático parte del mismo brief y aplica exactamente esos contratos en una rama separada.
+## Distribución en cuatro jornadas
 
-## Límite de coste
-El modo A utiliza Claude Code con la cuenta del alumno. El modo B requiere, además, acceso a la API de Anthropic facturada por tokens y los minutos de runner que correspondan. La modalidad B consume API por tokens en GitLab; la cuota Pro corresponde únicamente a la modalidad interactiva. El presupuesto de API para L10 debe fijarse por separado; no está incluido en el coste de Claude Pro. No se configura `ANTHROPIC_API_KEY` en las prácticas locales.
+| Jornada | Actividades | Resultado verificable |
+|---|---|---|
+| **1** | L01 Vibe Coding, L02 cuentas y herramientas, L03 requisitos e introducción a L04 | GitLab personal con plantilla, tag `base-alm`, rama `practica/manual`, necesidades y criterios de aceptación |
+| **2** | Final de L04 diseño y L05 desarrollo iterativo | Arquitectura/ADR y aplicación con reservas, validación y cancelación |
+| **3** | L06 testing, L07 CI/CD del producto, L08 cambio, L09 trazabilidad | Tests, logs GitLab cuando existan, evolución CAM-01 y matriz de trazabilidad |
+| **4** | L10 orquestación ALM automática, L11 comparación y evaluación | Pipeline central real si ha sido validado, artifacts versionados, rama de referencia y defensa |
 
-## Criterios de evaluación
-Requisitos 20%, MVP 25%, pruebas y CI 25%, GitLab 15%, explicación crítica 15%. El L11 exige contrastar resultados y evidencias de ambos modos, sin afirmar que el automático pasó si sus gates fallaron.
+La profundidad de los laboratorios se ajusta por nivel: juniors reciben instrucciones y comprobaciones guiadas; seniors estudian decisiones de diseño, concurrencia, seguridad, gobierno, riesgos y costes.
+
+## Trabajo con GitLab
+
+Cada alumno crea un proyecto privado `coworking-alm-junior`, copia exclusivamente la carpeta `03_GITLAB_PLANTILLA` desde GitHub, crea el primer commit, el tag `base-alm` y la rama `practica/manual`. Invita al profesor con rol **Developer** mediante Manage → Members → Invite members y le envía la URL del proyecto. El profesor escribirá solo en la rama `referencia/alm-automatico`; no toca `main` ni el trabajo individual.
+
+## Condiciones de calidad y preparación
+
+El pipeline normal de **CI/CD del producto** (L07) no equivale al **pipeline de ALM generativo** (L10). GitLab gestiona issues, ramas, Merge Requests y jobs; Claude genera propuestas y artefactos, que requieren revisión. Nunca se afirman pruebas o pipelines ejecutados sin logs reales.
+
+Antes del taller se comprueban Git, Python, editor, autenticación Claude Code, cuentas GitLab y runners. El formador debe validar por separado su acceso a GitLab, la clave Anthropic API protegida, su presupuesto, el pipeline central y la publicación de artifacts. **El archivo de metaprompt por sí solo no constituye un pipeline probado.**

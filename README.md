@@ -1,6 +1,6 @@
 # Taller de 16 horas · Vibe Coding y ALM generativo con Claude y GitLab
 
-> **Curso de 16 horas.** Cada alumno crea su proyecto GitLab. El uso de runners y la automatización local se documentan en L02, L07 y L10.
+> **Curso de 16 horas en cuatro jornadas de cuatro horas, adaptable a junior y senior.** Cada alumno crea un GitLab personal; el formador ejecuta una sola vez el ALM automático central del L10.
 
 ## Qué es este repositorio
 
@@ -43,10 +43,10 @@ Stack de referencia: Python, FastAPI, SQLite, pytest, GitLab CI/CD. Evitamos aut
 ## Dos formas de ejecutar el ALM y un pipeline de CI/CD
 
 - **Modo guiado (L01–L09):** el alumno solicita a Claude cada fase, revisa el prompt operativo y valida la salida.
-- **Modo automático (L10):** un pipeline de **GitLab CI/CD** encadena los mismos seis contratos y metaprompts, genera prompts operativos y artefactos, ejecuta validaciones y se detiene si falla un gate. Se prepara en una rama limpia del mismo proyecto y GitLab lo ejecuta en runners.
+- **Modo automático (L10):** GitLab encadena seis contratos y metaprompts mediante Claude API. El alumno estudia su diseño, pero **solo el formador ejecuta una vez** el pipeline en su GitLab y distribuye los resultados versionados mediante la rama `referencia/alm-automatico`.
 - **GitLab CI/CD (L07):** pipeline diferente definido por `.gitlab-ci.yml`, que valida tests y artefactos tras los pushes. No debe confundirse con el pipeline ALM.
 
-En L10 el alumno genera el YAML con Claude Code y **GitLab ejecuta los metaprompts en sus runners**. La ejecución remota consume API de Anthropic (se factura aparte de Pro) y minutos del runner: debe habilitarse con presupuesto y permisos explícitos. Sin ellos se enseña el diseño pero no se afirma una ejecución completa.
+En L10 se estudia y puede generarse el YAML, pero la ejecución real se realiza **solo en el GitLab del formador**, con API y presupuesto propios. Los alumnos no requieren clave API para este taller. Si no hay ejecución validada, se registra como NO EJECUTADO.
 
 ## Recursos y costes
 
@@ -54,6 +54,6 @@ Claude Code requiere un plan compatible; Claude Free web no equivale a Claude Co
 
 ## Fase 2
 
-Quedará pendiente la **ejecución real en las cuentas GitLab de los alumnos**: ellos crearán sus proyectos y comprobarán sus runners, permisos, Merge Requests y pipelines. Hasta entonces la plantilla es material preparado, no infraestructura desplegada.
+Quedará pendiente la **ejecución real en las cuentas GitLab de los alumnos**: ellos crearán sus proyectos y comprobarán sus runners, permisos, Merge Requests y CI del producto; la ejecución central ALM del formador también requiere validación técnica real. Hasta entonces la plantilla es material preparado, no infraestructura desplegada.
 
 **No subir las soluciones del formador al repositorio del alumno.**

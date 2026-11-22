@@ -47,7 +47,7 @@ Utiliza un plan compatible con Claude Code. Si la empresa gestiona la autenticac
 
 ## 4. Importar la plantilla GitLab
 
-19. Clona el repositorio de **material docente** (necesitarás permiso de acceso porque es privado):
+19. Clona el repositorio de **material del alumno** en GitHub (en esta edición está publicado; si el cliente lo restringe, el formador facilitará acceso):
 ~~~powershell
 git clone https://github.com/jaimecopilot/CLAUDE-ALM-GENERATIVO.git
 ~~~
@@ -72,7 +72,7 @@ cd .\coworking-alm-junior
 Get-ChildItem -Force
 git status
 ~~~
-Deben existir `CLAUDE.md`, `alm/maestro.md`, `alm/contratos/`, `alm/metaprompts/`, `scripts/alm_auto.py` y la plantilla de casos de negocio.
+Deben existir `CLAUDE.md`, `alm/maestro.md`, `alm/contratos/`, `alm/metaprompts/` y `docs/instrucciones/CASO_NEGOCIO.md`. No hay un ejecutor ALM local ni código de aplicación implementado de antemano.
 
 ## 5. Primer commit, rama y versión base
 

@@ -18,7 +18,7 @@ Este directorio es el **manual técnico completo del alumno**. No hay que acudir
 
 ## Dos ejecuciones complementarias
 
-**L01–L09 (guiada):** Claude trabaja fase por fase con dos aprobaciones por contrato. **L10 (automática):** Claude genera el archivo GitLab CI que ejecutará los mismos contratos en una rama limpia mediante una API autorizada, a partir de la misma necesidad. **L11:** compara ambas ejecuciones y defiende lo aprendido. No mezclar artefactos de dos ramas para simular continuidad.
+**L01–L09 (guiada):** Claude trabaja fase por fase con dos aprobaciones por contrato. **L10 (automática):** los alumnos revisan el pipeline GitLab que encadena los contratos y metaprompts. El formador realiza **una única ejecución central con Claude API** y distribuye una copia en `referencia/alm-automatico` a cada proyecto privado. **L11:** compara ambas ejecuciones y defiende lo aprendido. No mezclar artefactos de dos ramas para simular continuidad.
 
 ## Orden de trabajo por laboratorio
 
