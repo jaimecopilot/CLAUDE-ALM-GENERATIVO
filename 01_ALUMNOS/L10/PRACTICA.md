@@ -1,5 +1,7 @@
 # L10 · PRÁCTICA: crear un pipeline GitLab que ejecute los metaprompts
 
+**No confundir L07 y L10:** L10 estudia **Claude Code no interactivo dentro de seis jobs GitLab**. Solo el formador ejecuta el pipeline ALM central con API y presupuesto propios. Los alumnos recibirán la referencia por Git. Ver [arquitectura transversal](../GUIA_INTEGRACION_CLAUDE_CODE_GITLAB.md).
+
 **180 min:** explicación 20, rama/credenciales 20, generar pipeline 45, revisión 25, ejecución y observación 50, comparación 20.
 
 ## Preparación

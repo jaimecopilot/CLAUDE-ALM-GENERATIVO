@@ -1,5 +1,7 @@
 # L09 · PRÁCTICA: unir todas las piezas del ALM
 
+**Evidencias:** los enlaces a issues, MR y pipelines deben ser reales. GitLab web, MCP o `glab` permiten consultarlos; Git gestiona los commits del clon. Ver [guía transversal](../GUIA_INTEGRACION_CLAUDE_CODE_GITLAB.md).
+
 **30 min:** teoría 5, generar documentación 10, trazar 10, revisión/gate 5.
 
 ## Paso 1 — recuperar evidencias verdaderas

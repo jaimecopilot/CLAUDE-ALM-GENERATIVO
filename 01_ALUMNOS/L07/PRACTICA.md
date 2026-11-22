@@ -1,5 +1,7 @@
 # L07 · PRÁCTICA: generar y ejecutar CI/CD en GitLab
 
+**Ejecución:** Claude Code genera el YAML sobre el clon y Git lo publica; GitLab Runner ejecuta los tests. MCP o `glab` pueden consultar jobs y logs, pero son opcionales. El CI normal de L07 **no consume API de Anthropic**. Ver [guía transversal](../GUIA_INTEGRACION_CLAUDE_CODE_GITLAB.md).
+
 **75 min:** teoría 10, diseño 10, generación/revisión 15, ejecución remota 25, reparación/cierre 15.
 
 ## Entradas
@@ -38,3 +40,16 @@ Registrar:
 - Registro del fallo/reparación si ocurrió.
 - Artefacto generado y guía breve de uso.
 - Aprobación humana; no merge automático.
+
+
+## Consultar y diagnosticar CI desde Claude Code (opcional)
+
+En VS Code puedes revisar el estado del job en **GitLab → Build → Pipelines** o solicitar a Claude Code su consulta por GitLab MCP. La CLI oficial `glab` también permite:
+
+~~~bash
+glab ci status
+glab ci view
+glab ci trace
+~~~
+
+`glab` exige una autenticación propia (`glab auth login`). No lo instales si el navegador o el conector MCP ya cubre tu necesidad. Si falla un job, registra el log real y diagnostica la causa; nunca declares CI correcta basándote en el mensaje del agente.
