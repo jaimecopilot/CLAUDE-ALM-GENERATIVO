@@ -9,6 +9,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 DOCS = [ROOT / "README.md"]
+DOCS += list((ROOT / "00_PROGRAMA").rglob("*.md"))
 DOCS += list((ROOT / "01_ALUMNOS").rglob("*.md"))
 DOCS += list((ROOT / "03_GITLAB_PLANTILLA").rglob("*.md"))
 LINK = re.compile(r"(?<!!)\[[^\]\n]+\]\(([^)\n]+)\)")
@@ -34,6 +35,8 @@ for file in DOCS:
                 fence_marker = None
             continue
         if in_code:
+            if re.search(r"^\s*(?:git\s+(?:reset\s+--hard|clean\s+-[^ ]*f|push\b.*(?:--force|-f\b)|tag\s+-f)|rm\s+-rf|Remove-Item\b.*-Recurse)", line, re.I):
+                errors.append(f"{rel(file)}:{lineno}: revisar comando destructivo ejecutable")
             continue
         for match in LINK.finditer(line):
             target = match.group(1).strip().strip("<>").strip()
@@ -59,6 +62,18 @@ required = [
     "01_ALUMNOS/L02/GUIA_GITLAB_PASO_A_PASO.md",
     "01_ALUMNOS/L03/METAPROMPT.md",
 ]
+for lab in range(1, 12):
+    for material in ("TEORIA.md", "PRACTICA.md", "METAPROMPT.md"):
+        required.append(f"01_ALUMNOS/L{lab:02}/{material}")
+
+entradas = ("CLAUDE.md", "alm/maestro.md", "alm/contratos/01-requisitos.md",
+            "alm/metaprompts/01-requisitos.md", "docs/instrucciones/CASO_NEGOCIO.md")
+for ruta in ("01_ALUMNOS/L03/METAPROMPT.md", "03_GITLAB_PLANTILLA/alm/metaprompts/01-requisitos.md"):
+    prompt = (ROOT / ruta).read_text(encoding="utf-8").split("~~~text", 1)[1].split("~~~", 1)[0]
+    for entrada in entradas:
+        if entrada not in prompt:
+            errors.append(f"{ruta}: falta en el texto para Claude: {entrada}")
+
 for target in required:
     if not (ROOT / target).exists():
         errors.append(f"prerrequisito no encontrado: {target}")

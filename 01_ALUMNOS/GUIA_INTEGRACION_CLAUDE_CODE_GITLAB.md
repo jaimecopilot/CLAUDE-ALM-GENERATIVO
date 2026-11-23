@@ -174,3 +174,9 @@ El YAML de L10 y los resultados del runner **deben validarse realmente** antes d
 - [ ] Si uso Claude web + MCP, sé sincronizar su trabajo con Claude Code
 
 Documentación técnica: [Claude Code + MCP](https://code.claude.com/docs/en/mcp), [permisos de Claude Code](https://code.claude.com/docs/en/permissions), [GitLab CLI](https://docs.gitlab.com/cli/), [GitLab MCP](https://docs.gitlab.com/user/model_context_protocol/mcp_server/).
+
+## Verificación de L02 y entrada en L03
+
+En Windows, prepara primero el clon con el [script L02](../scripts/Preparar-L02.ps1). Tras revisar el árbol, ejecuta la opción `-Publicar`. Git publica juntas las tres referencias y vuelve a leerlas del servidor. En un segundo clon, la rama local de prácticas debe conservar el SHA remoto del trabajo previo. En Bash, emplea el [bloque de la guía L02](./L02/GUIA_GITLAB_PASO_A_PASO.md), que se detiene ante un destino existente.
+
+Desde `practica/manual`, usa el [texto de L03](./L03/METAPROMPT.md). Claude debe leer las cinco entradas y escribir solo el prompt. Revisa su contenido para el Gate A. La publicación de los requisitos necesita un segundo control humano, el Gate B. La auditoría de comandos y su alcance se encuentran en la [matriz L01–L11](../00_PROGRAMA/AUDITORIA_OPERATIVA_L01_L11_2026-11-23.md).

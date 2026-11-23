@@ -5,7 +5,7 @@
 **180 min:** explicación 20, rama/credenciales 20, generar pipeline 45, revisión 25, ejecución y observación 50, comparación 20.
 
 ## Preparación
-Usa tu proyecto GitLab **personal y privado**, creado en L02. No mezcles la rama manual con la automática. El pipeline GitLab estará documentado en el GitHub del curso. **Solo el formador ejecutará una vez el ALM automático en su propio GitLab**, con su API y presupuesto. El alumno estudia el pipeline, ve sus logs y recibe una copia del resultado; no debe configurar ni consumir una clave API para este taller.
+Usa tu proyecto GitLab **personal y privado**, creado en L02. No mezcles la rama manual con la automática. GitHub contiene los contratos y el metaprompt de construcción. El YAML ejecutable se genera en el paso 2 y se revisa antes de publicarlo en el proyecto docente. **Solo el formador ejecutará una vez el ALM automático en su propio GitLab**, con su API y presupuesto. El alumno estudia el pipeline, ve sus logs y recibe una copia del resultado; no debe configurar ni consumir una clave API para este taller.
 
 ## Paso 1 — segunda rama desde el mismo estado inicial
 ~~~bash

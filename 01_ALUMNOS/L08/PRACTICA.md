@@ -45,6 +45,6 @@ git status
 Comprueba desde el endpoint real el límite de cuatro horas. Si la base contiene reservas antiguas de mayor duración, **documenta el comportamiento previsto**; no inventes una migración de producción dentro del taller.
 
 ## Paso 6 — CI y cierre
-Sube cambios, observa pipeline remoto GitLab y registra: issue CAM-01, commits, MR, tests nuevos, pruebas antiguas y estado CI. **Si elegiste `feature/CAM-01`, su MR debe apuntar a `practica/manual` y, tras Gate B, CI y revisión humana, debes integrar el cambio y volver a `practica/manual`.** Así L09 y L11 mostrarán la versión guiada completa. Si no hay runner, anota bloqueo; no anuncies «CI verde».
+Documenta el impacto y las pruebas en `docs/entrega/cambio-CAM-01.md`. Sube los cambios revisados y observa el pipeline remoto GitLab y registra: issue CAM-01, commits, MR, tests nuevos, pruebas antiguas y estado CI. **Si elegiste `feature/CAM-01`, su MR debe apuntar a `practica/manual` y, tras Gate B, CI y revisión humana, debes integrar el cambio y volver a `practica/manual`.** Así L09 y L11 mostrarán la versión guiada completa. Si no hay runner, anota bloqueo; no anuncies «CI verde».
 
 **Resultado esperado:** el equipo puede explicar por qué un cambio de negocio vuelve a abrir requisitos, implementación, testing y documentación. Una MR es evidencia del proceso, no solo un mecanismo de subir archivos.

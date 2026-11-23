@@ -11,7 +11,7 @@ Sitúate en **`practica/manual`** y comprueba que contiene **también CAM-01 de 
 Utiliza **METAPROMPT.md** para generar **alm/prompts-generados/07-documentacion.md**. En esta fase la numeración 07 es un paso de cierre documental y no altera la secuencia principal de seis contratos ALM. El prompt debe leer archivos existentes, no inventar componentes, y producir un README útil y una matriz de trazabilidad.
 
 ## Paso 3 — generar y revisar README
-Claude actualiza **README.md** del proyecto GitLab: propósito, límites del MVP, requisitos para instalar, comandos de ejecución de API, prueba con pytest, alcance de CI y limitaciones conocidas. El alumno ejecuta al menos un comando del README y corrige cualquier desajuste.
+Tras el Gate A del prompt documental, Claude actualiza **README.md** del proyecto GitLab: propósito, límites del MVP, requisitos para instalar, comandos de ejecución de API, prueba con pytest, alcance de CI y limitaciones conocidas. El alumno ejecuta al menos un comando del README y corrige cualquier desajuste.
 
 ## Paso 4 — matriz de extremo a extremo
 Genera **docs/trazabilidad/matriz.md** con estas columnas:
