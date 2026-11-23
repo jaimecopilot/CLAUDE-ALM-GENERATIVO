@@ -92,7 +92,8 @@ class Writer:
             self.y += 12
             self.page.insert_text((LEFT, self.y), line, fontname="cour",
                                   fontsize=8.0, color=INK)
-        self.y += 15
+        # Separar visualmente el bloque de código del párrafo siguiente.
+        self.y += 25
 
 
 def page6(page):
