@@ -7,7 +7,7 @@ MODO: prepara un prompt operativo de defensa, NO inventes resultados ni crees so
 Lee únicamente documentos, código, tests, MR y evidencias disponibles del proyecto real.
 
 Escribe alm/prompts-generados/08-evaluacion.md para que, tras revisión del estudiante:
-1. Produzca un guion de demostración de siete minutos.
+1. Produzca un guion de demostración de tres minutos.
 2. Seleccione RF-03 y CAM-01 como ejemplos de trazabilidad.
 3. Enumere rutas, comandos y enlaces reales sin inventar.
 4. Distinga evidencias locales y pipelines remotos.
