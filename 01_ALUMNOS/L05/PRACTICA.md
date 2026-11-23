@@ -13,12 +13,13 @@
 **Prohibido**: pedirle a Claude que implemente login, cobros, notificaciones, Kubernetes o conectores externos; tampoco copiar la solución del profesor.
 
 ## Paso 1 — localizar el trabajo de GitLab
-Selecciona issues ordenadas del backlog. Crea una rama de feature o utiliza la rama entregada por el formador:
+Selecciona issues ordenadas del backlog y trabaja **por defecto en `practica/manual`**, creada en L02. Esta misma rama reunirá los artefactos de L03 a L09 para poder compararlos con el resultado automático del formador en L11:
 ~~~bash
 git status
-git switch -c feature/gestion-reservas
+git switch practica/manual
+git pull --ff-only origin practica/manual
 ~~~
-Si la rama existe, no repitas el comando; mantén el historial. Anota el identificador real de issue y cómo se relaciona con RF-01..RF-04.
+Haz `pull` únicamente con el árbol de trabajo limpio. **Rama opcional:** si deseas aislar una funcionalidad, crea `feature/gestion-reservas` desde `practica/manual`, presenta una MR **hacia `practica/manual`** y no continúes L06 hasta que el cambio aprobado se haya integrado en ella. No dejes el MVP únicamente en la rama feature. Anota la issue real y su relación con RF-01..RF-04.
 
 ## Paso 2 — metaprompt, prompt operativo y aprobación
 Pide a Claude ejecutar **METAPROMPT.md** en modo «solo generar prompt»; debe guardar **alm/prompts-generados/03-desarrollo.md**. Examina el plan: ¿separa sala, reserva y validaciones?, ¿respeta arquitectura?, ¿incluye comandos para instalar, ejecutar y probar?, ¿enumera restricciones? No autorices cambios hasta comprobarlo.
@@ -58,9 +59,9 @@ Realiza commit descriptivo y push cuando los cambios estén razonablemente revis
 ~~~bash
 git add app tests docs alm
 git commit -m "feat: implementar reservas y control de disponibilidad"
-git push -u origin feature/gestion-reservas
+git push -u origin practica/manual
 ~~~
-Las rutas y nombres pueden variar según el proyecto real. Abre una **Merge Request** a la rama protegida que corresponda, enlaza las issues y resume las pruebas locales. **No la fusiones sin revisión.**
+Las rutas y nombres pueden variar según el proyecto real. Si trabajaste directamente en `practica/manual`, abre una **Merge Request en borrador** desde `practica/manual` hacia `main`, enlaza las issues y **no la fusiones durante L05–L09**: las siguientes prácticas completarán el mismo recorrido. Si elegiste una rama feature, la MR debe apuntar a `practica/manual`; tras las comprobaciones y aprobación humana, integra el cambio allí y vuelve a `practica/manual`.
 
 ## Evidencia obligatoria
 1. Rutas reales del código generado y del prompt operativo.
@@ -82,6 +83,6 @@ La aplicación debe ejecutar las operaciones del MVP. En L06 se convertirán los
 2. Confirma `git status` y sincroniza con `git fetch origin` y `git pull --ff-only` en la rama correcta. Si hay cambios locales, revísalos antes de hacer pull.
 3. Claude genera primero `alm/prompts-generados/03-desarrollo.md`. **Gate A:** revisa y autoriza ese archivo; el modo Plan no sustituye su aprobación.
 4. Tras la ejecución, comprueba salida real de tests y `git diff`. **Gate B:** no autorices commit/push sin revisar.
-5. Autoriza commit y `git push`; abre una MR desde GitLab web, MCP o `glab mr create`. No hagas merge automático; examina la CI y sus logs.
+5. Autoriza commit y `git push` en `practica/manual`; abre o actualiza la MR en borrador hacia `main`. No la fusiones automáticamente; la CI se verificará en L07.
 
 **Git no equivale a MCP:** en el clon se publica normalmente mediante Git; en Claude web + MCP los cambios pueden escribirse directamente en GitLab, pero requieren los mismos gates.

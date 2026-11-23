@@ -34,6 +34,6 @@ Pide al compañero que señale en el diagrama dónde se:
 Si no puede ubicar la responsabilidad, el diseño necesita revisión. El ADR debe contener **contexto, alternativas, decisión y consecuencias**; «Claude lo recomienda» no es argumento técnico.
 
 ## Paso 5 — aprobar la fase
-Guarda el prompt, el diseño, el diagrama y el ADR en una rama; registra revisión y gate en **alm/evidencias/registro.md**. No marques el diseño «aprobado» si la especificación aún tiene dudas bloqueantes.
+Guarda el prompt, el diseño, el diagrama y el ADR en la **misma rama `practica/manual`** de L03; registra la revisión y el **Gate B** en **alm/evidencias/registro.md**. **Tras la aprobación**, realiza commit y push de los archivos de diseño, prompt y evidencia, sin modificar `main`. No marques el diseño «aprobado» si la especificación aún tiene dudas bloqueantes.
 
 **Resultado esperado:** la implementación del L05 puede partir del diseño sin redefinir reglas de negocio. **Errores típicos:** patrones innecesarios, módulos inventados, base de datos remota para un taller local, Mermaid que no renderiza, diagrama sin relación con RF-03. Corrige el diseño, no el requisito para justificar el dibujo.

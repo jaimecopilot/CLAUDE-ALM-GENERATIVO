@@ -1,0 +1,237 @@
+name: Validar L02 en Windows, PowerShell 5.1 y Bash
+on:
+  push:
+    branches:
+      - main
+      - "audit/**"
+    paths:
+      - "scripts/Preparar-L02.ps1"
+      - ".github/workflows/validar-l02-windows.yml"
+      - "03_GITLAB_PLANTILLA/**"
+      - "01_ALUMNOS/L02/**"
+      - "01_ALUMNOS/L03/**"
+  pull_request:
+    paths:
+      - "scripts/Preparar-L02.ps1"
+      - ".github/workflows/validar-l02-windows.yml"
+      - "03_GITLAB_PLANTILLA/**"
+      - "01_ALUMNOS/L02/**"
+      - "01_ALUMNOS/L03/**"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  laboratorio-l02:
+    runs-on: windows-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        proyecto:
+          - coworking-alm-junior
+          - coworking-alm-ensayo
+    steps:
+      - name: Obtener los materiales de GitHub
+        uses: actions/checkout@v4
+
+      - name: Configurar identidad Git de ensayo
+        shell: pwsh
+        run: |
+          git config --global user.name "Alumno CI"
+          git config --global user.email "alumno-ci@example.invalid"
+
+      - name: Simular GitLab vacío e importar plantilla por PowerShell
+        shell: pwsh
+        env:
+          PROYECTO: ${{ matrix.proyecto }}
+        run: |
+          $ErrorActionPreference = 'Stop'
+          $root = Join-Path $env:RUNNER_TEMP "ensayo-l02-$env:PROYECTO"
+          New-Item -ItemType Directory -Force -Path $root | Out-Null
+          $remote = Join-Path $root "$env:PROYECTO.git"
+          git init --bare --initial-branch=main $remote
+          if ($LASTEXITCODE -ne 0) { throw 'No se pudo crear el remoto de prueba.' }
+
+          $script = Join-Path $env:GITHUB_WORKSPACE 'scripts/Preparar-L02.ps1'
+          & $script -GitLabRepoUrl $remote -CarpetaTrabajo $root -CursoLocal $env:GITHUB_WORKSPACE -Publicar
+
+          $local = Join-Path $root $env:PROYECTO
+          foreach ($ruta in @('CLAUDE.md', '.gitignore', '.gitlab', 'alm/maestro.md',
+                              'alm/contratos/01-requisitos.md', 'alm/metaprompts/01-requisitos.md',
+                              'docs/instrucciones/CASO_NEGOCIO.md', 'app', 'tests')) {
+            if (-not (Test-Path -LiteralPath (Join-Path $local $ruta))) {
+              throw "No se importó $ruta"
+            }
+          }
+          $archivos = @(git -C $local ls-files)
+          if ($archivos -notcontains '.gitignore') { throw 'Falta .gitignore versionado.' }
+          if (@($archivos | Where-Object { $_ -like '.gitlab/*' }).Count -lt 1) {
+            throw 'Falta .gitlab/ versionado.'
+          }
+          $main = (git -C $local rev-parse refs/heads/main).Trim()
+          $tag = (git -C $local rev-parse refs/tags/base-alm).Trim()
+          $manual = (git -C $local rev-parse refs/heads/practica/manual).Trim()
+          $remoto = (git -C $local rev-parse refs/remotes/origin/main).Trim()
+          if ($main -ne $tag -or $main -ne $manual -or $main -ne $remoto) {
+            throw 'main, base-alm, practica/manual u origin/main no apuntan al mismo commit inicial.'
+          }
+          foreach ($ref in @('refs/heads/main', 'refs/heads/practica/manual', 'refs/tags/base-alm')) {
+            git --git-dir=$remote show-ref --verify $ref
+            if ($LASTEXITCODE -ne 0) { throw "Falta en el remoto: $ref" }
+          }
+          $antes = @(git -C $local rev-list --count main)[0].Trim()
+          # Ejecutar una segunda vez, sin duplicar commits ni sobrescribir el repositorio.
+          & $script -GitLabRepoUrl $remote -CarpetaTrabajo $root -CursoLocal $env:GITHUB_WORKSPACE -Publicar
+          $despues = @(git -C $local rev-list --count main)[0].Trim()
+          if ($antes -ne $despues -or $despues -ne '1') {
+            throw "La repetición añadió commits inesperados: $antes -> $despues."
+          }
+          if ((git -C $local status --porcelain | Out-String).Trim()) {
+            throw 'Quedaron cambios pendientes en el repositorio de ensayo.'
+          }
+          Write-Host "OK: $env:PROYECTO, importación y repetición, main, tag, rama, push y archivos ocultos."
+
+  l03-prerrequisitos-estaticos:
+    runs-on: windows-latest
+    steps:
+      - name: Obtener materiales
+        uses: actions/checkout@v4
+      - name: Verificar entradas y secuencia de L03 sin invocar IA
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = 'Stop'
+          $p = '03_GITLAB_PLANTILLA'
+          foreach ($rel in @(
+            'CLAUDE.md', 'alm/maestro.md', 'alm/contratos/01-requisitos.md',
+            'alm/metaprompts/01-requisitos.md',
+            'docs/instrucciones/CASO_NEGOCIO.md')) {
+            if (-not (Test-Path -LiteralPath (Join-Path $p $rel))) {
+              throw "L03 requiere un archivo ausente en la plantilla: $rel"
+            }
+          }
+          $practica = Get-Content '01_ALUMNOS/L03/PRACTICA.md' -Raw -Encoding UTF8
+          $metaprompt = Get-Content '01_ALUMNOS/L03/METAPROMPT.md' -Raw -Encoding UTF8
+          foreach ($clave in @('Gate A', 'Gate B', '01-requisitos.md', 'CASO_NEGOCIO.md', 'practica/manual')) {
+            if (-not $practica.Contains($clave)) { throw "Falta referencia L03: $clave" }
+          }
+          if (-not $metaprompt.Contains('CASO_NEGOCIO.md')) {
+            throw 'El metaprompt no exige el caso de negocio versionado.'
+          }
+          Write-Host 'OK L03: rutas de entrada y secuencia documental verificadas.'
+          Write-Host 'No constituye una ejecución de Claude ni acredita issues reales en GitLab.'
+
+  powershell-51:
+    name: Windows PowerShell 5.1
+    runs-on: windows-latest
+    steps:
+      - name: Obtener materiales
+        uses: actions/checkout@v4
+      - name: Probar script con Windows PowerShell 5.1
+        shell: powershell
+        run: |
+          $ErrorActionPreference = 'Stop'
+          if ($PSVersionTable.PSVersion.Major -ne 5) {
+            throw "Se esperaba Windows PowerShell 5.1, obtenido $($PSVersionTable.PSVersion)"
+          }
+          git config --global user.name "Alumno Windows 5.1"
+          git config --global user.email "alumno-ps51@example.invalid"
+          $raiz = Join-Path $env:RUNNER_TEMP 'ensayo-ps51'
+          New-Item -ItemType Directory -Force -Path $raiz | Out-Null
+          $remote = Join-Path $raiz 'coworking-alm-ensayo.git'
+          git init --bare --initial-branch=main $remote
+          if ($LASTEXITCODE -ne 0) { throw 'Error creando remoto simulado.' }
+          $script = Join-Path $env:GITHUB_WORKSPACE 'scripts/Preparar-L02.ps1'
+          & $script -GitLabRepoUrl $remote -CarpetaTrabajo $raiz -CursoLocal $env:GITHUB_WORKSPACE -Publicar
+          & $script -GitLabRepoUrl $remote -CarpetaTrabajo $raiz -CursoLocal $env:GITHUB_WORKSPACE -Publicar
+          $destino = Join-Path $raiz 'coworking-alm-ensayo'
+          if (-not (Test-Path (Join-Path $destino 'CLAUDE.md'))) { throw 'Falta CLAUDE.md' }
+          if (-not (Test-Path (Join-Path $destino '.gitlab'))) { throw 'Falta .gitlab' }
+          $nCommits = (git -C $destino rev-list --count main).Trim()
+          if ($nCommits -ne '1') { throw "Se esperaban 1 commit, existen $nCommits" }
+          Write-Host 'OK: PowerShell 5.1, clon inicial, commit, main, tag, rama y segunda ejecución.'
+
+  ubuntu-bash-l02:
+    name: Importacion Bash (${{ matrix.proyecto }})
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        proyecto: [coworking-alm-junior, coworking-alm-ensayo]
+    steps:
+      - name: Obtener materiales
+        uses: actions/checkout@v4
+      - name: Ejecutar clon, copia de archivos ocultos, ramas y tag
+        shell: bash
+        env:
+          PROYECTO: ${{ matrix.proyecto }}
+        run: |
+          set -euo pipefail
+          git config --global user.name "Alumno Bash"
+          git config --global user.email "alumno-bash@example.invalid"
+          raiz="$(mktemp -d)"
+          remote="$raiz/$PROYECTO.git"
+          git init --bare --initial-branch=main "$remote"
+          git clone "$remote" "$raiz/$PROYECTO"
+          nombre="$(basename "$remote" .git)"
+          git -C "$raiz/$nombre" symbolic-ref HEAD refs/heads/main
+          cp -R "$GITHUB_WORKSPACE/03_GITLAB_PLANTILLA/." "$raiz/$nombre/"
+          git -C "$raiz/$nombre" add -A
+          git -C "$raiz/$nombre" commit -m "chore: incorporar plantilla del curso"
+          git -C "$raiz/$nombre" push -u origin main
+          git -C "$raiz/$nombre" tag base-alm
+          git -C "$raiz/$nombre" push origin base-alm
+          git -C "$raiz/$nombre" switch -c practica/manual
+          git -C "$raiz/$nombre" push -u origin practica/manual
+          test "$(git -C "$raiz/$nombre" rev-parse HEAD)" = "$(git -C "$raiz/$nombre" rev-parse base-alm)"
+          git -C "$raiz/$nombre" ls-files | grep -q '^\.gitignore$'
+          git -C "$raiz/$nombre" ls-files | grep -q '^\.gitlab/'
+          test -z "$(git -C "$raiz/$nombre" status --porcelain)"
+          echo "OK Bash: $PROYECTO, main, base-alm, practica/manual, archivos ocultos."
+
+  l03-git-simulado:
+    name: L03 - commits y push sobre practica/manual (sin Claude)
+    runs-on: windows-latest
+    steps:
+      - name: Obtener materiales
+        uses: actions/checkout@v4
+      - name: Validar transicion L02-L03 sin modelo ni GitLab externo
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = 'Stop'
+          git config --global user.name "Alumno L03"
+          git config --global user.email "alumno-l03@example.invalid"
+          $root = Join-Path $env:RUNNER_TEMP 'ensayo-l03'
+          New-Item -ItemType Directory -Force -Path $root | Out-Null
+          $remote = Join-Path $root 'coworking-alm-junior.git'
+          git init --bare --initial-branch=main $remote
+          if ($LASTEXITCODE -ne 0) { throw 'Error inicializando remoto simulado.' }
+          $script = Join-Path $env:GITHUB_WORKSPACE 'scripts/Preparar-L02.ps1'
+          & $script -GitLabRepoUrl $remote -CarpetaTrabajo $root -CursoLocal $env:GITHUB_WORKSPACE -Publicar
+          $dest = Join-Path $root 'coworking-alm-junior'
+          $base = (git -C $dest rev-parse base-alm).Trim()
+          git -C $dest switch practica/manual
+          if ($LASTEXITCODE -ne 0) { throw 'No se pudo activar practica/manual.' }
+          $prompt = Join-Path $dest 'alm/prompts-generados/01-requisitos.md'
+          $spec = Join-Path $dest 'docs/requisitos/especificacion.md'
+          $backlog = Join-Path $dest 'docs/requisitos/backlog.md'
+          New-Item -ItemType Directory -Force -Path (Split-Path $prompt) | Out-Null
+          New-Item -ItemType Directory -Force -Path (Split-Path $spec) | Out-Null
+          'SIMULACION DE GIT, NO GENERACION REAL DE CLAUDE' | Set-Content $prompt
+          'SIMULACION DE GIT, NO REQUISITOS APROBADOS' | Set-Content $spec
+          'SIMULACION DE GIT, NO ISSUES REALES' | Set-Content $backlog
+          Add-Content (Join-Path $dest 'alm/evidencias/registro.md') 'ENSAYO AUTOMATICO, NO ES GATE HUMANO'
+          git -C $dest add alm/prompts-generados/01-requisitos.md docs/requisitos alm/evidencias/registro.md
+          if ($LASTEXITCODE -ne 0) { throw 'git add de L03 ha fallado.' }
+          git -C $dest commit -m 'test: simular publicacion de requisitos'
+          if ($LASTEXITCODE -ne 0) { throw 'git commit de L03 ha fallado.' }
+          git -C $dest push -u origin practica/manual
+          if ($LASTEXITCODE -ne 0) { throw 'git push de L03 ha fallado.' }
+          $manual = (git -C $dest rev-parse refs/remotes/origin/practica/manual).Trim()
+          $main = (git -C $dest rev-parse refs/remotes/origin/main).Trim()
+          $tag = (git -C $dest rev-parse base-alm).Trim()
+          if ($manual -eq $main -or $tag -ne $base -or $main -ne $base) {
+            throw 'La generacion L03 simulada cambio main/base-alm o no avanzo practica/manual.'
+          }
+          Write-Host 'OK L03 Git: archivos, commit, push en practica/manual; main y base-alm intactos.'
+          Write-Host 'La prueba NO ejecuta Claude ni crea issues GitLab.'

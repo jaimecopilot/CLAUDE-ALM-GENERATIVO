@@ -5,7 +5,7 @@
 **60 min:** preparación 10, demostraciones individuales 36, preguntas cruzadas 9, cierre 5.
 
 ## Preparación
-Cada alumno prepara una demostración de tres minutos con su GitLab personal. En un grupo de 12 personas, 12 × 3 son 36 minutos. Muestra tu rama `practica/manual` y la copia de la ejecución central del formador en `referencia/alm-automatico`. Si existe una rama `practica/automatica` con YAML de estudio, explica que no constituye una ejecución de API. No generes código nuevo durante la defensa.
+Cada alumno prepara una demostración de tres minutos con su GitLab personal. En un grupo de 12 personas, 12 × 3 son 36 minutos. Muestra tu rama **`practica/manual` con todo el trabajo L03–L09, incluido CAM-01** y la copia de la ejecución central del formador en `referencia/alm-automatico`. Antes de la defensa, verifica que ninguna funcionalidad aprobada haya quedado solo en una rama `feature` no integrada. Si existe una rama `practica/automatica` con YAML de estudio, explica que no constituye una ejecución de API. No generes código nuevo durante la defensa.
 
 ## Guion obligatorio de demostración
 0. **Dos recorridos:** muestra los resultados manual y automático, o el bloqueo real del pipeline GitLab.

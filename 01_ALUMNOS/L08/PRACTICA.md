@@ -26,7 +26,7 @@ Si propone reescribir toda la aplicación, solicita una reducción razonada del 
 Ejecuta **METAPROMPT.md** y crea **alm/prompts-generados/06-evolucion.md**. Revisa que el prompt haga volver a los requisitos antes de tocar el código, que incluya tests nuevos y que mantenga las reglas de solapamiento y cancelación.
 
 ## Paso 4 — ejecutar el cambio
-En una rama nueva, autoriza:
+Para aislar CAM-01, crea la rama `feature/CAM-01` **desde `practica/manual`** (comprueba primero `git status` y sincroniza con `origin/practica/manual`). Alternativamente, si el formador autoriza trabajar sin feature, continúa en `practica/manual`. Tras Gate A, autoriza:
 1. editar RF/CA afectado y su historia;
 2. actualizar diseño/ADR solo si una decisión realmente cambia;
 3. incorporar validación de duración máxima;
@@ -45,6 +45,6 @@ git status
 Comprueba desde el endpoint real el límite de cuatro horas. Si la base contiene reservas antiguas de mayor duración, **documenta el comportamiento previsto**; no inventes una migración de producción dentro del taller.
 
 ## Paso 6 — CI y cierre
-Sube cambios, observa pipeline remoto GitLab y registra: issue CAM-01, commits, MR, tests nuevos, pruebas antiguas y estado CI. Si no hay runner, anota bloqueo; no anuncies «CI verde».
+Sube cambios, observa pipeline remoto GitLab y registra: issue CAM-01, commits, MR, tests nuevos, pruebas antiguas y estado CI. **Si elegiste `feature/CAM-01`, su MR debe apuntar a `practica/manual` y, tras Gate B, CI y revisión humana, debes integrar el cambio y volver a `practica/manual`.** Así L09 y L11 mostrarán la versión guiada completa. Si no hay runner, anota bloqueo; no anuncies «CI verde».
 
 **Resultado esperado:** el equipo puede explicar por qué un cambio de negocio vuelve a abrir requisitos, implementación, testing y documentación. Una MR es evidencia del proceso, no solo un mecanismo de subir archivos.
