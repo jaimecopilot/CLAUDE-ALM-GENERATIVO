@@ -22,6 +22,8 @@ git pull --ff-only origin practica/manual
 Haz `pull` únicamente con el árbol de trabajo limpio. **Rama opcional:** si deseas aislar una funcionalidad, crea `feature/gestion-reservas` desde `practica/manual`, presenta una MR **hacia `practica/manual`** y no continúes L06 hasta que el cambio aprobado se haya integrado en ella. No dejes el MVP únicamente en la rama feature. Anota la issue real y su relación con RF-01..RF-04.
 
 ## Paso 2 — metaprompt, prompt operativo y aprobación
+Si preparaste GitLab con una edición anterior, abre `alm/metaprompts/03-desarrollo.md`. Si pide cuatro incrementos, revisa el cambio y actualiza ese archivo con la [versión del curso](../../03_GITLAB_PLANTILLA/alm/metaprompts/03-desarrollo.md) en tu rama de trabajo.
+
 Pide a Claude ejecutar **METAPROMPT.md** en modo «solo generar prompt»; debe guardar **alm/prompts-generados/03-desarrollo.md**. Examina el plan: ¿separa sala, reserva y validaciones?, ¿respeta arquitectura?, ¿incluye comandos para instalar, ejecutar y probar?, ¿enumera restricciones? No autorices cambios hasta comprobarlo.
 
 ## Paso 3 — I1. Listado de salas

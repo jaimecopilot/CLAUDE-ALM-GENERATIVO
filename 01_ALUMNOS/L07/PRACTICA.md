@@ -11,6 +11,8 @@ Aplicación de L05, pruebas de L06, **alm/contratos/05-devops.md**, requirements
 El alumno escribe las condiciones de aceptación del pipeline: cada actualización de MR debe lanzar validación; pytest debe fallar el job si falla un test; un paquete o artefacto se guarda al finalizar; los secretos no se escriben en YAML. Decide con el formador si el runner puede ejecutar Python sin Docker.
 
 ## Paso 2 — generar prompt operativo
+Si preparaste GitLab con una edición anterior, abre `alm/metaprompts/05-devops.md`. Si termina a mitad de una frase, revisa el cambio y actualiza ese archivo con la [versión completa del curso](../../03_GITLAB_PLANTILLA/alm/metaprompts/05-devops.md) en `practica/manual` antes de seguir. Si lo has actualizado, incluye también `git add alm/metaprompts/05-devops.md` al preparar el commit del paso 4.
+
 Ejecuta **METAPROMPT.md** y exige **alm/prompts-generados/05-devops.md**. Comprueba que el prompt conoce las rutas reales de la aplicación y los comandos que ya funcionan localmente. No permitir que Claude invente un despliegue en AWS o una variable secreta que nadie ha provisionado.
 
 ## Paso 3 — crear .gitlab-ci.yml
