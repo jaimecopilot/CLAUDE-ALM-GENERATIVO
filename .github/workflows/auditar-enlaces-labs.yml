@@ -3,6 +3,7 @@ name: Auditar enlaces y continuidad L01-L11
 on:
   push:
     branches:
+      - main
       - "audit/**"
     paths:
       - "01_ALUMNOS/**"
