@@ -2,11 +2,11 @@
 
 **Ámbito:** repositorio de materiales `jaimecopilot/CLAUDE-ALM-GENERATIVO`, laboratorios L01–L11, plantilla y guía general PDF.
 
-**Rama de corrección:** `audit/l02-windows-actions-20261123`, presentada mediante una Pull Request **en borrador**. No se han fusionado estas correcciones a `main`.
+**Rama de corrección inicial:** `audit/l02-windows-actions-20261123`, revisión en la [Pull Request #1](https://github.com/jaimecopilot/CLAUDE-ALM-GENERATIVO/pull/1). El estado de publicación y merge debe consultarse allí; la auditoría distingue siempre pruebas automáticas de ejecución real en GitLab.
 
 ## Evidencia real de GitHub Actions
 
-- [L02 validado en Windows PowerShell 7, Windows PowerShell 5.1 y Bash/Ubuntu](https://github.com/jaimecopilot/CLAUDE-ALM-GENERATIVO/actions/runs/45138841793). Se utilizan repositorios Git bare locales simulados, sin credenciales ni proyecto GitLab privado.
+- [L02 validado en Windows PowerShell 7, Windows PowerShell 5.1 y Bash/Ubuntu, más Git simulado de L03](https://github.com/jaimecopilot/CLAUDE-ALM-GENERATIVO/actions/runs/45138979234). Se utilizan repositorios Git bare locales simulados, sin credenciales ni proyecto GitLab privado.
 - [Enlaces internos y continuidad de ramas](https://github.com/jaimecopilot/CLAUDE-ALM-GENERATIVO/actions/runs/45138841753): 56 archivos Markdown examinados, 46 enlaces relativos, 0 incidencias.
 - [PDF de 23 páginas corregido](https://github.com/jaimecopilot/CLAUDE-ALM-GENERATIVO/actions/runs/45138089460). Las páginas 6 y 7 se han sustituido conservando las restantes, y se han inspeccionado sus vistas.
 - La prueba complementaria L03 de commits y push utiliza **datos simulados**, no genera requisitos ni issues reales ni consume Claude API; consultar el último workflow de L02.
@@ -41,4 +41,4 @@
 
 **No probado todavía:** acceso real al GitLab privado del alumno, OAuth/SSH/HTTPS y permisos, ejecución interactiva de Claude Code, preguntas al cliente, issues GitLab, API generada, pruebas funcionales del MVP, GitLab CI, ni los 6 jobs ALM automáticos.
 
-No confundir el éxito de Actions con una prueba de sistema completa. No fusionar hasta revisar la guía PDF y decidir cómo registrar/verificar los pasos reales con el formador.
+No confundir el éxito de Actions con una prueba de sistema completa. La guía PDF ya se revisó visualmente; queda pendiente la comprobación de autenticación y del flujo real de Claude/GitLab por el formador antes de declarar completada la práctica docente.
