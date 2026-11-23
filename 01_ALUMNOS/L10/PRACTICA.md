@@ -14,6 +14,8 @@ git switch -c practica/automatica base-alm
 ~~~
 La rama de estudio debe tener los seis contratos y metaprompts, pero no las especificaciones/código generados en L03–L09. El resultado compartido llegará a otra rama independiente: `referencia/alm-automatico`.
 
+**Si preparaste L02 con una edición anterior.** En la nueva rama `practica/automatica`, compara los metaprompts de [diseño](../../03_GITLAB_PLANTILLA/alm/metaprompts/02-diseno.md), [desarrollo](../../03_GITLAB_PLANTILLA/alm/metaprompts/03-desarrollo.md) y [DevOps](../../03_GITLAB_PLANTILLA/alm/metaprompts/05-devops.md), y el [contrato de DevOps](../../03_GITLAB_PLANTILLA/alm/contratos/05-devops.md) con la plantilla vigente del curso. Debes encontrar la cancelación mediante `DELETE /reservas/{id}`, tres incrementos de desarrollo y las tres etapas de CI `quality`, `test` y `package`. En algunas copias antiguas el metaprompt de DevOps acaba a mitad del punto 4. Si hay diferencias, copia solo esos archivos de la plantilla a las mismas rutas bajo `alm/`, revisa el diff y versiona la actualización en esa rama antes de generar el YAML. Conserva la etiqueta `base-alm` y registra el commit de la actualización para la comparación de L11.
+
 ## Paso 2 — crear el pipeline con Claude
 Abre Claude Code sobre esta rama y utiliza [METAPROMPT.md](./METAPROMPT.md). Claude genera el archivo **`.gitlab-ci.yml`** y los scripts de apoyo necesarios. Incluye jobs **alm_requisitos, alm_diseno, alm_desarrollo, alm_testing, alm_devops y alm_evolucion**.
 
