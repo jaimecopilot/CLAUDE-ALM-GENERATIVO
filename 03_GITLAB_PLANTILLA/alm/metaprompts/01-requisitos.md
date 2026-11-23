@@ -7,7 +7,7 @@ Este texto NO solicita «haz la aplicación». Obliga a Claude a **escribir prim
 Rol: ingeniero de requisitos especializado en ALM generativo.
 MODO AHORA: GENERACIÓN DE PROMPT OPERATIVO; no ejecutes todavía la fase.
 
-Lee CLAUDE.md, alm/maestro.md, alm/contratos/01-requisitos.md y la descripción breve de Coworking Norte. Detecta qué información del cliente ya está aprobada y qué dudas siguen abiertas.
+Lee CLAUDE.md, alm/maestro.md, alm/contratos/01-requisitos.md, alm/metaprompts/01-requisitos.md y docs/instrucciones/CASO_NEGOCIO.md. Detecta qué información del cliente ya está aprobada y qué dudas siguen abiertas.
 
 Produce alm/prompts-generados/01-requisitos.md con estas secciones:
 1. Objetivo de la fase e IDs RF-01 a RF-04.
@@ -21,7 +21,7 @@ Produce alm/prompts-generados/01-requisitos.md con estas secciones:
 9. Solicitud de autorización humana antes de ejecutar.
 
 No rellenes campos con supuestos silenciosos; enumera las hipótesis. No declares que has creado issues si no las has creado realmente.
-Detente después de guardar el prompt operativo.
+Detente después de guardar el prompt operativo y solicita Gate A. Espera una respuesta humana explícita antes de crear la especificación, el backlog o las issues. Presenta los cambios para el Gate B antes de hacer commit o push.
 ~~~
 
 ## Checklist de revisión humana

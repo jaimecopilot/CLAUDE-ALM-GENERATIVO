@@ -16,10 +16,12 @@ Ejecuta **METAPROMPT.md** y exige **alm/prompts-generados/05-devops.md**. Compru
 ## Paso 3 — crear .gitlab-ci.yml
 Tras aprobar el prompt, Claude genera el YAML del pipeline GitLab con las fases necesarias: al menos test y un job de preparación de artefactos; lint si encaja. El alumno debe localizar cada job y explicar qué valida, qué dispara el pipeline y cómo se asegura de que un fallo de pytest no pasa inadvertido.
 
+Antes del commit, guarda en `docs/entrega/informe.md` los comandos, los jobs previstos y el artefacto que debe producirse. Deja pendiente el resultado hasta ejecutar el pipeline.
+
 ## Paso 4 — inspección y push
 Revisa el YAML y haz commit en la rama de trabajo:
 ~~~bash
-git add .gitlab-ci.yml docs/entrega alm/prompts-generados/05-devops.md alm/evidencias/registro.md
+git add .gitlab-ci.yml docs/entrega/informe.md alm/prompts-generados/05-devops.md alm/evidencias/registro.md
 git diff --cached --stat
 git commit -m "ci: comprobar app y tests desde GitLab"
 git push
@@ -41,6 +43,8 @@ Registrar:
 - Registro del fallo/reparación si ocurrió.
 - Artefacto generado y guía breve de uso.
 - Aprobación humana; no merge automático.
+
+Completa `docs/entrega/informe.md` y `alm/evidencias/registro.md` con el resultado observado y el enlace al pipeline del commit probado. Tras la revisión, publica esos dos archivos en `practica/manual` con un segundo commit.
 
 
 ## Consultar y diagnosticar CI desde Claude Code (opcional)
