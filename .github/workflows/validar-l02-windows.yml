@@ -187,3 +187,50 @@ jobs:
           git -C "$raiz/$nombre" ls-files | grep -q '^\.gitlab/'
           test -z "$(git -C "$raiz/$nombre" status --porcelain)"
           echo "OK Bash: $PROYECTO, main, base-alm, practica/manual, archivos ocultos."
+
+  l03-git-simulado:
+    name: L03 - commits y push sobre practica/manual (sin Claude)
+    runs-on: windows-latest
+    steps:
+      - name: Obtener materiales
+        uses: actions/checkout@v4
+      - name: Validar transicion L02-L03 sin modelo ni GitLab externo
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = 'Stop'
+          git config --global user.name "Alumno L03"
+          git config --global user.email "alumno-l03@example.invalid"
+          $root = Join-Path $env:RUNNER_TEMP 'ensayo-l03'
+          New-Item -ItemType Directory -Force -Path $root | Out-Null
+          $remote = Join-Path $root 'coworking-alm-junior.git'
+          git init --bare --initial-branch=main $remote
+          if ($LASTEXITCODE -ne 0) { throw 'Error inicializando remoto simulado.' }
+          $script = Join-Path $env:GITHUB_WORKSPACE 'scripts/Preparar-L02.ps1'
+          & $script -GitLabRepoUrl $remote -CarpetaTrabajo $root -CursoLocal $env:GITHUB_WORKSPACE -Publicar
+          $dest = Join-Path $root 'coworking-alm-junior'
+          $base = (git -C $dest rev-parse base-alm).Trim()
+          git -C $dest switch practica/manual
+          if ($LASTEXITCODE -ne 0) { throw 'No se pudo activar practica/manual.' }
+          $prompt = Join-Path $dest 'alm/prompts-generados/01-requisitos.md'
+          $spec = Join-Path $dest 'docs/requisitos/especificacion.md'
+          $backlog = Join-Path $dest 'docs/requisitos/backlog.md'
+          New-Item -ItemType Directory -Force -Path (Split-Path $prompt) | Out-Null
+          New-Item -ItemType Directory -Force -Path (Split-Path $spec) | Out-Null
+          'SIMULACION DE GIT, NO GENERACION REAL DE CLAUDE' | Set-Content $prompt
+          'SIMULACION DE GIT, NO REQUISITOS APROBADOS' | Set-Content $spec
+          'SIMULACION DE GIT, NO ISSUES REALES' | Set-Content $backlog
+          Add-Content (Join-Path $dest 'alm/evidencias/registro.md') 'ENSAYO AUTOMATICO, NO ES GATE HUMANO'
+          git -C $dest add alm/prompts-generados/01-requisitos.md docs/requisitos alm/evidencias/registro.md
+          if ($LASTEXITCODE -ne 0) { throw 'git add de L03 ha fallado.' }
+          git -C $dest commit -m 'test: simular publicacion de requisitos'
+          if ($LASTEXITCODE -ne 0) { throw 'git commit de L03 ha fallado.' }
+          git -C $dest push -u origin practica/manual
+          if ($LASTEXITCODE -ne 0) { throw 'git push de L03 ha fallado.' }
+          $manual = (git -C $dest rev-parse refs/remotes/origin/practica/manual).Trim()
+          $main = (git -C $dest rev-parse refs/remotes/origin/main).Trim()
+          $tag = (git -C $dest rev-parse base-alm).Trim()
+          if ($manual -eq $main -or $tag -ne $base -or $main -ne $base) {
+            throw 'La generacion L03 simulada cambio main/base-alm o no avanzo practica/manual.'
+          }
+          Write-Host 'OK L03 Git: archivos, commit, push en practica/manual; main y base-alm intactos.'
+          Write-Host 'La prueba NO ejecuta Claude ni crea issues GitLab.'
