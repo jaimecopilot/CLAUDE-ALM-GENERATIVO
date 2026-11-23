@@ -8,12 +8,14 @@ on:
       - ".github/workflows/validar-l02-windows.yml"
       - "03_GITLAB_PLANTILLA/**"
       - "01_ALUMNOS/L02/**"
+      - "01_ALUMNOS/L03/**"
   pull_request:
     paths:
       - "scripts/Preparar-L02.ps1"
       - ".github/workflows/validar-l02-windows.yml"
       - "03_GITLAB_PLANTILLA/**"
       - "01_ALUMNOS/L02/**"
+      - "01_ALUMNOS/L03/**"
   workflow_dispatch:
 
 permissions:
@@ -88,3 +90,32 @@ jobs:
             throw 'Quedaron cambios pendientes en el repositorio de ensayo.'
           }
           Write-Host "OK: $env:PROYECTO, importación y repetición, main, tag, rama, push y archivos ocultos."
+
+  l03-prerrequisitos-estaticos:
+    runs-on: windows-latest
+    steps:
+      - name: Obtener materiales
+        uses: actions/checkout@v4
+      - name: Verificar entradas y secuencia de L03 sin invocar IA
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = 'Stop'
+          $p = '03_GITLAB_PLANTILLA'
+          foreach ($rel in @(
+            'CLAUDE.md', 'alm/maestro.md', 'alm/contratos/01-requisitos.md',
+            'alm/metaprompts/01-requisitos.md',
+            'docs/instrucciones/CASO_NEGOCIO.md')) {
+            if (-not (Test-Path -LiteralPath (Join-Path $p $rel))) {
+              throw "L03 requiere un archivo ausente en la plantilla: $rel"
+            }
+          }
+          $practica = Get-Content '01_ALUMNOS/L03/PRACTICA.md' -Raw -Encoding UTF8
+          $metaprompt = Get-Content '01_ALUMNOS/L03/METAPROMPT.md' -Raw -Encoding UTF8
+          foreach ($clave in @('Gate A', 'Gate B', '01-requisitos.md', 'CASO_NEGOCIO.md', 'practica/manual')) {
+            if (-not $practica.Contains($clave)) { throw "Falta referencia L03: $clave" }
+          }
+          if (-not $metaprompt.Contains('CASO_NEGOCIO.md')) {
+            throw 'El metaprompt no exige el caso de negocio versionado.'
+          }
+          Write-Host 'OK L03: rutas de entrada y secuencia documental verificadas.'
+          Write-Host 'No constituye una ejecución de Claude ni acredita issues reales en GitLab.'
