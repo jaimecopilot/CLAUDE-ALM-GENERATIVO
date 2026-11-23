@@ -11,20 +11,22 @@ Aplicación de L05, pruebas de L06, **alm/contratos/05-devops.md**, requirements
 El alumno escribe las condiciones de aceptación del pipeline: cada actualización de MR debe lanzar validación; pytest debe fallar el job si falla un test; un paquete o artefacto se guarda al finalizar; los secretos no se escriben en YAML. Decide con el formador si el runner puede ejecutar Python sin Docker.
 
 ## Paso 2 — generar prompt operativo
+Si preparaste GitLab con una edición anterior, abre `alm/metaprompts/05-devops.md`. Si termina a mitad de una frase, revisa el cambio y actualiza ese archivo con la [versión completa del curso](../../03_GITLAB_PLANTILLA/alm/metaprompts/05-devops.md) en `practica/manual` antes de seguir. Si lo has actualizado, incluye también `git add alm/metaprompts/05-devops.md` al preparar el commit del paso 4.
+
 Ejecuta **METAPROMPT.md** y exige **alm/prompts-generados/05-devops.md**. Comprueba que el prompt conoce las rutas reales de la aplicación y los comandos que ya funcionan localmente. No permitir que Claude invente un despliegue en AWS o una variable secreta que nadie ha provisionado.
 
 ## Paso 3 — crear .gitlab-ci.yml
-Tras aprobar el prompt, Claude genera el YAML del pipeline GitLab con las fases necesarias: al menos test y un job de preparación de artefactos; lint si encaja. El alumno debe localizar cada job y explicar qué valida, qué dispara el pipeline y cómo se asegura de que un fallo de pytest no pasa inadvertido.
+Tras aprobar el prompt, Claude genera el YAML del pipeline GitLab con tres etapas: `quality` comprueba la sintaxis y ejecuta lint si está configurado, `test` ejecuta pytest y `package` publica un archivo .tar.gz con el código y las instrucciones de instalación. Usa Python 3.12 como en el manual (imagen `python:3.12-slim` si el runner usa contenedores). El alumno debe localizar cada job y explicar qué valida, qué dispara el pipeline y cómo se asegura de que un fallo de pytest no pasa inadvertido.
 
 Antes del commit, guarda en `docs/entrega/informe.md` los comandos, los jobs previstos y el artefacto que debe producirse. Deja pendiente el resultado hasta ejecutar el pipeline.
 
 ## Paso 4 — inspección y push
-Revisa el YAML y haz commit en la rama de trabajo:
+Comprueba con `git branch --show-current` que estás en `practica/manual`. Revisa el YAML y prepara la publicación en esa rama.
 ~~~bash
-git add .gitlab-ci.yml docs/entrega/informe.md alm/prompts-generados/05-devops.md alm/evidencias/registro.md
+git add .gitlab-ci.yml docs/entrega alm/prompts-generados/05-devops.md alm/evidencias/registro.md
 git diff --cached --stat
-git commit -m "ci: comprobar app y tests desde GitLab"
-git push
+git commit -m "ci: validar y empaquetar MVP"
+git push -u origin practica/manual
 ~~~
 El push actualiza la MR en borrador `practica/manual` → `main`. Abre **Build → Pipelines** en GitLab y busca la ejecución asociada a ese commit o MR. **No está aprobado hasta comprobar su estado en la instancia real.**
 

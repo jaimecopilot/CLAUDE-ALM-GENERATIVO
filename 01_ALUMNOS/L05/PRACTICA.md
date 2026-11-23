@@ -22,20 +22,22 @@ git pull --ff-only origin practica/manual
 Haz `pull` únicamente con el árbol de trabajo limpio. **Rama opcional:** si deseas aislar una funcionalidad, crea `feature/gestion-reservas` desde `practica/manual`, presenta una MR **hacia `practica/manual`** y no continúes L06 hasta que el cambio aprobado se haya integrado en ella. No dejes el MVP únicamente en la rama feature. Anota la issue real y su relación con RF-01..RF-04.
 
 ## Paso 2 — metaprompt, prompt operativo y aprobación
+Si preparaste GitLab con una edición anterior, abre `alm/metaprompts/03-desarrollo.md`. Si pide cuatro incrementos, revisa el cambio y actualiza ese archivo con la [versión del curso](../../03_GITLAB_PLANTILLA/alm/metaprompts/03-desarrollo.md) en tu rama de trabajo.
+
 Pide a Claude ejecutar **METAPROMPT.md** en modo «solo generar prompt»; debe guardar **alm/prompts-generados/03-desarrollo.md**. Examina el plan: ¿separa sala, reserva y validaciones?, ¿respeta arquitectura?, ¿incluye comandos para instalar, ejecutar y probar?, ¿enumera restricciones? No autorices cambios hasta comprobarlo.
 
-## Paso 3 — primer incremento: salas
+## Paso 3 — I1. Listado de salas
 Autoriza generar un endpoint **GET /salas** con datos de ejemplo o persistidos según diseño. Comprueba que FastAPI se inicia. El resultado es una respuesta JSON legible y comprobable desde navegador o herramienta HTTP. No añadas una interfaz compleja antes de que la API responda.
 
 Prueba manual: realiza la petición, observa HTTP 200 y la estructura de salas. Registra si los datos son persistentes o de arranque.
 
-## Paso 4 — segundo incremento: alta de reservas
+## Paso 4 — I2. Alta de reservas
 Autoriza implementar el modelo y **POST /reservas** con validación de sala y fechas. Prueba al menos un caso válido y una fecha inicial posterior a la final. La respuesta debe permitir reconocer qué reserva se creó; una entrada inválida no puede dejar cambios parciales.
 
 ### Caso mínimo de éxito
 Sala S1 sin reservas. Solicitar S1 de 10:00 a 11:00 (misma fecha y zona explícita). Debe guardarse y ser recuperable o verificable con los datos de la API.
 
-## Paso 5 — tercer incremento: evitar conflictos
+## Paso 5 — I2 (continuación). Comprobación de solapamientos
 Ahora pide únicamente la regla RF-03. Explica por qué es una regla de negocio y no un detalle de interfaz. Pide a Claude que no modifique tests para silenciar un fallo. Ejecuta manualmente tres casos:
 - Reserva 10:00–11:00 activa; solicitar 10:30–11:30 → rechazo 409.
 - Reserva 10:00–11:00 activa; solicitar 11:00–12:00 → aceptada si no hay otra reserva.
@@ -43,8 +45,10 @@ Ahora pide únicamente la regla RF-03. Explica por qué es una regla de negocio 
 
 Si se produce un resultado diferente, captura entrada, salida y causa probable; pide corrección focalizada y repite.
 
-## Paso 6 — cuarto incremento: cancelación
+## Paso 6 — I3. Cancelación
 Pide implementar **DELETE /reservas/{id}** o ruta acordada para cancelar una reserva existente. Prueba la misma franja de tiempo antes y después de cancelar: después debe poder reservarse de nuevo. Comprueba que cancelar una reserva inexistente tiene una respuesta consistente con los requisitos.
+
+Después de comprobar la API, añade el formulario mínimo del manual. Debe usar la API para listar salas, crear y cancelar reservas. Comprueba desde el navegador que una cancelación libera la franja.
 
 ## Paso 7 — prueba de la aplicación y diff
 Lee los cambios:

@@ -52,6 +52,9 @@ for file in DOCS:
             if not resolved.is_relative_to(ROOT) or not resolved.exists():
                 errors.append(f"{rel(file)}:{lineno}: enlace roto: {target}")
 
+    if in_code:
+        errors.append(f"{rel(file)}: bloque de código sin cierre al final del archivo")
+
 required = [
     "03_GITLAB_PLANTILLA/CLAUDE.md",
     "03_GITLAB_PLANTILLA/alm/maestro.md",

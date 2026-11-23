@@ -15,13 +15,13 @@ Lee estas entradas reales:
 Genera exclusivamente alm/prompts-generados/05-devops.md.
 El prompt operativo que redactes deberá solicitar, tras aprobación humana:
 1. Crear un .gitlab-ci.yml válido para GitLab CI (no GitHub Actions).
-2. Instalar dependencias de una versión Python compatible y ejecutar pytest.
+2. Definir tres etapas: quality, test y package. Usar Python 3.12 para instalar las dependencias. Comprobar sintaxis en quality, ejecutar pytest en test y producir en package un .tar.gz descargable con código e instrucciones.
 3. Incorporar lint con ruff cuando sea compatible con la configuración real.
 4. Propagar errores de los comandos y fallar el job si falla una prueba obligatoria.
 5. No desactivar tests, no usar allow_failure: true ni expresiones que ignoren errores.
 6. Evitar secretos en archivos, logs y prompts; L07 no necesita Anthropic API.
 7. Evitar trabajos recursivos, despliegues cloud no aprobados y generación inconexa de requisitos.
-8. Documentar los pasos commit → push → GitLab Build/Pipelines → inspección de job y log.
+8. Crear docs/entrega/informe.md y documentar los pasos commit → push → GitLab Build/Pipelines → inspección de job y log.
 9. Explicar cómo diagnosticar fallos de runner, dependencias, descubrimiento de pruebas o YAML.
 10. Registrar el gate de salida: YAML revisado, job ejecutado realmente, estado y logs comprobados o bloqueo explícito.
 

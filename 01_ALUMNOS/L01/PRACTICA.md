@@ -3,10 +3,10 @@
 **Duración: 30 min.** 5 para la petición inicial, 5 para revisar supuestos, 15 para los criterios y 5 para el cierre.
 
 ## Objetivo y precondición
-Comprender mediante una experiencia pequeña por qué el ALM generativo necesita especificaciones y validaciones. Basta con Claude web o Claude Code para esta demostración; los siguientes laboratorios requieren Claude Code. No subir datos reales a ningún modelo.
+Comprender mediante una experiencia pequeña por qué el ALM generativo necesita especificaciones y validaciones. Para esta demostración puedes usar Claude web o Claude Code. El manual muestra la vía de Claude Code en un directorio temporal. En las prácticas posteriores, consulta la herramienta indicada en cada laboratorio. No subir datos reales a ningún modelo.
 
 ## Actividad A — petición vaga (5 min)
-Introduce exactamente esta petición: «Crea un sistema web para gestionar reservas de salas de coworking». Pide una implementación pequeña, sin complicar el entorno. No entregues todavía las reglas de negocio.
+Introduce exactamente esta petición: «Crea un sistema web para gestionar reservas de salas de coworking». Pide una implementación pequeña, sin complicar el entorno. No entregues todavía las reglas de negocio. Si se genera una aplicación ejecutable, intenta reservar dos veces la misma sala a la misma hora, cancelar y volver a reservar, e introducir un intervalo invertido. Registra qué ocurre en cada caso.
 
 Anota en una tabla: ¿qué atributos tiene una sala?, ¿cómo se representa la reserva?, ¿hay persistencia?, ¿impide reservas simultáneas?, ¿qué hace cuando falta un campo?, ¿qué pruebas propone? **No marques como verificado algo que solo aparece en la explicación de Claude.**
 

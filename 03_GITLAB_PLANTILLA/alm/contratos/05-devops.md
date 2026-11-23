@@ -16,7 +16,7 @@
 - [ ] YAML específico GitLab
 - [ ] Jobs verifican tests
 - [ ] No usa secretos de Claude en GitLab CI
-- [ ] Artefacto reproducible o informe
+- [ ] Paquete .tar.gz descargable e informe de entrega con los resultados observados
 - [ ] Estado CI real documentado, o bloqueo explícito
 
 ## Protocolo

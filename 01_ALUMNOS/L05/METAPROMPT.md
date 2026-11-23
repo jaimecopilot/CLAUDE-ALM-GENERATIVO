@@ -15,7 +15,7 @@ Crea alm/prompts-generados/03-desarrollo.md y detente.
 Ese prompt operativo deberá, una vez aprobado:
 1. Construir la aplicación Coworking Manager con Python, FastAPI y SQLite, respetando arquitectura acordada.
 2. Limitar alcance a listar salas, reservar, rechazar solapamientos y cancelar.
-3. Dividir implementación en cuatro incrementos, cada uno con resultado comprobable.
+3. Organizar la API en tres incrementos comprobables: I1 listar salas, I2 crear reservas persistentes y rechazar solapamientos, e I3 cancelar y liberar la franja. Después, conectar el formulario mínimo a la API ya comprobada.
 4. Documentar rutas HTTP, validaciones, códigos de estado y manejo de fechas con zona explícita.
 5. Preservar intervalos [inicio,fin) y comprobar colisiones solo entre reservas activas de la misma sala.
 6. Proponer rutas exactas de archivos a crear o modificar antes de escribirlos.
