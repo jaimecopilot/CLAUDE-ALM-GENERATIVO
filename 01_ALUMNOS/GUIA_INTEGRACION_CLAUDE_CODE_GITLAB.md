@@ -110,7 +110,7 @@ En la interfaz web siempre puedes consultar issues, MRs y pipelines **sin instal
 ## 6. Flujo completo: issue → Claude Code → MR → CI
 
 1. **Entrada real.** Abre una issue de GitLab. Consulta su texto por navegador, MCP o `glab issue view N`. Relaciónala con un RF y su criterio de aceptación.
-2. **Sincronización.** Confirma `git status`, `git switch practica/manual` y `git pull --ff-only origin practica/manual`; si usas otra rama de feature, créala desde la rama acordada y conserva el enlace a la issue.
+2. **Sincronización.** Confirma `git status`, `git switch practica/manual` y `git pull --ff-only origin practica/manual`; si utilizas una rama `feature`, créala desde `practica/manual`, abre la MR hacia esa rama y, tras aprobación, integra el cambio antes de avanzar de laboratorio. El resultado guiado final de L03–L09 debe quedar en `practica/manual`.
 3. **Gate A.** Lee el contrato y el metaprompt de la fase; Claude genera primero `alm/prompts-generados/NN-fase.md`. **El alumno revisa y aprueba este archivo**. El modo Plan es una ayuda, no sustituye este gate.
 4. **Implementación y pruebas.** Tras la aprobación, Claude Code edita archivos y ejecuta `pytest` (o `mvn test` / `dotnet test` en una adaptación del taller). Conserva salida real, no afirmaciones.
 5. **Gate B.** Revisa `git diff`, los criterios y los tests. **Hasta esta aprobación, no autorices commit, push ni MR**.
