@@ -1,0 +1,90 @@
+name: Validar L02 en Windows (PowerShell y Git)
+on:
+  push:
+    branches:
+      - "audit/**"
+    paths:
+      - "scripts/Preparar-L02.ps1"
+      - ".github/workflows/validar-l02-windows.yml"
+      - "03_GITLAB_PLANTILLA/**"
+      - "01_ALUMNOS/L02/**"
+  pull_request:
+    paths:
+      - "scripts/Preparar-L02.ps1"
+      - ".github/workflows/validar-l02-windows.yml"
+      - "03_GITLAB_PLANTILLA/**"
+      - "01_ALUMNOS/L02/**"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  laboratorio-l02:
+    runs-on: windows-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        proyecto:
+          - coworking-alm-junior
+          - coworking-alm-ensayo
+    steps:
+      - name: Obtener los materiales de GitHub
+        uses: actions/checkout@v4
+
+      - name: Configurar identidad Git de ensayo
+        shell: pwsh
+        run: |
+          git config --global user.name "Alumno CI"
+          git config --global user.email "alumno-ci@example.invalid"
+
+      - name: Simular GitLab vacío e importar plantilla por PowerShell
+        shell: pwsh
+        env:
+          PROYECTO: ${{ matrix.proyecto }}
+        run: |
+          $ErrorActionPreference = 'Stop'
+          $root = Join-Path $env:RUNNER_TEMP "ensayo-l02-$env:PROYECTO"
+          New-Item -ItemType Directory -Force -Path $root | Out-Null
+          $remote = Join-Path $root "$env:PROYECTO.git"
+          git init --bare --initial-branch=main $remote
+          if ($LASTEXITCODE -ne 0) { throw 'No se pudo crear el remoto de prueba.' }
+
+          $script = Join-Path $env:GITHUB_WORKSPACE 'scripts/Preparar-L02.ps1'
+          & $script -GitLabRepoUrl $remote -CarpetaTrabajo $root -CursoLocal $env:GITHUB_WORKSPACE -Publicar
+
+          $local = Join-Path $root $env:PROYECTO
+          foreach ($ruta in @('CLAUDE.md', '.gitignore', '.gitlab', 'alm/maestro.md',
+                              'alm/contratos/01-requisitos.md', 'alm/metaprompts/01-requisitos.md',
+                              'docs/instrucciones/CASO_NEGOCIO.md', 'app', 'tests')) {
+            if (-not (Test-Path -LiteralPath (Join-Path $local $ruta))) {
+              throw "No se importó $ruta"
+            }
+          }
+          $archivos = @(git -C $local ls-files)
+          if ($archivos -notcontains '.gitignore') { throw 'Falta .gitignore versionado.' }
+          if (@($archivos | Where-Object { $_ -like '.gitlab/*' }).Count -lt 1) {
+            throw 'Falta .gitlab/ versionado.'
+          }
+          $main = (git -C $local rev-parse refs/heads/main).Trim()
+          $tag = (git -C $local rev-parse refs/tags/base-alm).Trim()
+          $manual = (git -C $local rev-parse refs/heads/practica/manual).Trim()
+          $remoto = (git -C $local rev-parse refs/remotes/origin/main).Trim()
+          if ($main -ne $tag -or $main -ne $manual -or $main -ne $remoto) {
+            throw 'main, base-alm, practica/manual u origin/main no apuntan al mismo commit inicial.'
+          }
+          foreach ($ref in @('refs/heads/main', 'refs/heads/practica/manual', 'refs/tags/base-alm')) {
+            git --git-dir=$remote show-ref --verify $ref
+            if ($LASTEXITCODE -ne 0) { throw "Falta en el remoto: $ref" }
+          }
+          $antes = @(git -C $local rev-list --count main)[0].Trim()
+          # Ejecutar una segunda vez, sin duplicar commits ni sobrescribir el repositorio.
+          & $script -GitLabRepoUrl $remote -CarpetaTrabajo $root -CursoLocal $env:GITHUB_WORKSPACE -Publicar
+          $despues = @(git -C $local rev-list --count main)[0].Trim()
+          if ($antes -ne $despues -or $despues -ne '1') {
+            throw "La repetición añadió commits inesperados: $antes -> $despues."
+          }
+          if ((git -C $local status --porcelain | Out-String).Trim()) {
+            throw 'Quedaron cambios pendientes en el repositorio de ensayo.'
+          }
+          Write-Host "OK: $env:PROYECTO, importación y repetición, main, tag, rama, push y archivos ocultos."
