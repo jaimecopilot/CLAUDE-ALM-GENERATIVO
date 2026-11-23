@@ -69,6 +69,8 @@ $repo = "https://gitlab.com/TU_USUARIO/NOMBRE_REAL_DEL_PROYECTO.git"
 
 [Preparar-L02.ps1](../../scripts/Preparar-L02.ps1) detecta el nombre real del proyecto y clona GitLab; después copia únicamente la plantilla, incluidos archivos ocultos. Comprueba las rutas y crea localmente el commit, `main`, la etiqueta `base-alm` y la rama `practica/manual`. Se detiene si detecta cambios sin confirmar o un estado que no deba sobrescribirse.
 
+Si ves `No se ha hecho push`, el paso 21 ha terminado correctamente. Mantén abierta esa ventana de PowerShell. Sigue con el paso 22 para revisar y con el 23 para publicar. En el PDF de 23 páginas, ambos están en la página 7.
+
 22. Verifica el resultado antes de hacer push:
 
 ~~~powershell
