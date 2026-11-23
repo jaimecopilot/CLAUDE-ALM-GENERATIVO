@@ -45,58 +45,81 @@ claude auth status
 ~~~
 Utiliza un plan compatible con Claude Code. Si la empresa gestiona la autenticación, sigue sus instrucciones. Una variable `ANTHROPIC_API_KEY` activada podría cambiar la facturación a API: para los laboratorios guiados no se necesita. L10 utiliza una API autorizada dentro de GitLab CI/CD, facturada por separado.
 
-## 4. Importar la plantilla GitLab
+## 4. Importar y verificar la plantilla: procedimiento Windows probado
 
-19. Clona el repositorio de **material del alumno** en GitHub (en esta edición está publicado; si el cliente lo restringe, el formador facilitará acceso):
+**Regla:** ejecuta los comandos en **PowerShell** desde una carpeta que contenga los dos clones (por ejemplo, tu carpeta de usuario). No escribas a mano la URL ni presupongas que el proyecto siempre se llama `coworking-alm-junior`.
+
+19. Copia desde **GitLab → Code → Clone with HTTPS** la URL exacta del proyecto privado vacío. Comprueba tu nombre de usuario de GitLab.
+
+20. Abre PowerShell y obtén una sola vez los materiales del curso:
+
 ~~~powershell
+cd $HOME
 git clone https://github.com/jaimecopilot/CLAUDE-ALM-GENERATIVO.git
 ~~~
-Si ya lo tienes, utiliza su carpeta local y omite esta operación.
 
-20. Clona tu nuevo proyecto GitLab, aún vacío, utilizando **la URL exacta obtenida en el paso 14**:
+Si ya tienes ese clon, no lo dupliques. Nunca copies su directorio `.git` al proyecto del alumno.
+
+21. Prepara la plantilla **sin publicarla**. Sustituye la URL de ejemplo por la dirección HTTPS copiada desde tu GitLab:
+
 ~~~powershell
-git clone https://gitlab.com/TU_USUARIO/coworking-alm-junior.git
+$repo = "https://gitlab.com/TU_USUARIO/NOMBRE_REAL_DEL_PROYECTO.git"
+& ".\CLAUDE-ALM-GENERATIVO\scripts\Preparar-L02.ps1" -GitLabRepoUrl $repo -CarpetaTrabajo $HOME
 ~~~
-Sustituye `TU_USUARIO` por el tuyo. Es normal que Git avise que el repositorio está vacío. Si la autenticación Git solicita credenciales, utiliza el procedimiento autorizado por GitLab, Git Credential Manager o SSH; no pegues tokens en Claude.
 
-21. Desde la carpeta **padre de ambos clones** en PowerShell, copia exclusivamente los archivos de `03_GITLAB_PLANTILLA` al repositorio GitLab. Esto incluye archivos ocultos como `.gitignore` y `.gitlab/`:
-~~~powershell
-Get-ChildItem -LiteralPath ".\CLAUDE-ALM-GENERATIVO\03_GITLAB_PLANTILLA" -Force |
-  Copy-Item -Destination ".\coworking-alm-junior" -Recurse -Force
-~~~
-Si tu clon GitLab tiene otro nombre de carpeta, adapta la ruta de destino. **No copies el manual del curso, la carpeta completa del GitHub ni las soluciones del formador**.
+[Preparar-L02.ps1](../../scripts/Preparar-L02.ps1) detecta el nombre real del proyecto y clona GitLab; después copia únicamente la plantilla, incluidos archivos ocultos. Comprueba las rutas y crea localmente el commit, `main`, la etiqueta `base-alm` y la rama `practica/manual`. Se detiene si detecta cambios sin confirmar o un estado que no deba sobrescribirse.
 
-22. Abre la carpeta GitLab y comprueba las rutas:
+22. Verifica el resultado antes de hacer push:
+
 ~~~powershell
-cd .\coworking-alm-junior
+$nombre = ($repo.TrimEnd("/") -split "/")[-1] -replace "\.git$", ""
+cd (Join-Path $HOME $nombre)
 Get-ChildItem -Force
 git status
+git log -1 --oneline
+git branch --list
+git tag --list
 ~~~
-Deben existir `CLAUDE.md`, `alm/maestro.md`, `alm/contratos/`, `alm/metaprompts/` y `docs/instrucciones/CASO_NEGOCIO.md`. No hay un ejecutor ALM local ni código de aplicación implementado de antemano.
+
+Deben existir `CLAUDE.md`, `alm/maestro.md`, `alm/contratos/`, `alm/metaprompts/`, `alm/evidencias/registro.md`, `docs/instrucciones/CASO_NEGOCIO.md`, `.gitlab/`, `app/` y `tests/`. Los seis contratos y los seis metaprompts se comprueban antes del commit.
+
+23. **Tras revisar**, publica el estado inicial:
+
+~~~powershell
+cd $HOME
+& ".\CLAUDE-ALM-GENERATIVO\scripts\Preparar-L02.ps1" -GitLabRepoUrl $repo -CarpetaTrabajo $HOME -Publicar
+~~~
+
+La segunda ejecución no duplica commits. Publica `main`, `base-alm`, `practica/manual` y comprueba `origin/main`. Si GitLab solicita autenticación, utiliza Git Credential Manager o el navegador; no pegues contraseñas ni tokens en Claude.
+
+24. Comprueba en GitLab las dos ramas y la etiqueta. En PowerShell:
+
+~~~powershell
+cd (Join-Path $HOME $nombre)
+git ls-remote --heads origin
+git ls-remote --tags origin
+git status
+~~~
+
+25. Activa la rama de trabajo para L03 y abre el proyecto en VS Code:
+
+~~~powershell
+git switch practica/manual
+git status
+code .
+~~~
+
+Si `code` no está en el PATH, abre la carpeta desde VS Code. Nunca desarrolles las prácticas L03–L09 directamente sobre `main`.
+
+**¿Y si prefieres los comandos manuales?** El formador puede explicar la secuencia `clone → copiar plantilla → status → add → commit → push → tag → branch`, pero no se debe combinar el procedimiento manual con el script en un clon parcialmente configurado. En particular, la instrucción para copiar archivos ocultos en PowerShell incluye un separador `|` entre dos comandos: si al pegar desde un PDF se pierde, el comando falla.
+
+**Alcance de la prueba:** [GitHub Actions en Windows](https://github.com/jaimecopilot/CLAUDE-ALM-GENERATIVO/actions) ejecuta este script contra un remoto Git vacío simulado con dos nombres de proyecto y lo repite para detectar duplicados. **No sustituye** comprobar la autenticación y los permisos del GitLab real.
 
 ## 5. Primer commit, rama y versión base
 
-23. Publica la plantilla:
-~~~powershell
-git add .
-git commit -m "chore: incorporar plantilla del taller ALM"
-git push -u origin HEAD:main
-~~~
-Si GitLab no te permite hacer push a main por una regla corporativa, utiliza el procedimiento de ramas y MR autorizado por tu instancia. No fuerces el push.
+El primer commit publicado en `main` contiene exclusivamente la plantilla. La etiqueta `base-alm` debe apuntar exactamente a ese commit, y `practica/manual` debe nacer desde ese mismo estado. El script prepara y verifica esas referencias. El alumno debe poder explicarlas y comprobarlas.
 
-24. **Etiqueta el estado inicial** antes de generar ningún artefacto:
-~~~powershell
-git tag base-alm
-git push origin base-alm
-~~~
-Este tag permitirá que L10 cree una segunda rama desde exactamente el mismo punto de partida. Sin él no podemos comparar limpiamente el modo guiado y el automático.
-
-25. Crea la rama de trabajo manual:
-~~~powershell
-git switch -c practica/manual
-git push -u origin practica/manual
-~~~
-Verifica que `git status` está limpio antes de comenzar L03. No realices todo el curso directamente sobre main.
+Puedes proteger `base-alm` desde las opciones **Protected tags** de GitLab, según permisos de tu proyecto. Nunca uses `git tag -f` ni `git push --force` para ocultar un conflicto.
 
 ## 6. Configuración GitLab recomendada
 
