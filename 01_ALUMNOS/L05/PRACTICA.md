@@ -55,13 +55,14 @@ git status
 Inspecciona imports, validaciones, tratamiento de timezone, existencia de sala y control de conflictos. La revisión del alumno es parte de la práctica, aunque Claude haya realizado las modificaciones. Ejecuta los comandos que existan en README; si no existen, pide a Claude que los documente y después ejecútalos.
 
 ## Paso 8 — versionar y solicitar revisión
-Realiza commit descriptivo y push cuando los cambios estén razonablemente revisados:
+Comprueba la rama activa con `git branch --show-current`. Debe ser `practica/manual` o, si elegiste la variante del paso 1, `feature/gestion-reservas`. Revisa las rutas adicionales que hayas creado y añádelas de forma explícita. Tras aprobar el Gate B, ejecuta el bloque desde esa rama.
 ~~~bash
-git add app tests docs alm
+git add app tests docs alm README.md requirements.txt
+git diff --cached --stat
 git commit -m "feat: implementar reservas y control de disponibilidad"
-git push -u origin practica/manual
+git push -u origin HEAD
 ~~~
-Las rutas y nombres pueden variar según el proyecto real. Si trabajaste directamente en `practica/manual`, abre una **Merge Request en borrador** desde `practica/manual` hacia `main`, enlaza las issues y **no la fusiones durante L05–L09**: las siguientes prácticas completarán el mismo recorrido. Si elegiste una rama feature, la MR debe apuntar a `practica/manual`; tras las comprobaciones y aprobación humana, integra el cambio allí y vuelve a `practica/manual`.
+Las rutas y nombres pueden variar según el proyecto real. Si trabajaste directamente en `practica/manual`, abre una **Merge Request en borrador** desde `practica/manual` hacia `main`, enlaza las issues y **no la fusiones durante L05–L09**: las siguientes prácticas completarán el mismo recorrido. Si elegiste la rama feature, el mismo comando publica esa rama activa. Abre su MR hacia `practica/manual`; tras las comprobaciones y aprobación humana, integra el cambio allí y vuelve a `practica/manual`.
 
 ## Evidencia obligatoria
 1. Rutas reales del código generado y del prompt operativo.

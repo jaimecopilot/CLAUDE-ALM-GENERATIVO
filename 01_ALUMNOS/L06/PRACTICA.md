@@ -18,7 +18,7 @@ Para cada RF, marca al menos un caso de éxito y uno de fallo o límite. En RF-0
 - reserva cancelada;
 - fecha fin anterior al inicio.
 
-La matriz puede guardarse como **docs/calidad/matriz-pruebas.md**. Los nombres de test deben describir comportamiento, no números aleatorios.
+Guarda la matriz exigida por el contrato en **docs/calidad/matriz-pruebas.md**. Los nombres de test deben describir comportamiento, no números aleatorios.
 
 ## Paso 3 — generar y ejecutar
 Autoriza generar pruebas con pytest para servicios y API, ajustadas al código real. En una terminal del entorno del proyecto ejecuta:

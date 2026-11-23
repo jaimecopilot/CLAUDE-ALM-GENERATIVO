@@ -9,12 +9,14 @@ on:
       - "01_ALUMNOS/**"
       - "03_GITLAB_PLANTILLA/**"
       - "scripts/auditar_rutas_labs.py"
+      - "scripts/probar_publicacion_labs.py"
       - ".github/workflows/auditar-enlaces-labs.yml"
   pull_request:
     paths:
       - "01_ALUMNOS/**"
       - "03_GITLAB_PLANTILLA/**"
       - "scripts/auditar_rutas_labs.py"
+      - "scripts/probar_publicacion_labs.py"
       - ".github/workflows/auditar-enlaces-labs.yml"
   workflow_dispatch:
 
@@ -29,3 +31,5 @@ jobs:
         uses: actions/checkout@v4
       - name: Auditar links relativos y ramas
         run: python3 scripts/auditar_rutas_labs.py
+      - name: Ejecutar los comandos de publicación de L05 y L07 en un remoto temporal
+        run: python3 scripts/probar_publicacion_labs.py
