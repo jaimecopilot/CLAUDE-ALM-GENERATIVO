@@ -59,6 +59,16 @@ jobs:
           if ($LASTEXITCODE -ne 0) { throw 'No se pudo crear el remoto de prueba.' }
 
           $script = Join-Path $env:GITHUB_WORKSPACE 'scripts/Preparar-L02.ps1'
+          # Página 6 de la guía: se prepara el commit sin publicar ni indicar el cambio de rama.
+          $salidaLocal = (& $script -GitLabRepoUrl $remote -CarpetaTrabajo $root -CursoLocal $env:GITHUB_WORKSPACE 6>&1 | Out-String)
+          if ($salidaLocal -notmatch 'No se ha hecho push' -or $salidaLocal -notmatch '-Publicar' -or $salidaLocal -match 'git switch practica/manual') {
+            throw 'El mensaje de preparación debe remitir a la publicación.'
+          }
+          $refsAntes = @(git ls-remote --refs $remote)
+          if ($LASTEXITCODE -ne 0 -or $refsAntes.Count -ne 0) { throw 'El remoto debe continuar vacío tras preparar.' }
+          # Página 7: revisar la plantilla y volver a ejecutar el script con -Publicar.
+          git -C (Join-Path $root $env:PROYECTO) show --stat --oneline main
+          if ($LASTEXITCODE -ne 0) { throw 'Falta el commit local que el alumno debe revisar.' }
           & $script -GitLabRepoUrl $remote -CarpetaTrabajo $root -CursoLocal $env:GITHUB_WORKSPACE -Publicar
 
           $local = Join-Path $root $env:PROYECTO
@@ -147,6 +157,7 @@ jobs:
           git init --bare --initial-branch=main $remote
           if ($LASTEXITCODE -ne 0) { throw 'Error creando remoto simulado.' }
           $script = Join-Path $env:GITHUB_WORKSPACE 'scripts/Preparar-L02.ps1'
+          & $script -GitLabRepoUrl $remote -CarpetaTrabajo $raiz -CursoLocal $env:GITHUB_WORKSPACE
           & $script -GitLabRepoUrl $remote -CarpetaTrabajo $raiz -CursoLocal $env:GITHUB_WORKSPACE -Publicar
           & $script -GitLabRepoUrl $remote -CarpetaTrabajo $raiz -CursoLocal $env:GITHUB_WORKSPACE -Publicar
           $destino = Join-Path $raiz 'coworking-alm-ensayo'

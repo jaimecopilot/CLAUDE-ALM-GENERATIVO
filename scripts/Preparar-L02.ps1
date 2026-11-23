@@ -1,4 +1,4 @@
-#Requires -Version 5.1
+﻿#Requires -Version 5.1
 <#
 .SYNOPSIS
   Prepara L02 desde un repositorio GitLab vacío usando la plantilla del curso.
@@ -175,6 +175,9 @@ if ((Get-GitText -Args @('-C',$destino,'status','--porcelain'))) {
     throw 'La preparación terminó con cambios sin confirmar.'
 }
 
+Write-Host "Proyecto: $destino"
+Write-Host "Commit base: $mainSha"
+
 if ($Publicar) {
     Write-Host 'Publicando main, etiqueta base-alm y rama practica/manual...'
     $referencias = @('refs/heads/main','refs/tags/base-alm','refs/heads/practica/manual')
@@ -184,9 +187,9 @@ if ($Publicar) {
         $id = Get-GitText -Args @('-C',$destino,'rev-parse','--verify',$ref)
         if ($publicadas -notcontains "$id`t$ref") { throw "El servidor no confirma la referencia $ref." }
     }
+    Write-Host 'Plantilla publicada. Comprueba main, practica/manual y base-alm en GitLab.'
+    Write-Host 'Después, en la carpeta del proyecto, ejecuta: git switch practica/manual'
 } else {
-    Write-Host 'No se ha hecho push. Ejecuta otra vez con -Publicar tras revisar el contenido.'
+    Write-Host 'Plantilla preparada en tu ordenador. No se ha hecho push.'
+    Write-Host 'Siguiente: revisa los archivos. En la misma ventana de PowerShell, repite el comando añadiendo -Publicar al final.'
 }
-Write-Host "L02 preparada. Proyecto: $destino"
-Write-Host "Commit base: $mainSha"
-Write-Host 'Siguiente: git switch practica/manual (en la carpeta del proyecto).'

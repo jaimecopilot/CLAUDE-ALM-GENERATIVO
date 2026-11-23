@@ -132,13 +132,17 @@ def page6(page):
         "03_GITLAB_PLANTILLA (incluyendo archivos ocultos). Comprueba los contratos, "
         "metaprompts, README y evidencias. Crea el primer commit, main, "
         "base-alm y practica/manual. Si encuentra archivos o commits inesperados, se detiene.")
+    w.subtitle("Continúa en la página 7 con la misma ventana de PowerShell")
+    w.p("Si ves 'No se ha hecho push', el paso 3 ha terminado correctamente y el commit está en tu ordenador. "
+        "En la página siguiente, revisa los archivos (paso 4) y sube la plantilla a GitLab con -Publicar (paso 5). "
+        "Cambia de rama después de comprobar la publicación (paso 6).")
     return w.y
 
 
 def page7(page):
     w = Writer(page, 7)
     w.title("3.3 Importación: comprobación y publicación")
-    w.step("4", "Examina los resultados antes de hacer push")
+    w.step("4", "Revisa el commit que acabas de crear en tu ordenador")
     w.code([
         r'$nombre = ($repo.TrimEnd("/") -split "/")[-1] -replace "\.git$", ""',
         "cd (Join-Path $HOME $nombre)",
@@ -151,7 +155,7 @@ def page7(page):
     w.p("Comprueba en la raíz CLAUDE.md, alm/, docs/, app/, tests/ y .gitlab/. "
         "El primer commit debe contener solo la plantilla; no debe existir código "
         "de aplicación resuelto ni un pipeline CI ya implementado.")
-    w.step("5", "Publica main, la etiqueta y la rama de trabajo")
+    w.step("5", "En la misma ventana, repite el comando con -Publicar")
     w.code([
         "cd $HOME",
         "& $script -GitLabRepoUrl $repo -CarpetaTrabajo $HOME -Publicar",
@@ -164,18 +168,14 @@ def page7(page):
         "cd (Join-Path $HOME $nombre)",
         "git ls-remote --heads origin",
         "git ls-remote --tags origin",
-        "git switch practica/manual",
-        "git status",
     ])
-    w.p("Recarga GitLab y verifica main, practica/manual y base-alm. "
-        "No comiences L03 en main. El tag base-alm debe apuntar al mismo "
-        "commit inicial que main; no lo muevas ni fuerces un push.")
+    w.p("En la primera publicación deben aparecer refs/heads/main, refs/heads/practica/manual y refs/tags/base-alm "
+        "con el mismo identificador de commit. Cuando veas las tres, activa la rama de práctica:")
+    w.code(["git switch practica/manual", "git status"])
     w.subtitle("3.4 Interpretar errores y repetir de forma segura")
-    w.p("Un aviso 'cloned an empty repository' es normal al comienzo. "
-        "'nothing to commit' significa que no hay cambios pendientes; no demuestra por sí solo "
-        "que se haya importado la plantilla. Si origin/main no existe, verifica el "
-        "primer push. En un clon nuevo, practica/manual recupera el avance remoto. "
-        "Ante un conflicto, revisa git status con el formador.")
+    w.p("El aviso 'cloned an empty repository' es normal en el primer clon. Si GitLab rechaza el primer push "
+        "porque main está protegida, conserva el clon y avisa al formador para revisar los permisos. "
+        "El commit sigue en tu ordenador.")
     w.subtitle("3.5 Alternativas y alcance de las pruebas")
     w.p("En macOS/Linux o sin ejecución de scripts, el formador puede utilizar el "
         "procedimiento manual de L02. GitLab Web IDE sirve para editar y commitear, "
