@@ -206,8 +206,8 @@ def main():
         doc.delete_page(idx)
         doc.insert_pdf(replacement, from_page=0, to_page=0, start_at=idx)
         replacement.close()
-    doc.set_metadata({**doc.metadata,
-                      "title": "Guía alumnado Claude, GitLab y ALM generativo - revisión operativa",
+    doc.set_metadata({"title": "Guía alumnado Claude, GitLab y ALM generativo - revisión operativa",
+                      "author": "Jaime Gallo García",
                       "subject": "Corrección verificada de importación GitLab en Windows, L02-L03"})
     with tempfile.NamedTemporaryFile(suffix=".pdf", dir=src.parent, delete=False) as fp:
         tmp = Path(fp.name)
