@@ -121,6 +121,34 @@ El primer commit publicado en `main` contiene exclusivamente la plantilla. La et
 
 Puedes proteger `base-alm` desde las opciones **Protected tags** de GitLab, según permisos de tu proyecto. Nunca uses `git tag -f` ni `git push --force` para ocultar un conflicto.
 
+## 5.1 Alternativa macOS/Linux: importación manual con Bash
+
+Utiliza **solo este procedimiento si no has ejecutado el script PowerShell** en ese clon. Trabaja desde una carpeta padre, con el GitLab privado recién creado, vacío y sin README. Copia siempre la URL HTTPS exacta desde GitLab y sustitúyela en el primer comando.
+
+~~~bash
+cd "$HOME"
+git clone https://github.com/jaimecopilot/CLAUDE-ALM-GENERATIVO.git
+repo="https://gitlab.com/TU_USUARIO/NOMBRE_REAL_DEL_PROYECTO.git"
+git clone "$repo"
+nombre="$(basename "$repo" .git)"
+cd "$nombre"
+git symbolic-ref HEAD refs/heads/main
+cd ..
+cp -R CLAUDE-ALM-GENERATIVO/03_GITLAB_PLANTILLA/. "$nombre"/
+cd "$nombre"
+git status
+git add -A
+git commit -m "chore: incorporar plantilla del curso"
+git push -u origin main
+git tag base-alm
+git push origin base-alm
+git switch -c practica/manual
+git push -u origin practica/manual
+git status
+~~~
+
+El sufijo \`/.\` de la carpeta origen incluye los archivos ocultos \`.gitignore\` y \`.gitlab/\`. No copies la carpeta \`.git\` de los materiales. El comando \`git clone\` del curso se omite si ya existe localmente. **No repitas este bloque desde cero sobre un repositorio que ya tiene commits:** verifica el estado de las ramas y detente ante divergencias. El alumnado que trabaje en Windows debe usar el procedimiento PowerShell de los apartados 4 y 5, verificado automáticamente.
+
 ## 6. Configuración GitLab recomendada
 
 26. Comprueba que el proyecto sigue siendo **Private**. En el apartado 7 aprenderás a invitar al formador como miembro **Developer**, sin hacerlo público.
