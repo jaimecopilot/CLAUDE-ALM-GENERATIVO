@@ -29,7 +29,7 @@ Pide al compañero que señale en el diagrama dónde se:
 1. verifica la existencia de una sala;
 2. comprueba el intervalo;
 3. rechaza una colisión;
-4. cancela una reserva.
+4. cancela una reserva con `DELETE /reservas/{id}`, devuelve 204 sin cuerpo y libera la franja. Es la ruta que comprobarás en L05.
 
 Si no puede ubicar la responsabilidad, el diseño necesita revisión. El ADR debe contener **contexto, alternativas, decisión y consecuencias**; «Claude lo recomienda» no es argumento técnico.
 

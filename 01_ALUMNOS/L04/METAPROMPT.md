@@ -8,6 +8,7 @@ Lee el contrato alm/contratos/02-diseno.md, los RF y criterios aceptados en docs
 
 Redacta alm/prompts-generados/02-diseno.md para que, SOLO después de la aprobación humana:
 - proponga una arquitectura monolítica sencilla FastAPI + SQLite;
+- conserve las rutas que usará el alumno en L05: GET /salas, POST /reservas y DELETE /reservas/{id}. La cancelación libera la franja y devuelve 204 sin cuerpo; puede conservar la reserva como cancelada;
 - identifique módulos, entidades y reglas con su relación a cada RF;
 - represente actores y componentes en Mermaid en docs/arquitectura/diagramas.md;
 - defina modelo de datos y responsabilidades en docs/arquitectura/diseno.md;

@@ -16,7 +16,7 @@ La especificación del curso define de forma deliberada un perímetro pequeño: 
 
 ## 3. API, validación y semántica de errores
 
-El equipo acordará rutas concretas a partir del contrato: por ejemplo **GET /salas**, **POST /reservas** y **DELETE /reservas/{id}**. Una solicitud válida se representa con inicio y fin inequívocos, ambos con zona horaria. La operación de alta puede devolver 201; la solicitud que solapa otra reserva, 409; sala desconocida, 404; datos inválidos, 422. Estos códigos describen comportamientos que los tests comprobarán, no adornos en una tabla.
+Las tres rutas del manual del alumno son **GET /salas**, **POST /reservas** y **DELETE /reservas/{id}**. Una solicitud válida se representa con inicio y fin inequívocos, ambos con zona horaria. La operación de alta puede devolver 201; la solicitud que solapa otra reserva, 409; sala desconocida, 404; datos inválidos, 422. Estos códigos describen comportamientos que los tests comprobarán, no adornos en una tabla.
 
 La comprobación de solapamiento debe realizarse para reservas activas de la **misma** sala. Una reserva cancelada libera el intervalo; los extremos contiguos no se solapan cuando el contrato usa [inicio,fin). Para bases con acceso concurrente real hay riesgos de carrera: en el nivel junior se estudian conceptualmente y no se promete resistencia a cargas de producción.
 
