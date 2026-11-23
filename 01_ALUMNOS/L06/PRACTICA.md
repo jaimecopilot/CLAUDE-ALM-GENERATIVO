@@ -1,5 +1,7 @@
 # L06 · PRÁCTICA: tests desde Gherkin y revisión de seguridad
 
+**Traspaso de la práctica.** Usa el [metaprompt de este laboratorio](METAPROMPT.md) en una conversación identificada. Lee el commit del MVP de L05 y sus pruebas antes de preparar el prompt. Entrega a L07 la suite ejecutada, la matriz y el informe de calidad.
+
 **Herramienta principal:** Claude Code ejecuta las pruebas reales en el clon (o workspace con terminal); GitLab CI aportará la verificación remota. Claude web + MCP no ejecuta tests por sí solo. Ver [guía transversal](../GUIA_INTEGRACION_CLAUDE_CODE_GITLAB.md).
 
 **75 min:** teoría 10, metaprompt y matriz 10, tests/ejecución 30, fallos/seguridad 15, gate 10.

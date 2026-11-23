@@ -1,5 +1,7 @@
 # L11 · PRÁCTICA: defensa, evaluación y retrospectiva
 
+**Traspaso de la práctica.** Usa el [metaprompt de este laboratorio](METAPROMPT.md) en una conversación identificada. Abre la entrega manual de L09 y el cierre de L10 antes del metaprompt de defensa. Si falta la referencia central, identifica el bloqueo y limita la comparación a la evidencia disponible.
+
 **Comparación:** el trabajo guiado del alumno puede utilizar Claude Code y Git, Claude web + MCP, o ambos con sincronización. La rama automática recibida proviene de la ejecución central del formador. No atribuyas a tu GitLab una ejecución ajena. Ver [guía de integración](../GUIA_INTEGRACION_CLAUDE_CODE_GITLAB.md).
 
 **60 min:** preparación 10, demostraciones individuales 36, preguntas cruzadas 9, cierre 5.

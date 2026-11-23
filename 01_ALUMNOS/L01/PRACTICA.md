@@ -14,7 +14,9 @@ Anota en una tabla: ¿qué atributos tiene una sala?, ¿cómo se representa la r
 Revisa el resultado anterior. Solicita: «enumera todos los supuestos de negocio que has introducido sin que te los pidiera; clasifica cada uno en decisión explícita, supuesto y duda pendiente». El alumno debe encontrar al menos cinco. Compara con la respuesta de otro compañero.
 
 ## Actividad C — petición con criterios (15 min)
-Ahora fija exclusivamente cuatro comportamientos: listar salas, crear una reserva, rechazar solapamientos y cancelar una reserva. No habrá autenticación, facturación ni eventos. Pide a Claude que prepare una lista de criterios Gherkin de comportamiento observable; **todavía no es el análisis formal del laboratorio L03**.
+Abre [METAPROMPT.md](METAPROMPT.md). Abre una conversación nueva y pega el bloque de texto completo como primer mensaje, con tus notas de A y B. Así podrás enlazar por separado el prototipo inicial y la ejecución del metaprompt. La primera respuesta debe ser un prompt de exploración de menos de 500 palabras. Guárdalo en `evidencias/prompt-L01.md`. Revisa que pida supuestos, propuesta mínima, tres errores y una tabla de observado, supuesto y pendiente. Si requiere correcciones, revisa la nueva versión antes de aprobarla.
+
+En el mismo hilo escribe «Apruebo este prompt. Ejecútalo sobre el prototipo observado y entrégame los resultados». Para delimitar los criterios, fija exclusivamente cuatro comportamientos: listar salas, crear una reserva, rechazar solapamientos y cancelar una reserva. No habrá autenticación, facturación ni eventos. Pide a Claude que prepare una lista de criterios Gherkin de comportamiento observable; **todavía no es el análisis formal del laboratorio L03**.
 
 Ejemplo esperado de criterio:
 ~~~gherkin
@@ -26,7 +28,7 @@ Entonces el sistema rechaza la nueva reserva y conserva la original
 Compara ambas peticiones. ¿Qué cambió de manera demostrable y qué sigue sin comprobarse?
 
 ## Actividad D — evidencia y cierre (5 min)
-Crea el archivo **evidencias/L01.md** (en el cuaderno del equipo o repositorio local) con cuatro apartados: petición inicial, supuestos detectados, criterios revisados y tres riesgos. Registra la herramienta utilizada; no es necesario copiar conversaciones completas ni consumos personales.
+Crea el archivo **evidencias/L01.md** (en el cuaderno del equipo o repositorio local) con cuatro apartados: petición inicial, supuestos detectados, criterios revisados y tres riesgos. Incorpora la tabla de exploración, referencia el prompt guardado y los mensajes de generación, aprobación y ejecución. Identifica cada hallazgo como L01-01, L01-02, etc. Entrega el cuaderno y el prompt al comenzar L02. Registra la herramienta utilizada; no es necesario copiar conversaciones completas ni consumos personales.
 
 **Criterio de terminación:** el alumno puede explicar Vibe Coding, ALM, metaprompt, prompt operativo, artefacto y evidencia usando ejemplos distintos, e identifica al menos un supuesto que haría fallar una aplicación real.
 

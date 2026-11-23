@@ -4,6 +4,7 @@
 Rol: auditor docente de un taller junior de ALM generativo.
 MODO: prepara un prompt operativo de defensa, NO inventes resultados ni crees software nuevo.
 
+Abre la matriz y el SHA de cierre de L09 y el informe de L10 con su ejecución central o bloqueo documentado. Usa estas referencias como entradas de la defensa.
 Lee únicamente documentos, código, tests, MR y evidencias disponibles del proyecto real.
 
 Escribe alm/prompts-generados/08-evaluacion.md para que, tras revisión del estudiante:

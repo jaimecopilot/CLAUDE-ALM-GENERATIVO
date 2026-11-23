@@ -1,10 +1,12 @@
 # L03 · PRÁCTICA: generar requisitos, Gherkin e issues en GitLab
 
-**Condición de entrada verificada:** L02 ha publicado `main`, la etiqueta `base-alm` y `practica/manual`. Antes de generar archivos, abre el clon local, ejecuta `git status` y `git switch practica/manual`, y verifica que no hay cambios pendientes. La ruta del clon depende del nombre real que hayas dado al proyecto GitLab, no necesariamente `coworking-alm-junior`.
+**Condición de entrada verificada:** L02 ha publicado `main`, las etiquetas `base-alm` y `entrada-l02` y la rama `practica/manual`. Antes de generar archivos, abre el clon local, ejecuta `git status` y `git switch practica/manual`, y verifica que no hay cambios pendientes. La ruta del clon depende del nombre real que hayas dado al proyecto GitLab, no necesariamente `coworking-alm-junior`.
 
 **Herramienta de trabajo:** requisitos y Gherkin pueden generarse con Claude Code o con Claude web + MCP. Ambas vías deben leer los mismos contratos y guardar **primero** el prompt operativo antes de producir documentos. Si alternas herramientas, sincroniza la rama; ver [guía transversal](../GUIA_INTEGRACION_CLAUDE_CODE_GITLAB.md).
 
 **90 min:** teoría 20, preguntas y contrato 15, generación 25, revisión/GitLab 20, gate 10.
+
+Antes de abrir el metaprompt, coteja el SHA de `entrada-l02` con la entrega de L02. Lee `evidencias/L02.md` y `evidencias/L01.md`. Registra en la especificación el destino de cada hallazgo L01: requisito o criterio asociado, descarte motivado o decisión pendiente del cliente.
 
 ## Entrada de negocio común (no es la especificación final)
 «Coworking Norte dispone de varias salas. Necesitamos ver las salas, reservarlas por intervalo y cancelarlas. Dos clientes no pueden ocupar la misma sala a la vez. Queremos algo sencillo que funcione como prototipo interno».
@@ -52,7 +54,7 @@ git commit -m "docs: aprobar requisitos y backlog"
 git push -u origin practica/manual
 ~~~
 
-**Evidencia:** prompt operativo revisado, decisiones del cliente, commit real en la rama guiada y enlaces a issues. Si no se autoriza la fase, no ejecutes estos comandos. **Salida a L04:** únicamente la especificación aprobada, no todo el historial del chat.
+**Evidencia:** prompt operativo revisado, decisiones del cliente, commit real en la rama guiada y enlaces a issues. Si no se autoriza la fase, no ejecutes estos comandos. **Salida a L04:** la especificación y el backlog aprobados, con su commit. L04 abre ambos archivos.
 
 ## Si no llega la cuota de Claude
 No se generan más variantes. Se utiliza la especificación de referencia entregada por el docente como **checkpoint externo**, marcado como tal y sin fingir autoría del equipo.

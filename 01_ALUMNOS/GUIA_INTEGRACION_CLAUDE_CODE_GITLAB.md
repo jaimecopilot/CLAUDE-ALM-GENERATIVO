@@ -174,3 +174,10 @@ El YAML de L10 y los resultados del runner **deben validarse realmente** antes d
 - [ ] Si uso Claude web + MCP, sé sincronizar su trabajo con Claude Code
 
 Documentación técnica: [Claude Code + MCP](https://code.claude.com/docs/en/mcp), [permisos de Claude Code](https://code.claude.com/docs/en/permissions), [GitLab CLI](https://docs.gitlab.com/cli/), [GitLab MCP](https://docs.gitlab.com/user/model_context_protocol/mcp_server/).
+
+
+## Trazabilidad de cada entrega
+
+Para cada laboratorio guiado, abre el metaprompt publicado del laboratorio en Claude (pega el bloque completo o indica su ruta y revisión). Conserva la respuesta que contiene el prompt, la aprobación explícita, el artefacto y su prueba. Registra el commit de entrada, los archivos leídos y el commit de la entrega aprobada. Comienza el laboratorio siguiente después de revisar esa entrega. En L10 registra por separado la preparación offline y cualquier ejecución real autorizada en GitLab.
+
+L01 entrega su cuaderno a L02. El alumno publica la etiqueta común `entrada-l02` antes de L03. L10 arranca desde esa misma entrada y L11 identifica la procedencia de los dos recorridos.

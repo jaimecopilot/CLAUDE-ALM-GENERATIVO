@@ -1,5 +1,7 @@
 # L08 · PRÁCTICA: una petición de negocio reabre el ALM
 
+**Traspaso de la práctica.** Usa el [metaprompt de este laboratorio](METAPROMPT.md) en una conversación identificada. Parte de la última entrega aprobada de L07. Reutiliza los requisitos, código, tests y CI de esa revisión. Entrega CAM-01 integrado y probado a L09.
+
 **Continuidad:** utiliza Claude Code sobre los requisitos, diseño, código y tests existentes. Si has empleado Claude web + MCP, sincroniza antes la rama para no sobrescribir cambios. Ver [guía de integración](../GUIA_INTEGRACION_CLAUDE_CODE_GITLAB.md).
 
 **60 min:** cambio/análisis 10, prompt operativo 10, modificación 15, pruebas/CI 15, revisión 10.

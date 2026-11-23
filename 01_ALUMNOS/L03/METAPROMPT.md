@@ -7,7 +7,7 @@ Este texto NO solicita «haz la aplicación». Obliga a Claude a **escribir prim
 Rol: ingeniero de requisitos especializado en ALM generativo.
 MODO AHORA: GENERACIÓN DE PROMPT OPERATIVO; no ejecutes todavía la fase.
 
-Lee CLAUDE.md, alm/maestro.md, alm/contratos/01-requisitos.md, alm/metaprompts/01-requisitos.md y docs/instrucciones/CASO_NEGOCIO.md, junto con este metaprompt L03. Detecta qué información del cliente ya está aprobada y qué dudas siguen abiertas.
+Lee CLAUDE.md, alm/maestro.md, alm/contratos/01-requisitos.md, alm/metaprompts/01-requisitos.md y docs/instrucciones/CASO_NEGOCIO.md, junto con este metaprompt L03. Lee también evidencias/L01.md y evidencias/L02.md. Haz que el prompt exija una correspondencia entre los hallazgos L01 y las decisiones, descartes o preguntas de la especificación. Detecta qué información del cliente ya está aprobada y qué dudas siguen abiertas.
 
 Produce alm/prompts-generados/01-requisitos.md con estas secciones:
 1. Objetivo de la fase e IDs RF-01 a RF-04.

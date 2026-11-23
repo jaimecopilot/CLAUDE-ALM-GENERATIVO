@@ -20,17 +20,32 @@ La guía técnica completa está en **[GUIA_GITLAB_PASO_A_PASO.md](./GUIA_GITLAB
 | 35–60 min | Git y Claude Code; clonar e importar la plantilla | Archivos en el directorio GitLab |
 | 60–75 min | Primer commit, tag `base-alm`, rama `practica/manual` | Historial Git visible |
 | 75–85 min | Revisar issues, MR y runners e invitar al formador con rol **Developer** | Acceso confirmado |
-| 85–90 min | Interpretar contrato 01 y registrar gate | Entorno aprobado o bloqueo |
+| 85–90 min | Aprobar la preparación y publicar entrada-l02 | Entorno aprobado o bloqueo |
 
 ## Qué tiene que existir al acabar
 
 En GitLab debe existir un repo `TU_USUARIO/coworking-alm-junior`, privado, con `CLAUDE.md`, `alm/`, `docs/`, `app/`, `tests/`. Esos directorios **son plantillas**: ni la especificación ni la API están resueltas.
 
-El tag `base-alm` apunta a la plantilla inicial. `practica/manual` inicia la primera implementación; en L10 se creará `practica/automatica` desde el tag. Este detalle es imprescindible para comparar resultados de forma justa.
+El tag `base-alm` apunta a la plantilla inicial. `practica/manual` inicia la primera implementación; en L10 se creará `practica/automatica` desde la plantilla y se avanzará hasta la entrega común `entrada-l02`. Este detalle es imprescindible para comparar resultados de forma justa.
 
 ## Interpretación de la metodología
 
 Lee el contrato `alm/contratos/01-requisitos.md` y el metaprompt `alm/metaprompts/01-requisitos.md`. Todavía no los ejecutes para generar requisitos. En L03 Claude generará primero el prompt operativo y después la especificación, partiendo del mismo caso de negocio. En L10 estudiarás el pipeline automático de GitLab, que **solo ejecutará el formador**. Recibirás su resultado como referencia en otra rama de tu propio proyecto.
 
+## Entrega común de L01 y L02
+
+Al cerrar la preparación técnica, sitúate en `practica/manual` todavía en `base-alm`. Copia los dos archivos aprobados de L01 en `evidencias/`: `L01.md` y `prompt-L01.md`. Abre el [metaprompt maestro de L02](METAPROMPT.md) en Claude. Genera y revisa `evidencias/prompt-L02.md`. Autoriza su ejecución y revisa `evidencias/L02.md`, con la URL del proyecto, el SHA de la plantilla y las referencias que se han comprobado. Con el resultado aprobado, publica esos cuatro archivos como entrada común. En el primer ensayo de cada proyecto:
+
+~~~sh
+git add evidencias/L01.md evidencias/prompt-L01.md evidencias/prompt-L02.md evidencias/L02.md
+git diff --cached --stat
+git commit -m "docs: entregar exploración y preparación aprobadas"
+git tag entrada-l02
+git push --atomic origin practica/manual refs/tags/entrada-l02
+git ls-remote origin refs/heads/practica/manual refs/tags/entrada-l02
+~~~
+
+Las dos referencias deben mostrar el mismo SHA. Si retomas una entrega publicada, comprueba la etiqueta existente y sus archivos antes de seguir. La etiqueta `base-alm` conserva la plantilla inicial. L03 y el recorrido automático de L10 reciben exactamente la versión marcada `entrada-l02`.
+
 ## Gate L02
-El alumno demuestra la URL real de GitLab, el resultado de `git ls-remote --heads origin` y `git ls-remote --tags origin`, y la rama; confirma que la etiqueta base precede a cualquier generación; el formador revisa que no se haya subido toda la documentación docente a GitLab. El alumno debe **invitarlo con rol Developer** y enviarle la URL de su proyecto, siguiendo el [apartado 7 de la guía](./GUIA_GITLAB_PASO_A_PASO.md#7-invitar-al-formador-como-developer-obligatorio). Si una cuenta o runner no está disponible, registrar el bloqueo: nunca declararlo configurado por suposición.
+El alumno demuestra la URL real de GitLab, el resultado de `git ls-remote --heads origin` y `git ls-remote --tags origin`, y la rama; comprueba que base-alm contiene la plantilla y que entrada-l02 contiene los cuatro archivos aprobados antes de generar requisitos; el formador revisa que no se haya subido toda la documentación docente a GitLab. El alumno debe **invitarlo con rol Developer** y enviarle la URL de su proyecto, siguiendo el [apartado 7 de la guía](./GUIA_GITLAB_PASO_A_PASO.md#7-invitar-al-formador-como-developer-obligatorio). Si una cuenta o runner no está disponible, registrar el bloqueo: nunca declararlo configurado por suposición.

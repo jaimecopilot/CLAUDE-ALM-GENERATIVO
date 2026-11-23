@@ -1,5 +1,7 @@
 # L05 · PRÁCTICA: generar Coworking Manager con Claude Code
 
+**Traspaso de la práctica.** Usa el [metaprompt de este laboratorio](METAPROMPT.md) en una conversación identificada. Abre los requisitos de L03 y el diseño, diagramas y ADR aprobados de L04. Entrega a L06 el commit del MVP, las instrucciones de arranque y sus pruebas.
+
 **Herramienta principal:** Claude Code en VS Code sobre el clon GitLab. **Git** sincroniza el código; MCP o `glab` (opcionales) sirven para issues, MR y pipelines. No hace falta VM. Ver [guía y flujo completo issue → pruebas → MR → CI](../GUIA_INTEGRACION_CLAUDE_CODE_GITLAB.md).
 
 **Tiempo: 210 min.** Preparación y explicación 25; prompt/plan 25; incremento de salas 35; reservas y conflictos 65; cancelación 25; validación, registro y revisión 35.

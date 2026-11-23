@@ -3,6 +3,8 @@
 **Actividad formativa origen:** L03. **Tipo:** contrato de una fase; NO contiene el artefacto final prehecho.
 
 ## Entradas que deben existir
+- evidencias/L01.md
+- evidencias/L02.md
 - README.md
 - docs/instrucciones/CASO_NEGOCIO.md
 - alm/maestro.md
@@ -12,6 +14,7 @@
 - docs/requisitos/backlog.md
 
 ## Criterios de validación obligatorios
+- [ ] Cada hallazgo L01 tiene un destino verificable en la especificación
 - [ ] RF-01 a RF-04 identificados
 - [ ] Historias y CA Gherkin verificables
 - [ ] Regla de intervalos [inicio,fin)

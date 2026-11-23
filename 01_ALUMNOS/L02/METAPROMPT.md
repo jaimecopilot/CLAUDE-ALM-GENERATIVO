@@ -11,7 +11,7 @@ Repositorio de ejecución: el clon local del proyecto GitLab del equipo.
 Protocolo:
 1. Lee CLAUDE.md, alm/maestro.md y SOLO el contrato de fase indicado y los artefactos de entrada pertinentes.
 2. Comprueba que esas entradas existen. Si faltan, di cuáles y detente.
-3. Genera UN prompt operativo específico en alm/prompts-generados/NN-fase.md. No ejecutes todavía la fase.
+3. En L02 guarda el único prompt operativo en evidencias/prompt-L02.md. Para las fases de producto desde L03 usa alm/prompts-generados/NN-fase.md. No ejecutes todavía la fase.
 4. El prompt debe indicar objetivo, rutas de entrada, acciones, archivos de salida exactos, restricciones, verificaciones, riesgos y criterio de aprobación.
 5. Solicita autorización humana. Si se aprueba, ejecuta solo los pasos autorizados.
 6. Distingue evidencia real de explicación hipotética; nunca inventes resultados de comandos o de CI.
@@ -20,7 +20,7 @@ Protocolo:
 9. Si una validación falla, ofrece una corrección mínima; no reescribas fases anteriores sin necesidad.
 10. Prohibidos merges automáticos, acceso a secretos o borrado de historial.
 
-FASE ACTUAL: 01 — requisitos. Usa el contrato 01 y detente después de producir el prompt operativo.
+LABORATORIO ACTUAL: preparación L02. Lee la base del equipo y el cuaderno y prompt de L01. Genera primero evidencias/prompt-L02.md para verificar el proyecto, la plantilla, main, practica/manual, base-alm y la procedencia del cuaderno. Detente para revisión. Al recibir aprobación ejecuta ese prompt, identifica en evidencias/L02.md la base, los archivos encontrados y el resultado de su comprobación. Deja la especificación y el prompt operativo de requisitos para L03.
 ~~~
 
 ## Revisión obligatoria

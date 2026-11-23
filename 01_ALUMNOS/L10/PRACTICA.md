@@ -7,17 +7,21 @@
 ## Preparación
 Usa tu proyecto GitLab **personal y privado**, creado en L02. No mezcles la rama manual con la automática. GitHub contiene los contratos y el metaprompt de construcción. El YAML ejecutable se genera en el paso 2 y se revisa antes de publicarlo en el proyecto docente. **Solo el formador ejecutará una vez el ALM automático en su propio GitLab**, con su API y presupuesto. El alumno estudia el pipeline, ve sus logs y recibe una copia del resultado; no debe configurar ni consumir una clave API para este taller.
 
+Al cerrar L09, anota el SHA aprobado de la rama guiada y su matriz. Consérvalos para la comparación de L10 y L11. La generación automática parte de la entrega de L02 para que ninguna solución manual se filtre a sus entradas. Si el formador utiliza un proyecto central, registra su entrada real y cualquier diferencia con la de tu equipo.
+
 ## Paso 1 — segunda rama desde el mismo estado inicial
 ~~~bash
 git fetch origin --tags
 git switch -c practica/automatica base-alm
+git merge --ff-only entrada-l02
+git rev-parse HEAD entrada-l02
 ~~~
-La rama de estudio debe tener los seis contratos y metaprompts, pero no las especificaciones/código generados en L03–L09. El resultado compartido llegará a otra rama independiente: `referencia/alm-automatico`.
+Los dos SHA deben coincidir antes de añadir el orquestador. Verifica que evidencias/L01.md y evidencias/L02.md contienen las mismas entradas aprobadas que en L03. La rama de estudio debe tener los seis contratos y metaprompts, pero no las especificaciones/código generados en L03–L09. El resultado compartido llegará a otra rama independiente: `referencia/alm-automatico`.
 
 **Si preparaste L02 con una edición anterior.** En la nueva rama `practica/automatica`, compara los metaprompts de [diseño](../../03_GITLAB_PLANTILLA/alm/metaprompts/02-diseno.md), [desarrollo](../../03_GITLAB_PLANTILLA/alm/metaprompts/03-desarrollo.md) y [DevOps](../../03_GITLAB_PLANTILLA/alm/metaprompts/05-devops.md), y el [contrato de DevOps](../../03_GITLAB_PLANTILLA/alm/contratos/05-devops.md) con la plantilla vigente del curso. Debes encontrar la cancelación mediante `DELETE /reservas/{id}`, tres incrementos de desarrollo y las tres etapas de CI `quality`, `test` y `package`. En algunas copias antiguas el metaprompt de DevOps acaba a mitad del punto 4. Si hay diferencias, copia solo esos archivos de la plantilla a las mismas rutas bajo `alm/`, revisa el diff y versiona la actualización en esa rama antes de generar el YAML. Conserva la etiqueta `base-alm` y registra el commit de la actualización para la comparación de L11.
 
 ## Paso 2 — crear el pipeline con Claude
-Abre Claude Code sobre esta rama y utiliza [METAPROMPT.md](./METAPROMPT.md). Claude genera el archivo **`.gitlab-ci.yml`** y los scripts de apoyo necesarios. Incluye jobs **alm_requisitos, alm_diseno, alm_desarrollo, alm_testing, alm_devops y alm_evolucion**.
+Abre Claude Code sobre esta rama y utiliza [METAPROMPT.md](./METAPROMPT.md). Guarda primero el prompt operativo en `evidencias/prompt-L10.md`. Revisa sus entradas, límites de coste y salidas. Tras tu aprobación escrita, Claude genera el archivo **`.gitlab-ci.yml`** y los scripts de apoyo necesarios. Incluye jobs **alm_requisitos, alm_diseno, alm_desarrollo, alm_testing, alm_devops y alm_evolucion**.
 
 Cada job lee su contrato y metaprompt, genera un prompt operativo y lo ejecuta; los posteriores reciben los archivos reales de las fases anteriores como artefactos. **No se crea una especificación independiente para desarrollo**.
 

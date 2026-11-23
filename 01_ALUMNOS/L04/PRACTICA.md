@@ -1,5 +1,7 @@
 # L04 · PRÁCTICA: generar y aprobar la arquitectura del coworking
 
+**Traspaso de la práctica.** Usa el [metaprompt de este laboratorio](METAPROMPT.md) en una conversación identificada. Abre especificación y backlog aprobados de L03 y coteja su commit antes de generar el prompt de diseño. Entrega diseño, diagramas y ADR a L05.
+
 **Herramienta de trabajo:** diseño y ADR pueden crearse con Claude Code o Claude web + MCP a partir de requisitos aprobados. Al alternar herramientas, sincroniza los commits y evita ediciones simultáneas. Ver [guía transversal](../GUIA_INTEGRACION_CLAUDE_CODE_GITLAB.md).
 
 **60 min:** teoría 15, prompt de diseño 10, generación 20, revisión/ADR 10, gate 5.

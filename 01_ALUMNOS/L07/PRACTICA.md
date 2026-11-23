@@ -1,5 +1,7 @@
 # L07 · PRÁCTICA: generar y ejecutar CI/CD en GitLab
 
+**Traspaso de la práctica.** Usa el [metaprompt de este laboratorio](METAPROMPT.md) en una conversación identificada. Espera el commit integrado de L06. Entrega el YAML de producto, el paquete y el informe con pipeline y SHA a L08.
+
 **Ejecución:** Claude Code genera el YAML sobre el clon y Git lo publica; GitLab Runner ejecuta los tests. MCP o `glab` pueden consultar jobs y logs, pero son opcionales. El CI normal de L07 **no consume API de Anthropic**. Ver [guía transversal](../GUIA_INTEGRACION_CLAUDE_CODE_GITLAB.md).
 
 **75 min:** teoría 10, diseño 10, generación/revisión 15, ejecución remota 25, reparación/cierre 15.

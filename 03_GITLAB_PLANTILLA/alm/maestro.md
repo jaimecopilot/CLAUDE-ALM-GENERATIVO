@@ -12,6 +12,8 @@
 7. Realizar verificaciones del contrato y registrar en alm/evidencias/registro.md.
 8. Pedir **gate B: aprobación del resultado**, antes de avanzar.
 
+Para cada laboratorio guiado, abre el metaprompt publicado del laboratorio en Claude (pega el bloque completo o indica su ruta y revisión). Conserva la respuesta que contiene el prompt, la aprobación explícita, el artefacto y su prueba. Registra el commit de entrada, los archivos leídos y el commit de la entrega aprobada. Comienza el laboratorio siguiente después de revisar esa entrega. En L10 registra por separado la preparación offline y cualquier ejecución real autorizada en GitLab.
+
 **Criterio de bloqueo:** salidas inexistentes, inconsistencias funcionales, pruebas críticas fallidas, acceso remoto no comprobado o decisión de negocio no aprobada. Nunca generar «pasa» donde hay bloqueo. Las fases que requieran GitLab y carezcan de accesos se anotan como no ejecutadas.
 
 **Gestión de cuota:** una arquitectura, una ejecución por fase y correcciones concretas. Guardar prompts y resultados; no enviar toda la biblioteca GitHub a Claude en cada paso.

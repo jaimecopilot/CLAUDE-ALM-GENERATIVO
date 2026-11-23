@@ -188,3 +188,6 @@ Documentación oficial: https://docs.gitlab.com/user/project/members/ y https://
 - [ ] Sé que recibiré los resultados automáticos en `referencia/alm-automatico`.
 
 **Resultado L02:** una plataforma de trabajo personal preparada para crear artefactos ALM con Claude. Ninguna especificación de requisitos se considera todavía generada.
+
+
+Tras verificar la plantilla y los permisos, completa la [entrega común de L01 y L02](PRACTICA.md#entrega-común-de-l01-y-l02). El script crea la base técnica. La etiqueta `entrada-l02` se publica después de revisar el cuaderno del alumno.
