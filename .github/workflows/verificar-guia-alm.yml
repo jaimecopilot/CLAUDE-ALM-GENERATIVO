@@ -2,7 +2,7 @@ name: Verificar guía PDF de alumnado
 
 on:
   push:
-    branches: [main]
+    branches: [main, "audit/**"]
     paths:
       - "01_ALUMNOS/GUIA_ALUMNADO_CLAUDE_GITLAB_VSCODE_ALM_2026.pdf"
       - "01_ALUMNOS/Manual_Alumno_ALM_Generativo_16h_2026.pdf"
