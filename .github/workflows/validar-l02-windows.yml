@@ -2,6 +2,7 @@ name: Validar L02 en Windows, PowerShell 5.1 y Bash
 on:
   push:
     branches:
+      - main
       - "audit/**"
     paths:
       - "scripts/Preparar-L02.ps1"
