@@ -1,4 +1,4 @@
-name: Validar L02 en Windows (PowerShell y Git)
+name: Validar L02 en Windows, PowerShell 5.1 y Bash
 on:
   push:
     branches:
@@ -149,3 +149,41 @@ jobs:
           $nCommits = (git -C $destino rev-list --count main).Trim()
           if ($nCommits -ne '1') { throw "Se esperaban 1 commit, existen $nCommits" }
           Write-Host 'OK: PowerShell 5.1, clon inicial, commit, main, tag, rama y segunda ejecución.'
+
+  ubuntu-bash-l02:
+    name: Importacion Bash (${{ matrix.proyecto }})
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        proyecto: [coworking-alm-junior, coworking-alm-ensayo]
+    steps:
+      - name: Obtener materiales
+        uses: actions/checkout@v4
+      - name: Ejecutar clon, copia de archivos ocultos, ramas y tag
+        shell: bash
+        env:
+          PROYECTO: ${{ matrix.proyecto }}
+        run: |
+          set -euo pipefail
+          git config --global user.name "Alumno Bash"
+          git config --global user.email "alumno-bash@example.invalid"
+          raiz="$(mktemp -d)"
+          remote="$raiz/$PROYECTO.git"
+          git init --bare --initial-branch=main "$remote"
+          git clone "$remote" "$raiz/$PROYECTO"
+          nombre="$(basename "$remote" .git)"
+          git -C "$raiz/$nombre" symbolic-ref HEAD refs/heads/main
+          cp -R "$GITHUB_WORKSPACE/03_GITLAB_PLANTILLA/." "$raiz/$nombre/"
+          git -C "$raiz/$nombre" add -A
+          git -C "$raiz/$nombre" commit -m "chore: incorporar plantilla del curso"
+          git -C "$raiz/$nombre" push -u origin main
+          git -C "$raiz/$nombre" tag base-alm
+          git -C "$raiz/$nombre" push origin base-alm
+          git -C "$raiz/$nombre" switch -c practica/manual
+          git -C "$raiz/$nombre" push -u origin practica/manual
+          test "$(git -C "$raiz/$nombre" rev-parse HEAD)" = "$(git -C "$raiz/$nombre" rev-parse base-alm)"
+          git -C "$raiz/$nombre" ls-files | grep -q '^\.gitignore$'
+          git -C "$raiz/$nombre" ls-files | grep -q '^\.gitlab/'
+          test -z "$(git -C "$raiz/$nombre" status --porcelain)"
+          echo "OK Bash: $PROYECTO, main, base-alm, practica/manual, archivos ocultos."
