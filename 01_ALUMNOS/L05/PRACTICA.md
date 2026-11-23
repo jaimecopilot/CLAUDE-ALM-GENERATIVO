@@ -46,7 +46,7 @@ Ahora pide únicamente la regla RF-03. Explica por qué es una regla de negocio 
 Si se produce un resultado diferente, captura entrada, salida y causa probable; pide corrección focalizada y repite.
 
 ## Paso 6 — I3. Cancelación
-Pide implementar **DELETE /reservas/{id}** o ruta acordada para cancelar una reserva existente. Prueba la misma franja de tiempo antes y después de cancelar: después debe poder reservarse de nuevo. Comprueba que cancelar una reserva inexistente tiene una respuesta consistente con los requisitos.
+Pide implementar **DELETE /reservas/{id}** para cancelar una reserva existente. Prueba la misma franja de tiempo antes y después de cancelar: después debe poder reservarse de nuevo. Comprueba que cancelar una reserva inexistente tiene una respuesta consistente con los requisitos.
 
 Después de comprobar la API, añade el formulario mínimo del manual. Debe usar la API para listar salas, crear y cancelar reservas. Comprueba desde el navegador que una cancelación libera la franja.
 
