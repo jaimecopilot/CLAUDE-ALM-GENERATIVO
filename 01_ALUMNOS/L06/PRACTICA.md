@@ -41,4 +41,4 @@ Comenta qué partes faltan; **no fijes un porcentaje inventado**. Si la herramie
 Documenta cada nivel (observación, resultado, evidencia). No basta poner siete checks verdes. En seguridad incluye dos límites conocidos del MVP: autenticación omitida por alcance y resistencia a concurrencia de producción no demostrada.
 
 ## Gate de calidad
-Hay pruebas ejecutadas, resultados comprobados, correspondencia con criterios CA y hallazgos anotados. Si falla un test exigido, la fase queda BLOQUEADA; el alumno realiza corrección controlada. Registra el commit de pruebas y prepara la MR para L07.
+Hay pruebas ejecutadas, resultados comprobados, correspondencia con criterios CA y hallazgos anotados. Si falla un test exigido, la fase queda BLOQUEADA; el alumno realiza corrección controlada. Tras Gate B, registra el commit de pruebas **en `practica/manual`**, haz push y actualiza la MR en borrador hacia `main` si ya la abriste en L05. Deja la MR sin fusionar hasta completar el recorrido; en L07 se añadirán y verificarán los jobs de CI.
