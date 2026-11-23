@@ -44,7 +44,15 @@ Comprueba y registra:
 - Decisiones de negocio validadas por el formador.
 - Vinculación entre backlog e issues reales o pendiente explícito.
 
-**Evidencia:** prompt operativo revisado, decisiones del cliente documentadas, commit real con requisitos y backlog, referencia a issues efectivamente creadas y aprobación **Gate B** antes de realizar commits o push. **Salida a L04:** únicamente la especificación aprobada, no todo el historial del chat.
+**Gate B y publicación:** revisa la especificación, backlog, enlaces reales a issues y `git diff`; registra la aprobación o rechazo en `alm/evidencias/registro.md`. **Solo tras aprobar Gate B**, desde `practica/manual`, ejecuta:
+
+~~~powershell
+git add alm/prompts-generados/01-requisitos.md docs/requisitos alm/evidencias/registro.md
+git commit -m "docs: aprobar requisitos y backlog"
+git push -u origin practica/manual
+~~~
+
+**Evidencia:** prompt operativo revisado, decisiones del cliente, commit real en la rama guiada y enlaces a issues. Si no se autoriza la fase, no ejecutes estos comandos. **Salida a L04:** únicamente la especificación aprobada, no todo el historial del chat.
 
 ## Si no llega la cuota de Claude
 No se generan más variantes. Se utiliza la especificación de referencia entregada por el docente como **checkpoint externo**, marcado como tal y sin fingir autoría del equipo.
