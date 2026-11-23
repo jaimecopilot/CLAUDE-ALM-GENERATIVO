@@ -1,0 +1,47 @@
+name: Actualizar guia PDF L02 desde correcciones verificadas
+
+on:
+  push:
+    branches:
+      - "audit/l02-windows-actions-20261123"
+    paths:
+      - "scripts/actualizar_guia_pdf_l02.py"
+      - ".github/workflows/actualizar-guia-pdf-l02.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  regenerar-paginas:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Obtener documentos de la rama de auditoria
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - name: Instalar PyMuPDF para edicion no destructiva del PDF
+        run: python3 -m pip install --disable-pip-version-check "PyMuPDF>=1.24,<2"
+      - name: Corregir paginas 6 y 7 conservando las otras 21 paginas
+        run: |
+          python3 scripts/actualizar_guia_pdf_l02.py \
+            01_ALUMNOS/GUIA_ALUMNADO_CLAUDE_GITLAB_VSCODE_ALM_2026.pdf
+      - name: Guardar evidencias visuales y PDF
+        uses: actions/upload-artifact@v4
+        with:
+          name: guia-alm-l02-revisada
+          path: |
+            01_ALUMNOS/GUIA_ALUMNADO_CLAUDE_GITLAB_VSCODE_ALM_2026.pdf
+            01_ALUMNOS/revision_guia_pagina_6.png
+            01_ALUMNOS/revision_guia_pagina_7.png
+          if-no-files-found: error
+      - name: Publicar PDF en la rama de revision
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add 01_ALUMNOS/GUIA_ALUMNADO_CLAUDE_GITLAB_VSCODE_ALM_2026.pdf
+          if git diff --cached --quiet; then
+            echo "El PDF ya coincide; no hay cambios."
+          else
+            git commit -m "docs(pdf): corregir procedimiento GitLab en paginas 6-7"
+            git push origin HEAD:${GITHUB_REF_NAME}
+          fi
