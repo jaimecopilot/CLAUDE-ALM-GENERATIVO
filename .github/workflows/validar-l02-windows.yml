@@ -18,6 +18,11 @@ on:
       - "01_ALUMNOS/L02/**"
       - "01_ALUMNOS/L03/**"
   workflow_dispatch:
+    inputs:
+      ensayo_gitlab:
+        description: "Validar L02 con el proyecto GitLab privado autorizado"
+        type: boolean
+        default: false
 
 permissions:
   contents: read
@@ -172,22 +177,24 @@ jobs:
           raiz="$(mktemp -d)"
           remote="$raiz/$PROYECTO.git"
           git init --bare --initial-branch=main "$remote"
-          git clone "$remote" "$raiz/$PROYECTO"
-          nombre="$(basename "$remote" .git)"
-          git -C "$raiz/$nombre" symbolic-ref HEAD refs/heads/main
-          cp -R "$GITHUB_WORKSPACE/03_GITLAB_PLANTILLA/." "$raiz/$nombre/"
-          git -C "$raiz/$nombre" add -A
-          git -C "$raiz/$nombre" commit -m "chore: incorporar plantilla del curso"
-          git -C "$raiz/$nombre" push -u origin main
-          git -C "$raiz/$nombre" tag base-alm
-          git -C "$raiz/$nombre" push origin base-alm
-          git -C "$raiz/$nombre" switch -c practica/manual
-          git -C "$raiz/$nombre" push -u origin practica/manual
-          test "$(git -C "$raiz/$nombre" rev-parse HEAD)" = "$(git -C "$raiz/$nombre" rev-parse base-alm)"
-          git -C "$raiz/$nombre" ls-files | grep -q '^\.gitignore$'
-          git -C "$raiz/$nombre" ls-files | grep -q '^\.gitlab/'
-          test -z "$(git -C "$raiz/$nombre" status --porcelain)"
-          echo "OK Bash: $PROYECTO, main, base-alm, practica/manual, archivos ocultos."
+          export ALM_REMOTE="$remote" ALM_TEST_ROOT="$raiz"
+          python3 - <<'PYTHON'
+          import os, pathlib, subprocess
+          root = pathlib.Path(os.environ["ALM_TEST_ROOT"])
+          curso = pathlib.Path(os.environ["GITHUB_WORKSPACE"])
+          guia = (curso / "01_ALUMNOS/L02/GUIA_GITLAB_PASO_A_PASO.md").read_text()
+          bloque = guia.split("~~~bash\n", 1)[1].split("\n~~~", 1)[0]
+          bloque = bloque.replace('cd "$HOME"', 'cd "$ALM_TEST_ROOT"')
+          bloque = bloque.replace('curso="$PWD/CLAUDE-ALM-GENERATIVO"', 'curso="$GITHUB_WORKSPACE"')
+          bloque = bloque.replace('repo="https://gitlab.com/TU_USUARIO/NOMBRE_REAL_DEL_PROYECTO.git"', 'repo="$ALM_REMOTE"')
+          # Un clon y un remoto son directorios hermanos.
+          subprocess.run(["bash", "-euc", bloque], check=True)
+          antes = subprocess.check_output(["git", "ls-remote", "--refs", os.environ["ALM_REMOTE"]])
+          assert len(antes.splitlines()) == 3
+          assert subprocess.run(["bash", "-euc", bloque]).returncode != 0
+          assert antes == subprocess.check_output(["git", "ls-remote", "--refs", os.environ["ALM_REMOTE"]])
+          print("OK Bash: bloque publicado, tres referencias y repetición protegida")
+          PYTHON
 
   l03-git-simulado:
     name: L03 - commits y push sobre practica/manual (sin Claude)
@@ -233,8 +240,68 @@ jobs:
           if ($manual -eq $main -or $tag -ne $base -or $main -ne $base) {
             throw 'La generacion L03 simulada cambio main/base-alm o no avanzo practica/manual.'
           }
+          $nuevo = Join-Path $root 'segundo-clon'
+          & $script -GitLabRepoUrl $remote -CarpetaTrabajo $nuevo -CursoLocal $env:GITHUB_WORKSPACE -Publicar
+          $destNuevo = Join-Path $nuevo 'coworking-alm-junior'
+          $recuperada = (git -C $destNuevo rev-parse refs/heads/practica/manual).Trim()
+          if ($recuperada -ne $manual) { throw 'El nuevo clon no conservó el avance de practica/manual.' }
           Write-Host 'OK L03 Git: archivos, commit, push en practica/manual; main y base-alm intactos.'
           Write-Host 'La prueba NO ejecuta Claude ni crea issues GitLab.'
+
+  gitlab-real:
+    name: L02 HTTPS contra GitLab (solicitud expresa)
+    if: github.event_name == 'workflow_dispatch' && inputs.ensayo_gitlab
+    runs-on: windows-latest
+    timeout-minutes: 10
+    concurrency: ensayo-gitlab-l02
+    environment: ensayo-gitlab
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Inspeccionar, preparar y comprobar dos veces
+        shell: pwsh
+        env:
+          ENSAYO_URL: ${{ vars.GITLAB_ENSAYO_URL }}
+          ENSAYO_TOKEN: ${{ secrets.GITLAB_ENSAYO_TOKEN }}
+          GIT_TERMINAL_PROMPT: "0"
+          GCM_INTERACTIVE: "Never"
+        run: |
+          $ErrorActionPreference = 'Stop'
+          $repo = $env:ENSAYO_URL
+          if ($repo -cnotmatch '^https://gitlab[.]com/jaimedeeplearning/coworking-alm-ensayo[.]git$') {
+              throw 'Configura la URL HTTPS exacta del ensayo autorizado.'
+          }
+          if (-not $env:ENSAYO_TOKEN) { throw 'Falta el secreto de proyecto GITLAB_ENSAYO_TOKEN.' }
+          $basic = [Convert]::ToBase64String([Text.Encoding]::UTF8.GetBytes("oauth2:$env:ENSAYO_TOKEN"))
+          Write-Output "::add-mask::$basic"
+          $env:GIT_CONFIG_COUNT = '2'
+          $env:GIT_CONFIG_KEY_0 = "http.$repo.extraHeader"
+          $env:GIT_CONFIG_VALUE_0 = "Authorization: Basic $basic"
+          $env:GIT_CONFIG_KEY_1 = "http.followRedirects"
+          $env:GIT_CONFIG_VALUE_1 = "false"
+          Remove-Item Env:ENSAYO_TOKEN
+          $antes = @(git ls-remote --refs $repo)
+          if ($LASTEXITCODE -ne 0) { throw 'Fallo de lectura HTTPS del proyecto privado.' }
+          Write-Host "Referencias observadas antes de escribir: $($antes.Count)"
+          git config --global user.name "Ensayo ALM"
+          git config --global user.email "ensayo-alm@example.invalid"
+          $params = @{ GitLabRepoUrl=$repo; CursoLocal=$env:GITHUB_WORKSPACE; CarpetaTrabajo=$env:RUNNER_TEMP }
+          $script = Join-Path $env:GITHUB_WORKSPACE 'scripts/Preparar-L02.ps1'
+          & $script @params
+          $local = Join-Path $env:RUNNER_TEMP 'coworking-alm-ensayo'
+          $baseTree = git -C $local rev-parse 'main^{tree}'
+          $plantilla = git rev-parse HEAD:03_GITLAB_PLANTILLA
+          if (-not $baseTree -or $baseTree -ne $plantilla) { throw 'La base contiene otro material. Revisar.' }
+          & $script @params -Publicar
+          $primera = @(git ls-remote --refs $repo)
+          if ($LASTEXITCODE -ne 0) { throw 'No se pudieron leer las referencias tras publicar.' }
+          $params.CarpetaTrabajo = Join-Path $env:RUNNER_TEMP 'repeticion'
+          & powershell.exe -NoProfile -NonInteractive -File $script -GitLabRepoUrl $repo -CursoLocal $env:GITHUB_WORKSPACE -CarpetaTrabajo $params.CarpetaTrabajo -Publicar
+          if ($LASTEXITCODE -ne 0) { throw 'Falló la repetición en Windows PowerShell 5.1.' }
+          $segunda = @(git ls-remote --refs $repo)
+          if ($LASTEXITCODE -ne 0 -or (Compare-Object $primera $segunda)) { throw 'Las referencias cambiaron en la repetición.' }
+          Write-Host 'OK GitLab.com HTTPS: PowerShell 7 y 5.1, dos clones y referencias estables.'
 
   l02-rechazo-cambios-locales:
     name: Bloqueo seguro con cambios locales y remoto equivocado

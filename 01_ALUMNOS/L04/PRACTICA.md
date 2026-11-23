@@ -19,7 +19,7 @@ Utiliza **METAPROMPT.md** para producir **alm/prompts-generados/02-diseno.md**. 
 ## Paso 3 — ejecutar el prompt aprobado
 Claude producirá:
 - **docs/arquitectura/diseno.md**: responsabilidades y restricciones.
-- **docs/arquitectura/diagramas.md**: diagramas Mermaid (contexto/contenedores y modelo).
+- **docs/arquitectura/diagramas.md**: diagramas Mermaid (contexto/contenedores y modelo). Abre el archivo renderizado y comprueba que también está en el commit que vas a publicar.
 - **docs/arquitectura/ADR-001.md**: decisión sobre la estructura del sistema y almacenamiento.
 
 El estudiante debe poder explicar las relaciones: *Sala tiene varias Reservas; una Reserva pertenece a una sala, posee inicio, fin y estado*. Comprueba que el tratamiento de reservas solapadas sigue visible.

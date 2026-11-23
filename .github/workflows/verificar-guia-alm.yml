@@ -2,12 +2,18 @@ name: Verificar guía PDF de alumnado
 
 on:
   push:
-    branches: [main]
+    branches: [main, "audit/**"]
     paths:
       - "01_ALUMNOS/GUIA_ALUMNADO_CLAUDE_GITLAB_VSCODE_ALM_2026.pdf"
+      - "01_ALUMNOS/Manual_Alumno_ALM_Generativo_16h_2026.pdf"
       - "README.md"
       - "01_ALUMNOS/README.md"
       - "01_ALUMNOS/L02/PRACTICA.md"
+      - ".github/workflows/verificar-guia-alm.yml"
+  pull_request:
+    paths:
+      - "01_ALUMNOS/*.pdf"
+      - "01_ALUMNOS/README.md"
       - ".github/workflows/verificar-guia-alm.yml"
   workflow_dispatch:
 
@@ -39,6 +45,13 @@ jobs:
           operative = (reader.pages[5].extract_text() or "") + (reader.pages[6].extract_text() or "")
           for marker in ("Preparar-L02.ps1", "practica/manual", "git ls-remote", "-Publicar"):
               assert marker in operative, f"El procedimiento L02 del PDF no contiene: {marker}"
+          manual = PdfReader("01_ALUMNOS/Manual_Alumno_ALM_Generativo_16h_2026.pdf", strict=True)
+          texto = "\n".join(page.extract_text() or "" for page in manual.pages)
+          for marker in [*(f"L{i:02}" for i in range(1, 12)), "Preparar-L02.ps1",
+                         "Gate A", "Gate B", "referencia/alm-automatico"]:
+              assert marker in texto, f"Manual extenso sin {marker}"
+          assert "GUION RESERVADO DEL FORMADOR" not in texto
+          print(f"Manual del alumno: {len(manual.pages)} páginas y once laboratorios.")
           expected = {
               "README.md": "./01_ALUMNOS/GUIA_ALUMNADO_CLAUDE_GITLAB_VSCODE_ALM_2026.pdf",
               "01_ALUMNOS/README.md": "./GUIA_ALUMNADO_CLAUDE_GITLAB_VSCODE_ALM_2026.pdf",

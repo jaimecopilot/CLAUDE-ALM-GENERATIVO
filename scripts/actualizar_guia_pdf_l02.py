@@ -122,7 +122,7 @@ def page6(page):
     w.step("2", "Define la URL de GitLab y la ruta del script")
     w.code([
         '$repo = "https://gitlab.com/TU_USUARIO/NOMBRE_REAL_DEL_PROYECTO.git"',
-        '$script = Join-Path $HOME "CLAUDE-ALM-GENERATIVO\scripts\Preparar-L02.ps1"',
+        r'$script = Join-Path $HOME "CLAUDE-ALM-GENERATIVO\scripts\Preparar-L02.ps1"',
     ])
     w.p("Sustituye toda la URL entre comillas por la URL HTTPS copiada de GitLab. "
         "No incluyas contraseñas ni tokens en la dirección.")
@@ -140,7 +140,7 @@ def page7(page):
     w.title("3.3 Importación: comprobación y publicación")
     w.step("4", "Examina los resultados antes de hacer push")
     w.code([
-        '$nombre = ($repo.TrimEnd("/") -split "/")[-1] -replace "\.git$", ""',
+        r'$nombre = ($repo.TrimEnd("/") -split "/")[-1] -replace "\.git$", ""',
         "cd (Join-Path $HOME $nombre)",
         "Get-ChildItem -Force",
         "git status",
@@ -157,7 +157,7 @@ def page7(page):
         "& $script -GitLabRepoUrl $repo -CarpetaTrabajo $HOME -Publicar",
     ])
     w.p("Esta segunda ejecución comprueba el estado anterior sin duplicar commits. "
-        "Publica main, base-alm y practica/manual. GitLab puede solicitar "
+        "Publica las tres referencias juntas y lee sus SHA del servidor. GitLab puede solicitar "
         "autenticación segura con Git Credential Manager o el navegador.")
     w.step("6", "Comprueba el remoto y pasa a la rama de práctica")
     w.code([
@@ -174,8 +174,8 @@ def page7(page):
     w.p("Un aviso 'cloned an empty repository' es normal al comienzo. "
         "'nothing to commit' significa que no hay cambios pendientes; no demuestra por sí solo "
         "que se haya importado la plantilla. Si origin/main no existe, verifica el "
-        "primer push. Si el script detecta otro historial o cambios pendientes, "
-        "no los sobrescribas: revisa git status con el formador.")
+        "primer push. En un clon nuevo, practica/manual recupera el avance remoto. "
+        "Ante un conflicto, revisa git status con el formador.")
     w.subtitle("3.5 Alternativas y alcance de las pruebas")
     w.p("En macOS/Linux o sin ejecución de scripts, el formador puede utilizar el "
         "procedimiento manual de L02. GitLab Web IDE sirve para editar y commitear, "
@@ -196,7 +196,15 @@ def main():
     doc = fitz.open(src)
     if len(doc) != 23:
         raise ValueError(f"Se esperaban 23 páginas, hay {len(doc)}; revisar antes de alterar.")
-    original_first_page = doc[0].get_text()
+    # La exportación original dejó una segunda firma cortada en el margen superior.
+    portada = doc[0]
+    firmas = [b for b in portada.get_text("blocks") if
+              b[4].strip() == "Jaime Gallo García" and b[1] < 0 and b[3] < 8]
+    if firmas:
+        for firma in firmas:
+            portada.add_redact_annot(fitz.Rect(firma[:4]) & portada.rect, fill=False)
+        portada.apply_redactions(images=0, graphics=0)
+    original_first_page = portada.get_text()
     original_last_page = doc[22].get_text()
     for idx, writer in [(5, page6), (6, page7)]:
         replacement = fitz.open()
@@ -235,7 +243,7 @@ def main():
     finally:
         if tmp.exists():
             tmp.unlink()
-    print(f"PDF revisado: {src}, 23 páginas; originales 1 y 23 intactas.")
+    print(f"PDF revisado: {src}, 23 páginas; portada comprobada y última página intacta.")
 
 
 if __name__ == "__main__":

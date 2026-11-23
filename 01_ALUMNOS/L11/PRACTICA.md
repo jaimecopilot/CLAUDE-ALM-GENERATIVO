@@ -43,3 +43,5 @@ No se penaliza por fallos de infraestructura ajenos al alumno si están claramen
 
 ## Evidencias finales
 Repositorio GitLab personal con dos ramas y sus evidencias; issues/commits/MRs; pruebas; CI real o bloqueo documentado; matriz de trazabilidad; versión final y conclusiones.
+
+Antes de presentar, ejecuta `git fetch origin` y `git log -1 origin/practica/manual`. Usa `git ls-tree -r --name-only origin/practica/manual` para localizar especificación, diagramas, aplicación, pruebas, CI de producto, cambio CAM-01 y matriz. Contrasta el SHA con la MR integrada en GitLab y el pipeline que validó ese cambio. Si hubo squash, consulta el SHA resultante de la MR. Comprueba por separado la procedencia de `origin/referencia/alm-automatico`.

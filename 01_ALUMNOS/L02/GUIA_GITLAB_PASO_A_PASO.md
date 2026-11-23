@@ -90,7 +90,7 @@ cd $HOME
 & ".\CLAUDE-ALM-GENERATIVO\scripts\Preparar-L02.ps1" -GitLabRepoUrl $repo -CarpetaTrabajo $HOME -Publicar
 ~~~
 
-La segunda ejecución no duplica commits. Publica `main`, `base-alm`, `practica/manual` y comprueba `origin/main`. Si GitLab solicita autenticación, utiliza Git Credential Manager o el navegador; no pegues contraseñas ni tokens en Claude.
+La segunda ejecución no duplica commits. Publica `main`, `base-alm`, `practica/manual` en una operación atómica y contrasta las tres referencias con `git ls-remote`. Si GitLab solicita autenticación, utiliza Git Credential Manager o el navegador; no pegues contraseñas ni tokens en Claude.
 
 24. Comprueba en GitLab las dos ramas y la etiqueta. En PowerShell:
 
@@ -126,28 +126,38 @@ Puedes proteger `base-alm` desde las opciones **Protected tags** de GitLab, seg�
 Utiliza **solo este procedimiento si no has ejecutado el script PowerShell** en ese clon. Trabaja desde una carpeta padre, con el GitLab privado recién creado, vacío y sin README. Copia siempre la URL HTTPS exacta desde GitLab y sustitúyela en el primer comando.
 
 ~~~bash
-cd "$HOME"
-git clone https://github.com/jaimecopilot/CLAUDE-ALM-GENERATIVO.git
-repo="https://gitlab.com/TU_USUARIO/NOMBRE_REAL_DEL_PROYECTO.git"
-git clone "$repo"
-nombre="$(basename "$repo" .git)"
-cd "$nombre"
-git symbolic-ref HEAD refs/heads/main
-cd ..
-cp -R CLAUDE-ALM-GENERATIVO/03_GITLAB_PLANTILLA/. "$nombre"/
-cd "$nombre"
-git status
-git add -A
-git commit -m "chore: incorporar plantilla del curso"
-git push -u origin main
-git tag base-alm
-git push origin base-alm
-git switch -c practica/manual
-git push -u origin practica/manual
-git status
+# Ejecuta el bloque en Bash. El subshell se detiene ante el primer fallo.
+(
+  set -eu
+  cd "$HOME"
+  curso="$PWD/CLAUDE-ALM-GENERATIVO"
+  if [ ! -d "$curso" ]; then
+    git clone https://github.com/jaimecopilot/CLAUDE-ALM-GENERATIVO.git "$curso"
+  fi
+  repo="https://gitlab.com/TU_USUARIO/NOMBRE_REAL_DEL_PROYECTO.git"
+  nombre="$(basename "$repo" .git)"
+  refs="$(git ls-remote --refs "$repo")"
+  if [ -n "$refs" ] || [ -e "$nombre" ]; then
+    echo "El destino ya existe. Inspecciona sus referencias y archivos." >&2
+    exit 1
+  fi
+  git clone "$repo" "$nombre"
+  cd "$nombre"
+  git symbolic-ref HEAD refs/heads/main
+  cp -R "$curso/03_GITLAB_PLANTILLA/." .
+  git add -A
+  test "$(git write-tree)" = "$(git -C "$curso" rev-parse HEAD:03_GITLAB_PLANTILLA)"
+  git commit -m "chore: incorporar plantilla del curso"
+  git tag base-alm main
+  git branch practica/manual main
+  git push --atomic -u origin refs/heads/main refs/tags/base-alm refs/heads/practica/manual
+  git ls-remote --refs origin refs/heads/main refs/tags/base-alm refs/heads/practica/manual
+  git switch practica/manual
+)
+# Si terminó correctamente, entra en el clon desde tu terminal para empezar L03.
 ~~~
 
-El sufijo \`/.\` de la carpeta origen incluye los archivos ocultos \`.gitignore\` y \`.gitlab/\`. No copies la carpeta \`.git\` de los materiales. El comando \`git clone\` del curso se omite si ya existe localmente. **No repitas este bloque desde cero sobre un repositorio que ya tiene commits:** verifica el estado de las ramas y detente ante divergencias. El alumnado que trabaje en Windows debe usar el procedimiento PowerShell de los apartados 4 y 5, verificado automáticamente.
+El sufijo `/.` de la carpeta origen incluye los archivos ocultos `.gitignore` y `.gitlab/`. No copies la carpeta `.git` de los materiales. El comando `git clone` del curso se omite si ya existe localmente. **No repitas este bloque desde cero sobre un repositorio que ya tiene commits:** verifica el estado de las ramas y detente ante divergencias. El alumnado que trabaje en Windows debe usar el procedimiento PowerShell de los apartados 4 y 5, verificado automáticamente.
 
 ## 6. Configuración GitLab recomendada
 
