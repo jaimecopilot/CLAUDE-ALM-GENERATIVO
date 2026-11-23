@@ -235,3 +235,57 @@ jobs:
           }
           Write-Host 'OK L03 Git: archivos, commit, push en practica/manual; main y base-alm intactos.'
           Write-Host 'La prueba NO ejecuta Claude ni crea issues GitLab.'
+
+  l02-rechazo-cambios-locales:
+    name: Bloqueo seguro con cambios locales y remoto equivocado
+    runs-on: windows-latest
+    steps:
+      - name: Obtener curso
+        uses: actions/checkout@v4
+      - name: Verificar rechazos sin borrar contenido
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = 'Stop'
+          git config --global user.name "Prueba Protecciones L02"
+          git config --global user.email "test-l02@example.invalid"
+          $base = Join-Path $env:RUNNER_TEMP "protecciones-l02"
+          New-Item -ItemType Directory -Force -Path $base | Out-Null
+          $remote = Join-Path $base "coworking-alm-ensayo.git"
+          git init --bare --initial-branch=main $remote
+          if ($LASTEXITCODE -ne 0) { throw "No se pudo crear remoto local." }
+          $script = Join-Path $env:GITHUB_WORKSPACE "scripts/Preparar-L02.ps1"
+          & $script -GitLabRepoUrl $remote -CarpetaTrabajo $base -CursoLocal $env:GITHUB_WORKSPACE -Publicar
+          $proyecto = Join-Path $base "coworking-alm-ensayo"
+          $shaAntes = (git -C $proyecto rev-parse main).Trim()
+          $archivoLocal = Join-Path $proyecto "NO_BORRAR_PRUEBA_LOCAL.txt"
+          Set-Content -LiteralPath $archivoLocal -Value "Cambio local intencional"
+          $errorCapturado = $false
+          try {
+            & $script -GitLabRepoUrl $remote -CarpetaTrabajo $base -CursoLocal $env:GITHUB_WORKSPACE -Publicar
+          } catch {
+            if ($_.Exception.Message -like "*cambios sin confirmar*") {
+              $errorCapturado = $true
+            } else { throw }
+          }
+          if (-not $errorCapturado) { throw "El script no bloqueó los cambios locales." }
+          if (-not (Test-Path -LiteralPath $archivoLocal)) {
+            throw "La prueba borró un archivo local no versionado."
+          }
+          Remove-Item -LiteralPath $archivoLocal
+          $otroPadre = Join-Path $env:RUNNER_TEMP "otro-remoto"
+          New-Item -ItemType Directory -Force -Path $otroPadre | Out-Null
+          $remotoErroneo = Join-Path $otroPadre "coworking-alm-ensayo.git"
+          git init --bare --initial-branch=main $remotoErroneo
+          if ($LASTEXITCODE -ne 0) { throw "No se pudo crear segundo remoto." }
+          $errorRemoto = $false
+          try {
+            & $script -GitLabRepoUrl $remotoErroneo -CarpetaTrabajo $base -CursoLocal $env:GITHUB_WORKSPACE -Publicar
+          } catch {
+            if ($_.Exception.Message -like "*El origin del destino*") {
+              $errorRemoto = $true
+            } else { throw }
+          }
+          if (-not $errorRemoto) { throw "El script no detectó remoto origin incorrecto." }
+          $shaDespues = (git -C $proyecto rev-parse main).Trim()
+          if ($shaAntes -ne $shaDespues) { throw "Se ha modificado el commit main durante un rechazo." }
+          Write-Host "OK: bloquea cambios locales y remotos distintos, sin borrar archivos ni alterar main."
