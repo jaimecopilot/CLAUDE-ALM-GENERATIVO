@@ -9,7 +9,7 @@
 ## Objetivo
 Utilizar una cuenta GitLab existente o abrir una nueva, crear un **proyecto personal privado**, importar la plantilla del curso y dejar un estado inicial versionado sobre el que podrán ejecutarse dos recorridos ALM: guiado y automático.
 
-La guía técnica completa está en **[GUIA_GITLAB_PASO_A_PASO.md](./GUIA_GITLAB_PASO_A_PASO.md)**, con las operaciones de GitLab.com y los comandos de PowerShell para Windows. Sigue los pasos en orden.
+La guía técnica completa está en **[GUIA_GITLAB_PASO_A_PASO.md](./GUIA_GITLAB_PASO_A_PASO.md)**. Para Windows, el procedimiento principal utiliza [**Preparar-L02.ps1**](../../scripts/Preparar-L02.ps1), validado en runners Windows por GitHub Actions con dos nombres de proyecto. Copia siempre la URL HTTPS exacta desde GitLab, prepara primero sin publicar, comprueba los archivos y ejecuta después `-Publicar`. La verificación con GitHub Actions no equivale a verificar permisos del GitLab privado.
 
 ## Reloj de la sesión
 
@@ -33,4 +33,4 @@ El tag `base-alm` apunta a la plantilla inicial. `practica/manual` inicia la pri
 Lee el contrato `alm/contratos/01-requisitos.md` y el metaprompt `alm/metaprompts/01-requisitos.md`. Todavía no los ejecutes para generar requisitos. En L03 Claude generará primero el prompt operativo y después la especificación, partiendo del mismo caso de negocio. En L10 estudiarás el pipeline automático de GitLab, que **solo ejecutará el formador**. Recibirás su resultado como referencia en otra rama de tu propio proyecto.
 
 ## Gate L02
-El alumno demuestra el URL de GitLab y la rama; confirma que el tag base precede a cualquier generación; el formador revisa que no se haya subido toda la documentación docente a GitLab. El alumno debe **invitarlo con rol Developer** y enviarle la URL de su proyecto, siguiendo el [apartado 7 de la guía](./GUIA_GITLAB_PASO_A_PASO.md#7-invitar-al-formador-como-developer-obligatorio). Si una cuenta o runner no está disponible, registrar el bloqueo: nunca declararlo configurado por suposición.
+El alumno demuestra la URL real de GitLab, el resultado de `git ls-remote --heads origin` y `git ls-remote --tags origin`, y la rama; confirma que la etiqueta base precede a cualquier generación; el formador revisa que no se haya subido toda la documentación docente a GitLab. El alumno debe **invitarlo con rol Developer** y enviarle la URL de su proyecto, siguiendo el [apartado 7 de la guía](./GUIA_GITLAB_PASO_A_PASO.md#7-invitar-al-formador-como-developer-obligatorio). Si una cuenta o runner no está disponible, registrar el bloqueo: nunca declararlo configurado por suposición.
