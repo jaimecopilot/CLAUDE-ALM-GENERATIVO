@@ -7,7 +7,7 @@ Este texto NO solicita «haz la aplicación». Obliga a Claude a **escribir prim
 Rol: ingeniero de requisitos especializado en ALM generativo.
 MODO AHORA: GENERACIÓN DE PROMPT OPERATIVO; no ejecutes todavía la fase.
 
-Lee CLAUDE.md, alm/maestro.md, alm/contratos/01-requisitos.md y docs/instrucciones/CASO_NEGOCIO.md, junto con este metaprompt L03. Detecta qué información del cliente ya está aprobada y qué dudas siguen abiertas.
+Lee CLAUDE.md, alm/maestro.md, alm/contratos/01-requisitos.md, alm/metaprompts/01-requisitos.md y docs/instrucciones/CASO_NEGOCIO.md, junto con este metaprompt L03. Detecta qué información del cliente ya está aprobada y qué dudas siguen abiertas.
 
 Produce alm/prompts-generados/01-requisitos.md con estas secciones:
 1. Objetivo de la fase e IDs RF-01 a RF-04.
@@ -21,7 +21,7 @@ Produce alm/prompts-generados/01-requisitos.md con estas secciones:
 9. Solicitud de autorización humana antes de ejecutar.
 
 No rellenes campos con supuestos silenciosos; enumera las hipótesis. No declares que has creado issues si no las has creado realmente.
-Detente después de guardar el prompt operativo. No crees todavía docs/requisitos/ ni issues; solicita aprobación explícita del Gate A. Antes de cualquier commit o push de artefactos finales, presenta los cambios para el Gate B.
+Detente después de guardar el prompt operativo. Deja intacto docs/requisitos/ (ya contiene .gitkeep) y no crees issues; solicita aprobación explícita del Gate A. Antes de cualquier commit o push de artefactos finales, presenta los cambios para el Gate B.
 ~~~
 
 ## Checklist de revisión humana

@@ -55,13 +55,14 @@ git status
 Inspecciona imports, validaciones, tratamiento de timezone, existencia de sala y control de conflictos. La revisión del alumno es parte de la práctica, aunque Claude haya realizado las modificaciones. Ejecuta los comandos que existan en README; si no existen, pide a Claude que los documente y después ejecútalos.
 
 ## Paso 8 — versionar y solicitar revisión
-Realiza commit descriptivo y push cuando los cambios estén razonablemente revisados:
+En el recorrido principal, confirma con `git branch --show-current` que estás en `practica/manual`. Revisa también cualquier ruta adicional que hayas creado y añádela de forma explícita. Tras Gate B:
 ~~~bash
-git add app tests docs alm
+git add app tests docs alm README.md requirements.txt
+git diff --cached --stat
 git commit -m "feat: implementar reservas y control de disponibilidad"
 git push -u origin practica/manual
 ~~~
-Las rutas y nombres pueden variar según el proyecto real. Si trabajaste directamente en `practica/manual`, abre una **Merge Request en borrador** desde `practica/manual` hacia `main`, enlaza las issues y **no la fusiones durante L05–L09**: las siguientes prácticas completarán el mismo recorrido. Si elegiste una rama feature, la MR debe apuntar a `practica/manual`; tras las comprobaciones y aprobación humana, integra el cambio allí y vuelve a `practica/manual`.
+Las rutas y nombres pueden variar según el proyecto real. Si trabajaste directamente en `practica/manual`, abre una **Merge Request en borrador** desde `practica/manual` hacia `main`, enlaza las issues y **no la fusiones durante L05–L09**: las siguientes prácticas completarán el mismo recorrido. Si elegiste la rama feature, sustituye la línea de push del bloque por `git push -u origin HEAD` desde la feature. La MR debe apuntar a `practica/manual`; tras las comprobaciones y aprobación humana, integra el cambio allí y vuelve a `practica/manual`.
 
 ## Evidencia obligatoria
 1. Rutas reales del código generado y del prompt operativo.
