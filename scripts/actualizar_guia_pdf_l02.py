@@ -87,103 +87,75 @@ class Writer:
                                      self.page.rect.width - RIGHT + 5, self.y + h),
                             fill=BLUE_BG, color=LINE, width=.4)
         for line in lines:
-            if fitz.get_text_length(line, fontname="cour", fontsize=8.0) > self.width:
+            if fitz.get_text_length(line, fontname="cour", fontsize=9.2) > self.width:
                 raise ValueError(f"Línea PowerShell demasiado larga: {line}")
             self.y += 12
             self.page.insert_text((LEFT, self.y), line, fontname="cour",
-                                  fontsize=8.0, color=INK)
+                                  fontsize=9.2, color=INK)
         # Separar visualmente el bloque de código del párrafo siguiente.
         self.y += 25
 
 
 def page6(page):
     w = Writer(page, 6)
-    w.title("3. GitLab e importación: procedimiento Windows")
-    w.subtitle("3.2 Verificar Git y preparar la identidad")
-    w.p("Instala Git for Windows desde git-scm.com y abre una terminal PowerShell nueva. "
-        "Configura la identidad real antes del primer commit; no copies literalmente los ejemplos.")
-    w.code([
-        "git --version",
-        'git config --global user.name "Nombre Apellido"',
-        'git config --global user.email "correo@ejemplo.com"',
-        "git config --global init.defaultBranch main",
-    ])
-    w.subtitle("3.3 Importación reproducible con PowerShell")
-    w.p("El alumno crea en GitLab un proyecto personal Private, SIN README inicial. "
-        "Copia su dirección exacta desde Code > Clone with HTTPS. El nombre real "
-        "de la carpeta será el slug del proyecto, no un nombre supuesto.")
-    w.step("1", "Sitúate en la carpeta de trabajo y clona el curso una sola vez")
-    w.code([
-        "cd $HOME",
-        "git clone https://github.com/jaimecopilot/CLAUDE-ALM-GENERATIVO.git",
-    ])
-    w.p("Si el curso ya está clonado en esa carpeta, omite el segundo comando. "
-        "No clones el repositorio del curso dentro del repositorio GitLab.")
-    w.step("2", "Define la URL de GitLab y la ruta del script")
-    w.code([
-        '$repo = "https://gitlab.com/TU_USUARIO/NOMBRE_REAL_DEL_PROYECTO.git"',
-        r'$script = Join-Path $HOME "CLAUDE-ALM-GENERATIVO\scripts\Preparar-L02.ps1"',
-    ])
-    w.p("Sustituye toda la URL entre comillas por la URL HTTPS copiada de GitLab. "
-        "No incluyas contraseñas ni tokens en la dirección.")
-    w.step("3", "Prepara localmente la plantilla, sin publicar todavía")
-    w.code(["& $script -GitLabRepoUrl $repo -CarpetaTrabajo $HOME"])
-    w.p("El script clona GitLab vacío, determina la carpeta de destino y copia únicamente "
-        "03_GITLAB_PLANTILLA (incluyendo archivos ocultos). Comprueba los contratos, "
-        "metaprompts, README y evidencias. Crea el primer commit, main, "
-        "base-alm y practica/manual. Si encuentra archivos o commits inesperados, se detiene.")
-    w.subtitle("Continúa en la página 7 con la misma ventana de PowerShell")
-    w.p("Si ves 'No se ha hecho push', el paso 3 ha terminado correctamente y el commit está en tu ordenador. "
-        "En la página siguiente, revisa los archivos (paso 4) y sube la plantilla a GitLab con -Publicar (paso 5). "
-        "Cambia de rama después de comprobar la publicación (paso 6).")
+    w.title("3. Publicar la plantilla en tu GitLab desde Windows")
+    w.p("Abre PowerShell. Usa tu proyecto privado de GitLab, creado sin README como indica la página 5. "
+        "Si ya tienes el commit de una ejecución anterior, conserva la carpeta del proyecto.")
+    w.step("1", "Comprueba que Git reconoce tu nombre y tu correo")
+    w.code(["git --version", "git config --get user.name", "git config --get user.email"])
+    w.p("Si falta algún dato, ejecuta la línea correspondiente y escribe tu respuesta cuando la pida.")
+    w.code(['git config --global user.name (Read-Host "Tu nombre")',
+            'git config --global user.email (Read-Host "Tu correo")'])
+    w.step("2", "Obtén la versión de clase del curso")
+    w.p("Si es tu primera vez en este ordenador, ejecuta estas dos líneas:")
+    w.code(["cd $HOME", "git clone --branch main https://github.com/jaimecopilot/CLAUDE-ALM-GENERATIVO.git"])
+    w.p("Si ya tienes el curso clonado en tu carpeta de usuario, actualiza solo los materiales. "
+        "Ejecuta cada línea por separado. Si Git muestra un error, detente y conserva el mensaje.")
+    w.code(['$curso = Join-Path $HOME "CLAUDE-ALM-GENERATIVO"',
+            'git -C $curso switch main', 'git -C $curso pull --ff-only origin main'])
+    w.step("3", "Publica en tu proyecto personal")
+    w.p("En GitLab abre tu proyecto y copia Code > Clone with HTTPS. Ejecuta la línea siguiente, "
+        "pega la dirección cuando PowerShell la pida y pulsa Intro.")
+    w.code(['$repo = (Read-Host "URL HTTPS de tu proyecto GitLab").Trim()'])
+    w.p("Ejecuta estas dos líneas. Sirven también si la guía anterior dejó el mensaje 'No se ha hecho push'.")
+    w.code([r'$script = Join-Path $HOME "CLAUDE-ALM-GENERATIVO\scripts\Preparar-L02.ps1"',
+            '& $script -GitLabRepoUrl $repo -CarpetaTrabajo $HOME -Publicar'])
+    w.p("Si se abre el navegador, entra con la cuenta propietaria del proyecto y vuelve a PowerShell. "
+        "Espera a leer 'Plantilla publicada'. En la página 7 comprobarás el resultado.", gap=0)
     return w.y
 
 
 def page7(page):
     w = Writer(page, 7)
-    w.title("3.3 Importación: comprobación y publicación")
-    w.step("4", "Revisa el commit que acabas de crear en tu ordenador")
-    w.code([
-        r'$nombre = ($repo.TrimEnd("/") -split "/")[-1] -replace "\.git$", ""',
-        "cd (Join-Path $HOME $nombre)",
-        "Get-ChildItem -Force",
-        "git status",
-        "git log -1 --oneline",
-        "git branch --list",
-        "git tag --list",
-    ])
-    w.p("Comprueba en la raíz CLAUDE.md, alm/, docs/, app/, tests/ y .gitlab/. "
-        "El primer commit debe contener solo la plantilla; no debe existir código "
-        "de aplicación resuelto ni un pipeline CI ya implementado.")
-    w.step("5", "En la misma ventana, repite el comando con -Publicar")
-    w.code([
-        "cd $HOME",
-        "& $script -GitLabRepoUrl $repo -CarpetaTrabajo $HOME -Publicar",
-    ])
-    w.p("Esta segunda ejecución comprueba el estado anterior sin duplicar commits. "
-        "Publica main, base-alm y practica/manual. GitLab puede solicitar "
-        "autenticación segura con Git Credential Manager o el navegador.")
-    w.step("6", "Comprueba el remoto y pasa a la rama de práctica")
-    w.code([
-        "cd (Join-Path $HOME $nombre)",
-        "git ls-remote --heads origin",
-        "git ls-remote --tags origin",
-    ])
-    w.p("En la primera publicación deben aparecer refs/heads/main, refs/heads/practica/manual y refs/tags/base-alm "
-        "con el mismo identificador de commit. Cuando veas las tres, activa la rama de práctica:")
-    w.code(["git switch practica/manual", "git status"])
-    w.subtitle("3.4 Interpretar errores y repetir de forma segura")
-    w.p("El aviso 'cloned an empty repository' es normal en el primer clon. Si GitLab rechaza el primer push "
-        "porque main está protegida, conserva el clon y avisa al formador para revisar los permisos. "
-        "El commit sigue en tu ordenador.")
-    w.subtitle("3.5 Alternativas y alcance de las pruebas")
-    w.p("En macOS/Linux o sin ejecución de scripts, el formador puede utilizar el "
-        "procedimiento manual de L02. GitLab Web IDE sirve para editar y commitear, "
-        "pero no importa automáticamente una única subcarpeta del curso.")
-    w.p("GitHub Actions valida en Windows las operaciones de clonación, copia, "
-        "commit, ramas, etiqueta y push contra un remoto de prueba. "
-        "La autenticación y permisos del GitLab privado deben comprobarse "
-        "en la cuenta real del alumno.", gap=0)
+    w.title("3.3 Comprobar la publicación y empezar la práctica")
+    w.step("4", "Comprueba que tu proyecto ya contiene la plantilla")
+    w.p("En GitLab actualiza la página del proyecto y selecciona main. Deben aparecer CLAUDE.md y las "
+        "carpetas alm/, docs/, .gitlab/, app/ y tests/. En Code > Branches verás main y practica/manual. "
+        "En Code > Tags verás base-alm.")
+    w.p("Para comprobarlo desde la misma ventana de PowerShell, ejecuta:")
+    w.code([r'$nombre = ($repo.TrimEnd("/") -split "/")[-1] -replace "\.git$", ""',
+            "cd (Join-Path $HOME $nombre)", "git ls-remote --heads origin", "git ls-remote --tags origin"])
+    w.p("En un proyecto recién importado aparecen tres líneas con el mismo identificador de commit: "
+        "refs/heads/main, refs/heads/practica/manual y refs/tags/base-alm.")
+    w.step("5", "Abre el proyecto en la rama del alumnado")
+    w.code(["git switch practica/manual", "git status", "code ."])
+    w.p("Comprueba que git status indica practica/manual y que el árbol está limpio. Si PowerShell no reconoce "
+        "code, abre VS Code y selecciona Archivo > Abrir carpeta. Elige la carpeta del proyecto GitLab.")
+    w.subtitle("3.4 Si te quedaste a mitad")
+    w.p("Si ves 'No se ha hecho push', tu commit ya está guardado. Vuelve al paso 2 de la página 6, elige la "
+        "opción para un curso ya clonado y ejecuta el paso 3. Puedes hacerlo en una ventana nueva. "
+        "El script reutiliza el commit existente.")
+    w.p("Si GitLab rechaza la publicación, comprueba que la URL pertenece a tu proyecto y que has entrado "
+        "con la cuenta que puede escribir en él. Si indica que main está protegida, muestra el error al formador. "
+        "Una vez resuelto, repite el paso 3.")
+    w.p("El aviso 'cloned an empty repository' es normal al clonar un proyecto nuevo. Si en cambio el script "
+        "detecta cambios locales, entra en el proyecto, ejecuta git status y revisa esos cambios con el formador.")
+    w.p("Si Windows indica que la ejecución de scripts está deshabilitada, consulta al formador. "
+        "En un equipo propio donde se permita, ejecuta la siguiente línea en la ventana actual y repite el paso 3. "
+        "En un equipo gestionado sigue la política de tu organización.")
+    w.code(["Set-ExecutionPolicy -Scope Process -ExecutionPolicy RemoteSigned"])
+    w.subtitle("3.5 Si utilizas macOS o Linux")
+    w.p("Sigue el apartado 5.1 de la guía GitLab paso a paso de L02 para la importación con Bash.", gap=0)
     return w.y
 
 
@@ -223,7 +195,8 @@ def main():
         for fragment in ("Preparar-L02.ps1", "git clone", "base-alm"):
             if fragment not in t6 + t7:
                 raise ValueError(f"Falta texto esencial del PDF: {fragment}")
-        for fragment in ("-Publicar", "git ls-remote", "practica/manual"):
+        assert t6.splitlines().count("& $script -GitLabRepoUrl $repo -CarpetaTrabajo $HOME -Publicar") == 1
+        for fragment in ("git ls-remote", "practica/manual"):
             if fragment not in t7:
                 raise ValueError(f"Falta texto de comprobación del PDF: {fragment}")
         for n in (5, 6):

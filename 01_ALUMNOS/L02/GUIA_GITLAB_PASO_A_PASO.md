@@ -33,10 +33,10 @@ claude --version
 ~~~
 17. Configura tu identidad Git si aún no existe:
 ~~~powershell
-git config --global user.name "Tu nombre"
-git config --global user.email "tu-correo@ejemplo.com"
+git config --global user.name (Read-Host "Tu nombre")
+git config --global user.email (Read-Host "Tu correo")
 ~~~
-Sustituye esos ejemplos por tu identidad real. No copies claves de acceso ni contraseñas en los comandos del curso.
+Ejecuta cada línea y responde con tus datos. No copies claves de acceso ni contraseñas en los comandos del curso.
 
 18. Inicia sesión en Claude Code mediante su interfaz de autenticación oficial:
 ~~~powershell
@@ -51,59 +51,52 @@ Utiliza un plan compatible con Claude Code. Si la empresa gestiona la autenticac
 
 19. Copia desde **GitLab → Code → Clone with HTTPS** la URL exacta del proyecto privado vacío. Comprueba tu nombre de usuario de GitLab.
 
-20. Abre PowerShell y obtén una sola vez los materiales del curso:
+20. Obtén los materiales de la rama `main`. Si es la primera vez en este ordenador:
 
 ~~~powershell
 cd $HOME
-git clone https://github.com/jaimecopilot/CLAUDE-ALM-GENERATIVO.git
+git clone --branch main https://github.com/jaimecopilot/CLAUDE-ALM-GENERATIVO.git
 ~~~
 
-Si ya tienes ese clon, no lo dupliques. Nunca copies su directorio `.git` al proyecto del alumno.
-
-21. Prepara la plantilla **sin publicarla**. Sustituye la URL de ejemplo por la dirección HTTPS copiada desde tu GitLab:
+Si ya tienes el curso en tu carpeta de usuario, actualiza ese clon. Ejecuta cada línea por separado y detente si Git muestra un error:
 
 ~~~powershell
-$repo = "https://gitlab.com/TU_USUARIO/NOMBRE_REAL_DEL_PROYECTO.git"
-& ".\CLAUDE-ALM-GENERATIVO\scripts\Preparar-L02.ps1" -GitLabRepoUrl $repo -CarpetaTrabajo $HOME
+$curso = Join-Path $HOME "CLAUDE-ALM-GENERATIVO"
+git -C $curso switch main
+git -C $curso pull --ff-only origin main
 ~~~
 
-[Preparar-L02.ps1](../../scripts/Preparar-L02.ps1) detecta el nombre real del proyecto y clona GitLab; después copia únicamente la plantilla, incluidos archivos ocultos. Comprueba las rutas y crea localmente el commit, `main`, la etiqueta `base-alm` y la rama `practica/manual`. Se detiene si detecta cambios sin confirmar o un estado que no deba sobrescribirse.
+21. Ejecuta esta línea. Cuando aparezca la pregunta, pega la URL que has copiado desde GitLab y pulsa Intro:
 
-Si ves `No se ha hecho push`, el paso 21 ha terminado correctamente. Mantén abierta esa ventana de PowerShell. Sigue con el paso 22 para revisar y con el 23 para publicar. En el PDF de 23 páginas, ambos están en la página 7.
+~~~powershell
+$repo = (Read-Host "URL HTTPS de tu proyecto GitLab").Trim()
+~~~
 
-22. Verifica el resultado antes de hacer push:
+22. Publica la plantilla. Ejecuta las dos líneas de este bloque:
+
+~~~powershell
+$script = Join-Path $HOME "CLAUDE-ALM-GENERATIVO\scripts\Preparar-L02.ps1"
+& $script -GitLabRepoUrl $repo -CarpetaTrabajo $HOME -Publicar
+~~~
+
+El script comprueba el contenido, crea el primer commit si hace falta y pide a GitLab que confirme las dos ramas y la etiqueta. Si se abre el navegador, completa la autenticación y vuelve a PowerShell. Espera al mensaje `Plantilla publicada`.
+
+**Si la versión anterior dejó el mensaje «No se ha hecho push»**, conserva el proyecto del alumno. Usa la opción de curso ya clonado del paso 20 y sigue los pasos 21 y 22, incluso si has cerrado PowerShell. El script reutiliza el commit existente.
+
+23. Actualiza tu proyecto en GitLab. En `main` deben verse `CLAUDE.md`, `alm/`, `docs/`, `.gitlab/`, `app/` y `tests/`. En **Code → Branches** deben aparecer `main` y `practica/manual`. En **Code → Tags** debe aparecer `base-alm`.
+
+24. En la misma ventana de PowerShell, comprueba las referencias del servidor:
 
 ~~~powershell
 $nombre = ($repo.TrimEnd("/") -split "/")[-1] -replace "\.git$", ""
 cd (Join-Path $HOME $nombre)
-Get-ChildItem -Force
-git status
-git log -1 --oneline
-git branch --list
-git tag --list
-~~~
-
-Deben existir `CLAUDE.md`, `alm/maestro.md`, `alm/contratos/`, `alm/metaprompts/`, `alm/evidencias/registro.md`, `docs/instrucciones/CASO_NEGOCIO.md`, `.gitlab/`, `app/` y `tests/`. Los seis contratos y los seis metaprompts se comprueban antes del commit.
-
-23. **Tras revisar**, publica el estado inicial:
-
-~~~powershell
-cd $HOME
-& ".\CLAUDE-ALM-GENERATIVO\scripts\Preparar-L02.ps1" -GitLabRepoUrl $repo -CarpetaTrabajo $HOME -Publicar
-~~~
-
-La segunda ejecución no duplica commits. Publica `main`, `base-alm`, `practica/manual` y comprueba `origin/main`. Si GitLab solicita autenticación, utiliza Git Credential Manager o el navegador; no pegues contraseñas ni tokens en Claude.
-
-24. Comprueba en GitLab las dos ramas y la etiqueta. En PowerShell:
-
-~~~powershell
-cd (Join-Path $HOME $nombre)
 git ls-remote --heads origin
 git ls-remote --tags origin
-git status
 ~~~
 
-25. Activa la rama de trabajo para L03 y abre el proyecto en VS Code:
+En la primera publicación las tres referencias deben tener el mismo identificador de commit. Si ya has trabajado en `practica/manual`, esa rama puede haberse adelantado.
+
+25. Activa la rama del alumnado para L03 y abre el proyecto:
 
 ~~~powershell
 git switch practica/manual
@@ -111,7 +104,7 @@ git status
 code .
 ~~~
 
-Si `code` no está en el PATH, abre la carpeta desde VS Code. Nunca desarrolles las prácticas L03–L09 directamente sobre `main`.
+Comprueba que estás en `practica/manual` con el árbol limpio. Si `code` no está en PATH, abre la carpeta del proyecto desde VS Code.
 
 **¿Y si prefieres los comandos manuales?** El formador puede explicar la secuencia `clone → copiar plantilla → status → add → commit → push → tag → branch`, pero no se debe combinar el procedimiento manual con el script en un clon parcialmente configurado. En particular, la instrucción para copiar archivos ocultos en PowerShell incluye un separador `|` entre dos comandos: si al pegar desde un PDF se pierde, el comando falla.
 

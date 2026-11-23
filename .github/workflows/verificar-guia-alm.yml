@@ -5,6 +5,7 @@ on:
     branches: [main]
     paths:
       - "01_ALUMNOS/GUIA_ALUMNADO_CLAUDE_GITLAB_VSCODE_ALM_2026.pdf"
+      - "01_ALUMNOS/Manual_Alumno_ALM_Generativo_16h_2026.pdf"
       - "README.md"
       - "01_ALUMNOS/README.md"
       - "01_ALUMNOS/L02/PRACTICA.md"
@@ -39,6 +40,13 @@ jobs:
           operative = (reader.pages[5].extract_text() or "") + (reader.pages[6].extract_text() or "")
           for marker in ("Preparar-L02.ps1", "practica/manual", "git ls-remote", "-Publicar"):
               assert marker in operative, f"El procedimiento L02 del PDF no contiene: {marker}"
+          manual = PdfReader("01_ALUMNOS/Manual_Alumno_ALM_Generativo_16h_2026.pdf")
+          publicar = "& $script -GitLabRepoUrl $repo -CarpetaTrabajo $HOME -Publicar"
+          for pagina in (reader.pages[5], manual.pages[9]):
+              comandos = [linea.strip() for linea in pagina.extract_text().splitlines()
+                          if linea.strip().startswith("& $script")]
+              assert comandos == [publicar], f"Importación ambigua al copiar el PDF: {comandos}"
+          assert "git switch audit/" not in manual.pages[9].extract_text()
           expected = {
               "README.md": "./01_ALUMNOS/GUIA_ALUMNADO_CLAUDE_GITLAB_VSCODE_ALM_2026.pdf",
               "01_ALUMNOS/README.md": "./GUIA_ALUMNADO_CLAUDE_GITLAB_VSCODE_ALM_2026.pdf",

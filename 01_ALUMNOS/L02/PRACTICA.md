@@ -9,7 +9,7 @@
 ## Objetivo
 Utilizar una cuenta GitLab existente o abrir una nueva, crear un **proyecto personal privado**, importar la plantilla del curso y dejar un estado inicial versionado sobre el que podrán ejecutarse dos recorridos ALM: guiado y automático.
 
-La guía técnica completa está en **[GUIA_GITLAB_PASO_A_PASO.md](./GUIA_GITLAB_PASO_A_PASO.md)**. Para Windows, el procedimiento principal utiliza [**Preparar-L02.ps1**](../../scripts/Preparar-L02.ps1), validado en runners Windows por GitHub Actions con dos nombres de proyecto. Copia siempre la URL HTTPS exacta desde GitLab, prepara primero sin publicar, comprueba los archivos y ejecuta después `-Publicar`. La verificación con GitHub Actions no equivale a verificar permisos del GitLab privado.
+La guía técnica completa está en **[GUIA_GITLAB_PASO_A_PASO.md](./GUIA_GITLAB_PASO_A_PASO.md)**. Para Windows, el procedimiento principal utiliza [**Preparar-L02.ps1**](../../scripts/Preparar-L02.ps1), validado en runners Windows por GitHub Actions con dos nombres de proyecto. Copia siempre la URL HTTPS exacta desde GitLab, ejecuta el script con `-Publicar` desde el principio y comprueba en GitLab las dos ramas y la etiqueta. La verificación con GitHub Actions no equivale a verificar permisos del GitLab privado.
 
 ## Reloj de la sesión
 

@@ -87,12 +87,24 @@ $origenActual = Get-GitText -Args @('-C',$destino,'remote','get-url','origin')
 if ($origenActual -ne $GitLabRepoUrl) {
     throw "El origin del destino es '$origenActual', pero se pidió '$GitLabRepoUrl'. No se cambia."
 }
-$estado = Get-GitText -Args @('-C',$destino,'status','--porcelain')
+$estado = (Invoke-Git -Args @('-C',$destino,'status','--porcelain','--untracked-files=all') | Out-String).Trim()
 if ($estado) {
     throw "El destino tiene cambios sin confirmar. Revisa git status en: $destino"
 }
 $cabecera = Get-GitText -Args @('-C',$destino,'rev-parse','--verify','HEAD')
 if (-not $cabecera) {
+    $refs = @(Invoke-Git -Args @('-C',$destino,'ls-remote','--refs','origin'))
+    if ($refs.Count -gt 0) {
+        throw 'El remoto ya contiene referencias. Revisa su rama predeterminada antes de importar.'
+    }
+    if (@(Get-ChildItem -LiteralPath $destino -Force | Where-Object Name -ne '.git').Count) {
+        throw 'El clon inicial contiene archivos locales, posiblemente ignorados. Revisa la carpeta.'
+    }
+    foreach ($cfg in @('user.name','user.email')) {
+        if (-not (Get-GitText -Args @('-C',$destino,'config',$cfg))) {
+            throw "Configura la identidad Git ($cfg) antes de copiar la plantilla."
+        }
+    }
     # La rama local de un clon vacío puede ser master, main u otra.
     Invoke-Git -Args @('-C',$destino,'symbolic-ref','HEAD','refs/heads/main')
     Write-Host 'Copiando archivos de la plantilla (también los ocultos)...'
@@ -126,26 +138,38 @@ foreach ($tipo in @('contratos','metaprompts')) {
 }
 
 if (-not $cabecera) {
-    foreach ($cfg in @('user.name','user.email')) {
-        if (-not (Get-GitText -Args @('-C',$destino,'config',$cfg))) {
-            throw "Configura la identidad Git con git config --global $cfg antes de crear el commit."
-        }
-    }
     Invoke-Git -Args @('-C',$destino,'add','-A')
+    $arbolFuente = Get-GitText -Args @('-C',$curso,'rev-parse','--verify','HEAD:03_GITLAB_PLANTILLA')
+    $arbolPreparado = Get-GitText -Args @('-C',$destino,'write-tree')
+    if (-not $arbolFuente -or $arbolPreparado -ne $arbolFuente) {
+        throw 'El contenido preparado difiere de la plantilla versionada. Revisa git diff --cached.'
+    }
     Invoke-Git -Args @('-C',$destino,'commit','-m','chore: incorporar plantilla del curso')
 }
 
 $mainSha = Get-GitText -Args @('-C',$destino,'rev-parse','refs/heads/main')
 if (-not $mainSha) { throw 'No se pudo verificar main local.' }
-$baseSha = Get-GitText -Args @('-C',$destino,'rev-parse','refs/tags/base-alm')
+$baseSha = Get-GitText -Args @('-C',$destino,'rev-parse','--verify','refs/tags/base-alm^{commit}')
 if ($baseSha -and $baseSha -ne $mainSha) {
     throw 'La etiqueta base-alm apunta a otro commit; se requiere revisión humana.'
 }
-if (-not $baseSha) { Invoke-Git -Args @('-C',$destino,'tag','base-alm') }
+if (-not $baseSha) {
+    $baseTree = Get-GitText -Args @('-C',$destino,'rev-parse','--verify','refs/heads/main^{tree}')
+    $templateTree = Get-GitText -Args @('-C',$curso,'rev-parse','--verify','HEAD:03_GITLAB_PLANTILLA')
+    if (-not $templateTree -or $templateTree -ne $baseTree) {
+        throw 'main no coincide con la plantilla del curso. No se crea base-alm.'
+    }
+    Invoke-Git -Args @('-C',$destino,'tag','base-alm',$mainSha)
+}
 
 $ramaManual = Get-GitText -Args @('-C',$destino,'rev-parse','refs/heads/practica/manual')
 if (-not $ramaManual) {
-    Invoke-Git -Args @('-C',$destino,'branch','practica/manual','main')
+    $remoteManual = Get-GitText -Args @('-C',$destino,'rev-parse','--verify','refs/remotes/origin/practica/manual')
+    if ($remoteManual) {
+        Invoke-Git -Args @('-C',$destino,'branch','--track','practica/manual','origin/practica/manual')
+    } else {
+        Invoke-Git -Args @('-C',$destino,'branch','practica/manual','main')
+    }
 }
 if ((Get-GitText -Args @('-C',$destino,'status','--porcelain'))) {
     throw 'La preparación terminó con cambios sin confirmar.'
@@ -156,11 +180,13 @@ Write-Host "Commit base: $mainSha"
 
 if ($Publicar) {
     Write-Host 'Publicando main, etiqueta base-alm y rama practica/manual...'
-    Invoke-Git -Args @('-C',$destino,'push','-u','origin','main')
-    Invoke-Git -Args @('-C',$destino,'push','origin','base-alm')
-    Invoke-Git -Args @('-C',$destino,'push','-u','origin','practica/manual')
-    $remoteMain = Get-GitText -Args @('-C',$destino,'rev-parse','refs/remotes/origin/main')
-    if ($remoteMain -ne $mainSha) { throw 'La rama origin/main no coincide con main.' }
+    $referencias = @('refs/heads/main','refs/tags/base-alm','refs/heads/practica/manual')
+    Invoke-Git -Args (@('-C',$destino,'push','--atomic','-u','origin') + $referencias)
+    $publicadas = @(Invoke-Git -Args (@('-C',$destino,'ls-remote','--refs','origin') + $referencias))
+    foreach ($ref in $referencias) {
+        $id = Get-GitText -Args @('-C',$destino,'rev-parse','--verify',$ref)
+        if ($publicadas -notcontains "$id`t$ref") { throw "El servidor no confirma la referencia $ref." }
+    }
     Write-Host 'Plantilla publicada. Comprueba main, practica/manual y base-alm en GitLab.'
     Write-Host 'Después, en la carpeta del proyecto, ejecuta: git switch practica/manual'
 } else {

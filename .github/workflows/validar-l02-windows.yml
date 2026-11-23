@@ -54,16 +54,14 @@ jobs:
           if ($LASTEXITCODE -ne 0) { throw 'No se pudo crear el remoto de prueba.' }
 
           $script = Join-Path $env:GITHUB_WORKSPACE 'scripts/Preparar-L02.ps1'
-          # Página 6 de la guía: se prepara el commit sin publicar ni indicar el cambio de rama.
-          $salidaLocal = (& $script -GitLabRepoUrl $remote -CarpetaTrabajo $root -CursoLocal $env:GITHUB_WORKSPACE 6>&1 | Out-String)
-          if ($salidaLocal -notmatch 'No se ha hecho push' -or $salidaLocal -notmatch '-Publicar' -or $salidaLocal -match 'git switch practica/manual') {
-            throw 'El mensaje de preparación debe remitir a la publicación.'
+          # Una ruta por nombre: inicio limpio y reanudación de un commit local.
+          if ($env:PROYECTO -eq 'coworking-alm-ensayo') {
+            & $script -GitLabRepoUrl $remote -CarpetaTrabajo $root -CursoLocal $env:GITHUB_WORKSPACE
+            $baseAnterior = git -C (Join-Path $root $env:PROYECTO) rev-parse main
+            if ($LASTEXITCODE -ne 0) { throw 'No se preparó el commit local.' }
+            $refsAntes = @(git ls-remote --refs $remote)
+            if ($LASTEXITCODE -ne 0 -or $refsAntes.Count -ne 0) { throw 'La preparación local publicó cambios.' }
           }
-          $refsAntes = @(git ls-remote --refs $remote)
-          if ($LASTEXITCODE -ne 0 -or $refsAntes.Count -ne 0) { throw 'El remoto debe continuar vacío tras preparar.' }
-          # Página 7: revisar la plantilla y volver a ejecutar el script con -Publicar.
-          git -C (Join-Path $root $env:PROYECTO) show --stat --oneline main
-          if ($LASTEXITCODE -ne 0) { throw 'Falta el commit local que el alumno debe revisar.' }
           & $script -GitLabRepoUrl $remote -CarpetaTrabajo $root -CursoLocal $env:GITHUB_WORKSPACE -Publicar
 
           $local = Join-Path $root $env:PROYECTO
@@ -89,6 +87,9 @@ jobs:
           foreach ($ref in @('refs/heads/main', 'refs/heads/practica/manual', 'refs/tags/base-alm')) {
             git --git-dir=$remote show-ref --verify $ref
             if ($LASTEXITCODE -ne 0) { throw "Falta en el remoto: $ref" }
+          }
+          if ($env:PROYECTO -eq 'coworking-alm-ensayo' -and $baseAnterior -ne $main) {
+            throw 'Reanudar cambió el commit del alumno.'
           }
           $antes = @(git -C $local rev-list --count main)[0].Trim()
           # Ejecutar una segunda vez, sin duplicar commits ni sobrescribir el repositorio.
