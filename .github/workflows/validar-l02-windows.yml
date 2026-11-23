@@ -119,3 +119,33 @@ jobs:
           }
           Write-Host 'OK L03: rutas de entrada y secuencia documental verificadas.'
           Write-Host 'No constituye una ejecución de Claude ni acredita issues reales en GitLab.'
+
+  powershell-51:
+    name: Windows PowerShell 5.1
+    runs-on: windows-latest
+    steps:
+      - name: Obtener materiales
+        uses: actions/checkout@v4
+      - name: Probar script con Windows PowerShell 5.1
+        shell: powershell
+        run: |
+          $ErrorActionPreference = 'Stop'
+          if ($PSVersionTable.PSVersion.Major -ne 5) {
+            throw "Se esperaba Windows PowerShell 5.1, obtenido $($PSVersionTable.PSVersion)"
+          }
+          git config --global user.name "Alumno Windows 5.1"
+          git config --global user.email "alumno-ps51@example.invalid"
+          $raiz = Join-Path $env:RUNNER_TEMP 'ensayo-ps51'
+          New-Item -ItemType Directory -Force -Path $raiz | Out-Null
+          $remote = Join-Path $raiz 'coworking-alm-ensayo.git'
+          git init --bare --initial-branch=main $remote
+          if ($LASTEXITCODE -ne 0) { throw 'Error creando remoto simulado.' }
+          $script = Join-Path $env:GITHUB_WORKSPACE 'scripts/Preparar-L02.ps1'
+          & $script -GitLabRepoUrl $remote -CarpetaTrabajo $raiz -CursoLocal $env:GITHUB_WORKSPACE -Publicar
+          & $script -GitLabRepoUrl $remote -CarpetaTrabajo $raiz -CursoLocal $env:GITHUB_WORKSPACE -Publicar
+          $destino = Join-Path $raiz 'coworking-alm-ensayo'
+          if (-not (Test-Path (Join-Path $destino 'CLAUDE.md'))) { throw 'Falta CLAUDE.md' }
+          if (-not (Test-Path (Join-Path $destino '.gitlab'))) { throw 'Falta .gitlab' }
+          $nCommits = (git -C $destino rev-list --count main).Trim()
+          if ($nCommits -ne '1') { throw "Se esperaban 1 commit, existen $nCommits" }
+          Write-Host 'OK: PowerShell 5.1, clon inicial, commit, main, tag, rama y segunda ejecución.'
