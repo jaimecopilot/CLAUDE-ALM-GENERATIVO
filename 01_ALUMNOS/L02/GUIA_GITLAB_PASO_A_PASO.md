@@ -163,7 +163,7 @@ Durante el taller, el formador hará una única ejecución del pipeline ALM gene
 
 **Dato previo:** el formador facilitará en clase su **nombre de usuario exacto de GitLab**. En este manual aparece el marcador `USUARIO_GITLAB_FORMADOR`; no lo utilices literalmente.
 
-31. Inicia sesión en GitLab y abre **tu proyecto** `https://gitlab.com/TU_USUARIO/coworking-alm-junior`.
+31. Inicia sesión en GitLab y abre **tu proyecto mediante la URL real que copiaste en el paso 14**, aunque su nombre no sea `coworking-alm-junior`.
 32. En el menú lateral izquierdo entra en **Manage → Members** (Gestionar → Miembros).
 33. Haz clic en **Invite members** (Invitar miembros).
 34. En el campo de búsqueda introduce el nombre de usuario de GitLab del formador y selecciona su cuenta. Si tiene una cuenta GitLab existente, es preferible invitarlo por usuario y no por correo.
