@@ -33,8 +33,13 @@ function Invoke-Git {
 
 function Get-GitText {
     param([Parameter(Mandatory = $true)][string[]]$Args)
+    # Windows PowerShell 5.1 transforma stderr nativo en error terminante
+    # con ErrorActionPreference=Stop, aunque Git devuelva un estado esperado
+    # (por ejemplo, cuando HEAD todavía no tiene commits).
+    $ErrorActionPreference = 'Continue'
     $output = & git @Args 2>$null
-    if ($LASTEXITCODE -ne 0) { return $null }
+    $codigo = $LASTEXITCODE
+    if ($codigo -ne 0) { return $null }
     return (($output | Out-String).Trim())
 }
 
