@@ -1,0 +1,54 @@
+name: Ensayo previo de GitLab y Windows
+on:
+  push:
+    branches: ["ensayos/previo-claude-20261123"]
+permissions:
+  contents: read
+jobs:
+  comprobar:
+    runs-on: windows-latest
+    timeout-minutes: 8
+    environment: ensayo-gitlab
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Comprobar acceso al proyecto privado y repetir el comando de clase
+        shell: pwsh
+        env:
+          ENSAYO_TOKEN: ${{ secrets.GITLAB_ENSAYO_TOKEN }}
+          GIT_TERMINAL_PROMPT: "0"
+          GCM_INTERACTIVE: Never
+        run: |
+          $ErrorActionPreference = 'Stop'
+          $project = 'https://gitlab.com/api/v4/projects/jaimedeeplearning%2Fcoworking-alm-ensayo'
+          $repo = 'https://gitlab.com/jaimedeeplearning/coworking-alm-ensayo.git'
+          if (-not $env:ENSAYO_TOKEN) { throw 'Falta GITLAB_ENSAYO_TOKEN en el entorno de ensayo.' }
+          $headers = @{ 'PRIVATE-TOKEN' = $env:ENSAYO_TOKEN }
+          foreach ($part in @('', '/issues?per_page=1', '/merge_requests?per_page=1', '/pipelines?per_page=1', '/runners?status=online&per_page=1')) {
+            $response = Invoke-WebRequest -Uri ($project + $part) -Headers $headers -SkipHttpErrorCheck -MaximumRedirection 0
+            Write-Host "GitLab API $part HTTP $($response.StatusCode)"
+            if ($part -like '/runners*' -and $response.StatusCode -eq 200) {
+              $runners = ConvertFrom-Json -InputObject $response.Content -NoEnumerate
+              Write-Host "Runner en línea visible: $($runners.Count -gt 0)"
+            }
+          }
+          $b64 = [Convert]::ToBase64String([Text.Encoding]::UTF8.GetBytes("oauth2:$env:ENSAYO_TOKEN"))
+          Write-Output "::add-mask::$b64"
+          $env:GIT_CONFIG_COUNT = '2'
+          $env:GIT_CONFIG_KEY_0 = "http.$repo.extraHeader"
+          $env:GIT_CONFIG_VALUE_0 = "Authorization: Basic $b64"
+          $env:GIT_CONFIG_KEY_1 = "http.followRedirects"
+          $env:GIT_CONFIG_VALUE_1 = "false"
+          Remove-Item Env:ENSAYO_TOKEN
+          $antes = @(git ls-remote --refs $repo)
+          if ($LASTEXITCODE -ne 0) { throw 'Lectura HTTPS denegada.' }
+          foreach ($ref in @('refs/heads/main','refs/heads/practica/manual','refs/tags/base-alm')) {
+            if (-not ($antes -match ([regex]::Escape($ref) + '$'))) { throw "El ensayo anterior no tiene $ref. Se detiene antes de escribir." }
+          }
+          $script = Join-Path $env:GITHUB_WORKSPACE 'scripts/Preparar-L02.ps1'
+          & powershell.exe -NoProfile -NonInteractive -File $script -GitLabRepoUrl $repo -CursoLocal $env:GITHUB_WORKSPACE -CarpetaTrabajo $env:RUNNER_TEMP -Publicar
+          if ($LASTEXITCODE -ne 0) { throw 'El comando de Windows PowerShell 5.1 ha fallado.' }
+          $despues = @(git ls-remote --refs $repo)
+          if ($LASTEXITCODE -ne 0 -or (Compare-Object $antes $despues)) { throw 'Las referencias no coinciden con el estado anterior.' }
+          Write-Host 'OK: versión actual en GitLab.com, publicación repetida y referencias conservadas.'
