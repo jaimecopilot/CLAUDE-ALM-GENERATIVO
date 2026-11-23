@@ -21,18 +21,24 @@ jobs:
     steps:
       - name: Obtener repositorio
         uses: actions/checkout@v4
+      - name: Instalar lector PDF estructural
+        run: python3 -m pip install --disable-pip-version-check 'pypdf>=5,<7'
       - name: Verificar PDF y referencias de los manuales
         shell: bash
         run: |
           python3 - <<'PY'
-          import re
           from pathlib import Path
+          from pypdf import PdfReader
           pdf_path = Path("01_ALUMNOS/GUIA_ALUMNADO_CLAUDE_GITLAB_VSCODE_ALM_2026.pdf")
           content = pdf_path.read_bytes()
           assert content.startswith(b"%PDF-"), "El archivo no tiene cabecera PDF"
           assert len(content) > 50_000, "El PDF parece incompleto"
-          page_count = len(re.findall(rb"/Type\s*/Page\b", content))
+          reader = PdfReader(str(pdf_path))
+          page_count = len(reader.pages)
           assert page_count == 23, f"Se esperaban 23 páginas, encontradas {page_count}"
+          operative = (reader.pages[5].extract_text() or "") + (reader.pages[6].extract_text() or "")
+          for marker in ("Preparar-L02.ps1", "practica/manual", "git ls-remote", "-Publicar"):
+              assert marker in operative, f"El procedimiento L02 del PDF no contiene: {marker}"
           expected = {
               "README.md": "./01_ALUMNOS/GUIA_ALUMNADO_CLAUDE_GITLAB_VSCODE_ALM_2026.pdf",
               "01_ALUMNOS/README.md": "./GUIA_ALUMNADO_CLAUDE_GITLAB_VSCODE_ALM_2026.pdf",
