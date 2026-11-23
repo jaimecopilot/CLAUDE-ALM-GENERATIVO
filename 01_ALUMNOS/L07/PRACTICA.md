@@ -5,7 +5,7 @@
 **75 min:** teoría 10, diseño 10, generación/revisión 15, ejecución remota 25, reparación/cierre 15.
 
 ## Entradas
-Aplicación de L05, pruebas de L06, **alm/contratos/05-devops.md**, requirements y comandos locales reales. El proyecto ya debe tener una rama y MR abierta o lista para crearse.
+Aplicación de L05, pruebas de L06, **alm/contratos/05-devops.md**, requirements y comandos locales reales. El proyecto debe conservar el trabajo de L03–L06 en **`practica/manual`** y tener una MR **en borrador hacia `main`**, abierta en L05 o lista para abrirse. No cambies de rama para generar el YAML del CI.
 
 ## Paso 1 — define antes de pedir YAML
 El alumno escribe las condiciones de aceptación del pipeline: cada actualización de MR debe lanzar validación; pytest debe fallar el job si falla un test; un paquete o artefacto se guarda al finalizar; los secretos no se escriben en YAML. Decide con el formador si el runner puede ejecutar Python sin Docker.
@@ -23,7 +23,7 @@ git add .gitlab-ci.yml
 git commit -m "ci: comprobar app y tests desde GitLab"
 git push
 ~~~
-Abre la pestaña **CI/CD → Pipelines** de GitLab y busca la ejecución asociada a ese commit o MR. **No está aprobado hasta comprobar su estado en la instancia real.**
+El push actualiza la MR en borrador `practica/manual` → `main`. Abre **Build → Pipelines** en GitLab y busca la ejecución asociada a ese commit o MR. **No está aprobado hasta comprobar su estado en la instancia real.**
 
 ## Paso 5 — diagnosticar fallos
 Si el pipeline falla, abre el job, conserva el extracto de log y pide a Claude:
