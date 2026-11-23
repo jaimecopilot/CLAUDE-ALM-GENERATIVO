@@ -19,7 +19,8 @@ Tras aprobar el prompt, Claude genera el YAML del pipeline GitLab con las fases 
 ## Paso 4 — inspección y push
 Revisa el YAML y haz commit en la rama de trabajo:
 ~~~bash
-git add .gitlab-ci.yml
+git add .gitlab-ci.yml docs/entrega alm/prompts-generados/05-devops.md alm/evidencias/registro.md
+git diff --cached --stat
 git commit -m "ci: comprobar app y tests desde GitLab"
 git push
 ~~~

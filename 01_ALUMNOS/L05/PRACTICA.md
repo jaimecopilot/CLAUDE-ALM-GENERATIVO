@@ -57,7 +57,8 @@ Inspecciona imports, validaciones, tratamiento de timezone, existencia de sala y
 ## Paso 8 — versionar y solicitar revisión
 Realiza commit descriptivo y push cuando los cambios estén razonablemente revisados:
 ~~~bash
-git add app tests docs alm
+git add app tests docs alm README.md requirements.txt
+git diff --cached --stat
 git commit -m "feat: implementar reservas y control de disponibilidad"
 git push -u origin practica/manual
 ~~~
