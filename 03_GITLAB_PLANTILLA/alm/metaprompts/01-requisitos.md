@@ -15,6 +15,7 @@ Produce alm/prompts-generados/01-requisitos.md con estas secciones:
 3. Pasos para generar una especificación funcional y backlog verificables.
 4. Archivos de salida docs/requisitos/especificacion.md y docs/requisitos/backlog.md.
 5. Criterios: listar, reservar, impedir solapamientos, cancelar; intervalos [inicio,fin), comportamiento observable, casos límite y códigos de error.
+   Para RF-04, incluye en la especificación y en la historia de cancelación un criterio de aceptación ya fijado por el taller: cuando DELETE /reservas/{id} cancela una reserva, devuelve HTTP 204 sin cuerpo y la franja queda libre. El formulario confirma la cancelación al recibir el 204, sin leer un mensaje de la respuesta.
 6. Exclusiones: pagos, membresías, eventos, autenticación compleja, microservicios.
 7. Revisión: escenarios Gherkin verificables, dependencias de historias, trazabilidad a issues.
 8. Plan de corrección si falta una regla de negocio.
