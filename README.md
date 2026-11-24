@@ -12,7 +12,7 @@ La IA del curso será Claude Code; los contratos y metaprompts se redactan para 
 
 ## Cómo encontrar los contenidos
 
-**Empieza por la guía PDF antes de realizar los laboratorios.** Es el documento de instalación y conexión; L02 aplica sus instrucciones al repositorio personal.
+Para preparar tu equipo, abre la guía inicial. Durante las cuatro jornadas puedes seguir el [manual del alumno (PDF)](./01_ALUMNOS/Manual_Alumno_ALM_Generativo_16h_2026.pdf) o el [índice de los once laboratorios](./01_ALUMNOS/README.md).
 
 - **[Guía inicial Claude + GitLab + VS Code (PDF)](./01_ALUMNOS/GUIA_ALUMNADO_CLAUDE_GITLAB_VSCODE_ALM_2026.pdf)**: lectura inicial para instalar Git, VS Code, Python, Claude Code y entender las conexiones con GitLab antes de L02.
 - **[Ciclo continuo ALM + CI/CD](./00_PROGRAMA/DIAGRAMAS/CICLO_CONTINUO_ALM_CICD.md)**: diagrama de necesidades, requisitos, diseño, código, revisión, entrega y mantenimiento.
@@ -21,7 +21,7 @@ La IA del curso será Claude Code; los contratos y metaprompts se redactan para 
 - **[Guía de alta individual en GitLab](./01_ALUMNOS/L02/GUIA_GITLAB_PASO_A_PASO.md)**: cuenta personal, proyecto privado y permisos.
 - **[Nuevo laboratorio de ALM automático](./01_ALUMNOS/L10/PRACTICA.md)**: segunda ejecución del mismo caso.
 - **[Material del alumno](./01_ALUMNOS/README.md)**: índice de los once laboratorios; **cada laboratorio tiene TEORIA, PRACTICA y METAPROMPT**.
-- **[Plantilla para GitLab](./03_GITLAB_PLANTILLA/README.md)**: archivos iniciales que se copiarán al proyecto GitLab cuando esté disponible.
+- **[Plantilla para GitLab](./03_GITLAB_PLANTILLA/README.md)**: en L02 copia **solo el contenido** de esta carpeta a la raíz de tu proyecto personal, incluidos los archivos ocultos. Sigue la guía de L02 para hacerlo en Windows o Bash.
 
 ## Qué debe hacer el alumno
 
@@ -56,8 +56,8 @@ En L10 se estudia y puede generarse el YAML, pero la ejecución real se realiza 
 
 Claude Code requiere un plan compatible; Claude Free web no equivale a Claude Code. El curso está dimensionado para una cuenta Pro por alumno, con límites de uso. Las llamadas de API del L10 son un coste separado que debe autorizarse antes de ejecutar. Se prevén puntos de recuperación si un alumno alcanza los límites.
 
-## Fase 2
+## Qué hacer con `.github/workflows` y `scripts`
 
-Quedará pendiente la **ejecución real en las cuentas GitLab de los alumnos**: ellos crearán sus proyectos y comprobarán sus runners, permisos, Merge Requests y CI del producto; la ejecución central ALM del formador también requiere validación técnica real. Hasta entonces la plantilla es material preparado, no infraestructura desplegada.
+GitHub Actions usa `.github/workflows/` para comprobar los enlaces y la continuidad de los laboratorios, probar la preparación de L02 en Windows y Bash y verificar los dos PDF del alumnado. Estas tareas son de mantenimiento del curso. Para el proyecto GitLab personal utiliza la plantilla indicada en L02. En L07 crearás allí tu propio archivo `.gitlab-ci.yml` para comprobar la aplicación.
 
-**No subir las soluciones del formador al repositorio del alumno.**
+Si trabajas en Windows, la práctica de L02 utiliza [Preparar-L02.ps1](./scripts/Preparar-L02.ps1). Ejecútalo desde la copia local del curso siguiendo esa guía.
